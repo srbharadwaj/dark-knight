@@ -43,6 +43,7 @@ public interface CConst
     String APP_NAME = "Dark-Knight";
     String VERSION = "v0.0.1";
     String TITLE = APP_NAME + " " + VERSION;
+    String WEBSITE = "https://code.google.com/p/dark-knight/";
     String PAWN = "Pawn";
     String ROOK = "Rook";
     String KNIGHT = "Knight";

@@ -823,14 +823,7 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
 
             if(cbo.isKingInCheck(whoseTurn))
             {
-                /*if(whoseTurn.equals(WHITE))
-                {
-                    System.out.println("WHITE IS IN CHECK");
-                }
-                else
-                {
-                    System.out.println("BLACK IS IN CHECK");
-                }*/
+                System.out.println(whoseTurn + " IS IN CHECK");
                 if(v==null)
                 {
                 chk=true;
@@ -1418,31 +1411,50 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
 
 
                 System.out.println("HERE :"+ new Date());
-                currentMoveNo=0;
-                cbo.resetCB();
-                resetChessBoardUI(true);
-                currentGameNo = 0;
+                //currentMoveNo=0;
+                //cbo.resetCB();
+                //resetChessBoardUI(true);
+                //currentGameNo = 0;
                 //game = new Game(cbo,currentGameNo);
                 //gameList.add(game);
                 gameList.removeAllElements();
-                setPieceUI();
+                //setPieceUI();
                 for(int i=0;i<allGames.pgnGames.size();i++)
                 {
                     EachPGNGame eg = (EachPGNGame) allGames.pgnGames.get(i);
                     System.out.println("Game no "+ eg.getGameNumber());
-
-                    currentMoveNo=0;
-                    cbo.resetCB();
-                    resetChessBoardUI(true);
                     currentGameNo = gameList.size()+1;
                     game = new Game(cbo,currentGameNo);
                     gameList.add(game);
-                    setPieceUI();
+                   
+                    for(int a=0;a<eg.allBandWMoves.size();a++)
+                    {
+                        game.allBWMoves.add(eg.allBandWMoves.get(a));
+                        //System.out.println(eg.allBandWMoves.get(a));
+                    }
+                    for(int a=0;a<eg.allTagDetails.size();a++)
+                    {
+                        game.tags.add(eg.allTagDetails.get(a));
+                        //System.out.println(eg.allBandWMoves.get(a));
+                    }
 
-                    eg.convertPGNMoveToGUIFormat();
+                    //eg.convertPGNMoveToGUIFormat();
                     
                 }
                 System.out.println("HERE :"+ new Date());
+                game = (Game) gameList.get(0);
+                currentGameNo = 1;
+                EachPGNGame  e1 = new EachPGNGame(this,1);
+                loadGame(game);
+                Vector v = new Vector();
+                for(int k=0;k<game.allBWMoves.size();k++)
+                {
+                    v.add(game.allBWMoves.get(k));
+                }
+
+                //System.out.println("Size "+v.size());
+                e1.convertPGNMoveToGUIFormat(v);
+
             }
         }
         else if(e.getActionCommand().equals(REMOVE))
