@@ -23,6 +23,7 @@ public class Game
     public String wPlayer = "Suhas";
     public String bPlayer = "Player"+gameno;
     public Vector tags = new Vector();
+    public Vector allBWMoves = new Vector();
 
     public Game(CB cb,int i)
     {
@@ -41,10 +42,16 @@ public class Game
             try {
             moveList.removeElementAt(mn-1);
             } catch(ArrayIndexOutOfBoundsException e) {
-                break;
+                try {
+                    allBWMoves.removeElementAt(mn-1);
+                } catch(ArrayIndexOutOfBoundsException e1) {
+                    break;
+                }
             }
         }
         System.out.println("MM "+s);
+        System.out.println("BW "+s.split(" ")[1]);
+        allBWMoves.add(s.split(" ")[1]);
         Move m = new Move(mn,s,cbGame);
         moveList.add(m);
         gameMoveNo++;
@@ -78,15 +85,16 @@ public class Game
             for(int i=0;i<tags.size();i++)
             {
                 String s = (String) tags.get(i);
-                if(s.contains("White"))
+                String[] sa = s.split(":");
+                if(sa[0].equals("White"))
                 {
                     wPlayer = s.split(":")[1];
                 }
-                else if(s.contains("Black"))
+                else if(sa[0].equals("Black"))
                 {
                     bPlayer = s.split(":")[1];
                 }
-                else if(s.contains("Result"))
+                else if(sa[0].equals("Result"))
                 {
                     gameResult = s.split(":")[1];
                 }

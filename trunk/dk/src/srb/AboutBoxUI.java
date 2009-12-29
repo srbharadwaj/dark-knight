@@ -55,7 +55,7 @@ public class AboutBoxUI extends javax.swing.JDialog implements CConst {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BN.gif"))); // NOI18N
         jPanel1.add(jLabel1);
 
-        jLabel2.setFont(new java.awt.Font("Algerian", 0, 36)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Algerian", 0, 36));
         jLabel2.setText("  DARK-KNIGHT  ");
         jPanel1.add(jLabel2);
 
@@ -68,20 +68,20 @@ public class AboutBoxUI extends javax.swing.JDialog implements CConst {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("This is my first program to learn java, hope you too have fun with it  :) ");
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabel10.setText("Version : ");
 
         jLabel6.setText(VERSION);
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabel11.setText("Author :");
 
         jLabel9.setText("Suhas Bharadwaj (srbharadwaj@gmail.com)");
 
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabel12.setText("Homepage :");
 
-        jLabel13.setText("https://knightrider.googlecode.com");
+        jLabel13.setText(WEBSITE);
 
         jButton1.setText("Close");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

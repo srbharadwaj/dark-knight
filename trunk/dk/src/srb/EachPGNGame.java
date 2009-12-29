@@ -1115,7 +1115,7 @@ public class EachPGNGame implements CConst
         return(getVector(name, fCol, fRow, tCol, tRow, cap, castle, check, promo));
     }
 
-    public void convertPGNMoveToGUIFormat()
+    public void convertPGNMoveToGUIFormat(Vector allBandWMoves)
     {
         njf.whoseTurn = WHITE;
 

@@ -19,7 +19,6 @@ import java.util.Vector;
  */
 public class GamesPanelUI extends javax.swing.JPanel {
 
-    public int gameNumber = 1;
      ChessBoardUI njf = null;
     /** Creates new form GamesPanelUI */
     public GamesPanelUI(ChessBoardUI n) {
@@ -170,16 +169,7 @@ public class GamesPanelUI extends javax.swing.JPanel {
         if(njf.currentGameNo>1)
         {
             njf.currentGameNo = 1;
-            for(int i=0;i<njf.gameList.size();i++)
-            {
-                Game g = (Game) njf.gameList.get(i);
-                if(g.gameno == njf.currentGameNo)
-                {
-                    njf.game = g;
-                    njf.loadGame(g);
-                    break;
-                }
-            }
+            callLoadGame();
         }
 
     }//GEN-LAST:event_butFirstGameActionPerformed
@@ -189,16 +179,7 @@ public class GamesPanelUI extends javax.swing.JPanel {
         if(njf.currentGameNo>1)
         {
             njf.currentGameNo--;
-            for(int i=0;i<njf.gameList.size();i++)
-            {
-                Game g = (Game) njf.gameList.get(i);
-                if(g.gameno == njf.currentGameNo)
-                {
-                    njf.game = g;
-                    njf.loadGame(g);
-                    break;
-                }
-            }
+            callLoadGame();
         }
     }//GEN-LAST:event_butPrevGameActionPerformed
 
@@ -207,16 +188,7 @@ public class GamesPanelUI extends javax.swing.JPanel {
         if(njf.currentGameNo<njf.gameList.size())
         {
             njf.currentGameNo++;
-            for(int i=0;i<njf.gameList.size();i++)
-            {
-                Game g = (Game) njf.gameList.get(i);
-                if(g.gameno == njf.currentGameNo)
-                {
-                    njf.game = g;
-                    njf.loadGame(g);
-                    break;
-                }
-            }
+            callLoadGame();
         }
     }//GEN-LAST:event_butNextGameActionPerformed
 
@@ -225,18 +197,37 @@ public class GamesPanelUI extends javax.swing.JPanel {
         if(njf.currentGameNo<njf.gameList.size())
         {
             njf.currentGameNo = njf.gameList.size();
-            for(int i=0;i<njf.gameList.size();i++)
-            {
-                Game g = (Game) njf.gameList.get(i);
-                if(g.gameno == njf.currentGameNo)
-                {
-                    njf.game = g;
-                    njf.loadGame(g);
-                    break;
-                }
-            }
+            callLoadGame();
         }
     }//GEN-LAST:event_butLastGameActionPerformed
+
+    public void callLoadGame()
+    {
+        for(int i=0;i<njf.gameList.size();i++)
+        {
+            Game g = (Game) njf.gameList.get(i);
+            g.moveList.clear();
+        }
+        for(int i=0;i<njf.gameList.size();i++)
+        {
+            Game g = (Game) njf.gameList.get(i);
+            if(g.gameno == njf.currentGameNo)
+            {
+                njf.game = g;
+                EachPGNGame  e = new EachPGNGame(njf,g.gameno);
+                njf.loadGame(g);
+                Vector v = new Vector();
+                for(int k=0;k<g.allBWMoves.size();k++)
+                {
+                    v.add(g.allBWMoves.get(k));
+                }
+
+                System.out.println("Size "+v.size());
+                e.convertPGNMoveToGUIFormat(v);
+                break;
+            }
+        }
+    }
 
     public void updateGamesPanelUI(Vector gameList) {
         njf.game.updateGame();
