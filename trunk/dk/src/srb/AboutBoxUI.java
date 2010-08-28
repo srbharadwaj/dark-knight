@@ -11,6 +11,14 @@
 
 package srb;
 
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author suhas
@@ -21,6 +29,8 @@ public class AboutBoxUI extends javax.swing.JDialog implements CConst {
     public AboutBoxUI(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        System.out.println(jLabel13.getFont());
+        System.out.println(jLabel13.getForeground());
     }
 
     /** This method is called from within the constructor to
@@ -46,6 +56,7 @@ public class AboutBoxUI extends javax.swing.JDialog implements CConst {
         jLabel13 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("About : " + TITLE);
@@ -55,7 +66,7 @@ public class AboutBoxUI extends javax.swing.JDialog implements CConst {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BN.gif"))); // NOI18N
         jPanel1.add(jLabel1);
 
-        jLabel2.setFont(new java.awt.Font("Algerian", 0, 36));
+        jLabel2.setFont(new java.awt.Font("Algerian", 0, 36)); // NOI18N
         jLabel2.setText("  DARK-KNIGHT  ");
         jPanel1.add(jLabel2);
 
@@ -66,7 +77,7 @@ public class AboutBoxUI extends javax.swing.JDialog implements CConst {
         jLabel7.setText("A Simple Two Player Chess Game cum PGN Viewer");
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("This is my first program to learn java, hope you too have fun with it  :) ");
+        jLabel8.setText("This project was written to learn java, hope you too have fun with it");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabel10.setText("Version : ");
@@ -82,6 +93,18 @@ public class AboutBoxUI extends javax.swing.JDialog implements CConst {
         jLabel12.setText("Homepage :");
 
         jLabel13.setText(WEBSITE);
+        jLabel13.setToolTipText("Open Link");
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel13MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel13MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel13MousePressed(evt);
+            }
+        });
 
         jButton1.setText("Close");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -91,6 +114,9 @@ public class AboutBoxUI extends javax.swing.JDialog implements CConst {
         });
         jPanel2.add(jButton1);
 
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText(":)  Do let me know if you have any suggestions or find any bugs  :)");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -98,41 +124,46 @@ public class AboutBoxUI extends javax.swing.JDialog implements CConst {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel12)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)))))
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -155,6 +186,67 @@ public class AboutBoxUI extends javax.swing.JDialog implements CConst {
         this.setVisible(false);
 }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jLabel13MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MousePressed
+        JLabel l = (JLabel) evt.getSource();
+        System.out.println("Pressed");
+        openURL(l.getText().trim());
+    }//GEN-LAST:event_jLabel13MousePressed
+
+    private void jLabel13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseEntered
+         JLabel l = (JLabel) evt.getSource();
+        customFontAndColor(l);
+    }//GEN-LAST:event_jLabel13MouseEntered
+
+    private void jLabel13MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseExited
+         JLabel l = (JLabel) evt.getSource();
+        defaultFontAndColor(l);
+    }//GEN-LAST:event_jLabel13MouseExited
+
+     static final String[] browsers = { "firefox", "opera", "konqueror", "epiphany",
+      "seamonkey", "galeon", "kazehakase", "mozilla", "netscape" };
+
+public void customFontAndColor(JLabel l)
+{
+    setCursor(Cursor.getPredefinedCursor(12));
+    l.setFont(new Font("Dialog", Font.BOLD, 12));
+    l.setForeground(new Color(0, 0, 255));
+}
+
+public void defaultFontAndColor(JLabel l)
+{
+    setCursor(Cursor.getDefaultCursor());
+    l.setFont(new Font("Dialog", Font.BOLD, 12));
+    l.setForeground(new Color(51, 51, 51));
+}
+ public static void openURL(String url) {
+      String osName = System.getProperty("os.name");
+      try {
+         if (osName.startsWith("Mac OS")) {
+            Class<?> fileMgr = Class.forName("com.apple.eio.FileManager");
+            Method openURL = fileMgr.getDeclaredMethod("openURL",
+               new Class[] {String.class});
+            openURL.invoke(null, new Object[] {url});
+            }
+         else if (osName.startsWith("Windows"))
+            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+         else { //assume Unix or Linux
+            boolean found = false;
+            for (String browser : browsers)
+               if (!found) {
+                  found = Runtime.getRuntime().exec(
+                     new String[] {"which", browser}).waitFor() == 0;
+                  if (found)
+                     Runtime.getRuntime().exec(new String[] {browser, url});
+                  }
+            if (!found)
+               throw new Exception(Arrays.toString(browsers));
+            }
+         }
+      catch (Exception e) {
+         JOptionPane.showMessageDialog(null,
+            "Error attempting to launch web browser\n" + e.toString());
+         }
+      }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -163,6 +255,7 @@ public class AboutBoxUI extends javax.swing.JDialog implements CConst {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;

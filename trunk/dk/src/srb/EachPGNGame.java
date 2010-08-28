@@ -5,7 +5,8 @@
 
 package srb;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  * Class Name - EachPGNGame
@@ -15,13 +16,13 @@ import java.util.Vector;
  */
 public class EachPGNGame implements CConst
 {
-    public Vector allTags = new Vector();
-    public Vector allTagDetails = new Vector();
-    public Vector allBandWMoves = new Vector();
-    public Vector allLines = new Vector();
+    public ArrayList allTags = new ArrayList();
+    public ArrayList allTagDetails = new ArrayList();
+    public ArrayList allBandWMoves = new ArrayList();
+    public ArrayList allLines = new ArrayList();
 
-    public Vector allWMoves = new Vector();
-    public Vector allBMoves = new Vector();
+    public ArrayList allWMoves = new ArrayList();
+    public ArrayList allBMoves = new ArrayList();
 
     boolean startOfComment = false;
     int gameNo = 0;
@@ -36,7 +37,7 @@ public class EachPGNGame implements CConst
         //System.out.println(i);
     }
  
-    public void setLines(Vector l)
+    public void setLines(ArrayList l)
     {
         for(int i=0;i<l.size();i++)
         {
@@ -127,7 +128,7 @@ public class EachPGNGame implements CConst
                     }
                     if(sm[j].trim().matches("\\([0-9]+."))
                     {
-                        System.out.println("problem, its a variation "+ sm[j].trim());
+                        System.out.println("problem, its a variation its not supported"+ sm[j].trim());
                         System.exit(0);
                     }
 
@@ -218,7 +219,7 @@ public class EachPGNGame implements CConst
         * 6-complete capture piece move :: Ng2xh4,(5 with chk)
         * 7-(6 with chk)
         */
-    public void chkValidityOfPGNSyntax(Vector vm)
+    public void chkValidityOfPGNSyntax(ArrayList vm)
     {
         for(int k=0;k<vm.size();k++)
         {
@@ -317,7 +318,7 @@ public class EachPGNGame implements CConst
          *
          */
 
-        Vector v = new Vector();
+        ArrayList v = new ArrayList();
         int l = m.length();
         switch(l)
             {
@@ -346,6 +347,9 @@ public class EachPGNGame implements CConst
                     //System.out.println(v);
                     break;
                 default:
+                    JOptionPane.showMessageDialog(null,
+            "ERROR!!! len=" + l +" '" + m + "' dos'nt match regex  index ");
+
                     System.out.println("ERROR!!! len=" + l +" '" + m + "' dos'nt match regex  index ");
                     break;
         }
@@ -439,7 +443,7 @@ public class EachPGNGame implements CConst
             return"INVALID PIECE";
     }
 
-    private void callFramesMakeMove(String col,Vector v)
+    private void callFramesMakeMove(String col,ArrayList v)
     {
          /*
          * The format in which the data must be fetched
@@ -572,9 +576,9 @@ public class EachPGNGame implements CConst
         njf.makeMove(njtb, pjtb,v);
     }
 
-    private Vector getVector(String name, String fCol, String fRow, String tCol, String tRow, String cap, String castle, String check, String promo)
+    private ArrayList getArrayList(String name, String fCol, String fRow, String tCol, String tRow, String cap, String castle, String check, String promo)
     {
-        Vector v = new Vector();
+        ArrayList v = new ArrayList();
         v.add(name);
         v.add(fCol);
         v.add(fRow);
@@ -585,12 +589,12 @@ public class EachPGNGame implements CConst
         v.add(check);
         v.add(promo);
 
-        System.out.println("getVector "+v);
+        System.out.println("getArrayList "+v);
         return v;
 
     }
 
-    private Vector parsePGNMoveLen2(String m)
+    private ArrayList parsePGNMoveLen2(String m)
     {
         /*
          * The format in which the data must be fetched
@@ -619,12 +623,12 @@ public class EachPGNGame implements CConst
         String check = null;
         String promo = null;
 
-        Vector v = getVector(name, fCol, fRow, tCol, tRow, cap, castle, check, promo);
+        ArrayList v = getArrayList(name, fCol, fRow, tCol, tRow, cap, castle, check, promo);
         return v;
 
     }
 
-    private Vector parsePGNMoveLen3(String m)
+    private ArrayList parsePGNMoveLen3(String m)
     {
         /*
          * The format in which the data must be fetched
@@ -684,10 +688,10 @@ public class EachPGNGame implements CConst
                 check = "CM";
         }
 
-        return(getVector(name, fCol, fRow, tCol, tRow, cap, castle, check, promo));
+        return(getArrayList(name, fCol, fRow, tCol, tRow, cap, castle, check, promo));
     }
 
-    private Vector parsePGNMoveLen4(String m)
+    private ArrayList parsePGNMoveLen4(String m)
     {
         /*
          * The format in which the data must be fetched
@@ -785,10 +789,10 @@ public class EachPGNGame implements CConst
             tRow = Integer.toString(convertNumRowToNumVal(m.charAt(3)));
         }
 
-        return(getVector(name, fCol, fRow, tCol, tRow, cap, castle, check, promo));
+        return(getArrayList(name, fCol, fRow, tCol, tRow, cap, castle, check, promo));
     }
 
-    private Vector parsePGNMoveLen5(String m)
+    private ArrayList parsePGNMoveLen5(String m)
     {
         /*
          * The format in which the data must be fetched
@@ -920,10 +924,10 @@ public class EachPGNGame implements CConst
             cap = "true";
         }
 
-        return(getVector(name, fCol, fRow, tCol, tRow, cap, castle, check, promo));
+        return(getArrayList(name, fCol, fRow, tCol, tRow, cap, castle, check, promo));
     }
 
-    private Vector parsePGNMoveLen6(String m)
+    private ArrayList parsePGNMoveLen6(String m)
     {
         /*
          * The format in which the data must be fetched
@@ -1038,10 +1042,10 @@ public class EachPGNGame implements CConst
         }
 
 
-        return(getVector(name, fCol, fRow, tCol, tRow, cap, castle, check, promo));
+        return(getArrayList(name, fCol, fRow, tCol, tRow, cap, castle, check, promo));
     }
 
-    private Vector parsePGNMoveLen7(String m)
+    private ArrayList parsePGNMoveLen7(String m)
     {
         /*
          * The format in which the data must be fetched
@@ -1112,10 +1116,10 @@ public class EachPGNGame implements CConst
                 check = "CM";
         }
 
-        return(getVector(name, fCol, fRow, tCol, tRow, cap, castle, check, promo));
+        return(getArrayList(name, fCol, fRow, tCol, tRow, cap, castle, check, promo));
     }
 
-    public void convertPGNMoveToGUIFormat(Vector allBandWMoves)
+    public void convertPGNMoveToGUIFormat(ArrayList allBandWMoves)
     {
         njf.whoseTurn = WHITE;
 

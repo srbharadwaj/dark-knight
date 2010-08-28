@@ -13,16 +13,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Vector;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -33,6 +36,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
@@ -45,8 +49,16 @@ import javax.swing.JToggleButton;
  *
  * @author Suhas Bharadwaj
  */
-public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,CConst
+public class ChessBoardUI extends JFrame implements WindowListener,ActionListener,ItemListener,CConst
 {
+    // private JMenuItem menuItemLocateEngine;
+        private JMenu menuItemEngine;
+          private ButtonGroup engineGroup;
+          public JRadioButtonMenuItem menuItemEngineOff;
+          private JRadioButtonMenuItem menuItemEngineOn;
+           public EngineProcess engineProcess = null;
+           public String engineFileName = null;
+
     public JPanel mainP = new JPanel(new BorderLayout());
     public JPanel cP = new JPanel(new BorderLayout());
     public JPanel nP = new JPanel(new BorderLayout());
@@ -82,7 +94,7 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
     public int currentMoveNo = 0;
     public int currentGameNo = 0;
 
-    public Vector gameList = new Vector();
+    public ArrayList gameList = new ArrayList();
     public Game game = null;
     public GamesPanelUI gamesPanelUI = null;
 
@@ -116,7 +128,7 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
 
         setContentPane(mainP);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        this.addWindowListener(this);
         setSize(760, 660);
         //Display the window.
         setVisible(true);
@@ -130,7 +142,9 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
         next.addActionListener(this);
         last.addActionListener(this);
 
-        
+        ImageIcon imageIcon16 = new ImageIcon(ChessBoardUI.class.getClassLoader().getResource(APPICON));
+        setIconImage(imageIcon16.getImage());
+        //setIconImage(new ImageIcon(ChessBoardUI.class.getClassLoader().getResource(APPICON)));
 
     }
 
@@ -192,6 +206,7 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
         jpMoves.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Moves"));
         
         txtAreaMoves.setColumns(15);
+        txtAreaMoves.setFont(new java.awt.Font("Monospaced", 0, 12));
         txtAreaMoves.setEditable(false);
         txtAreaMoves.setLineWrap(true);
         txtAreaMoves.setWrapStyleWord(true);
@@ -229,6 +244,7 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
 
     public JMenuBar createMenuBar()
     {
+
         JMenu menuOpt = new JMenu("File");
         menuOpt.setMnemonic(KeyEvent.VK_F);
 
@@ -240,12 +256,9 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
         miS.setMnemonic(KeyEvent.VK_S);
         miS.addActionListener(this);
 
+        JSeparator js0 = new JSeparator();
         JSeparator js1 = new JSeparator();
         JSeparator js2 = new JSeparator();
-
-        JMenuItem miP = new JMenuItem(SETUP);
-        miP.setMnemonic(KeyEvent.VK_P);
-        miP.addActionListener(this);
 
         JMenuItem miE = new JMenuItem(EXIT);
         miE.setMnemonic(KeyEvent.VK_E);
@@ -253,9 +266,24 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
 
         menuOpt.add(miO);
         menuOpt.add(miS);
+        menuOpt.add(js0);
+        
+       //  menuItemLocateEngine = new JMenuItem("Locate Chess Engine");
+     // menuItemLocateEngine.addActionListener(new LocateEngineListener());
+     // menuOpt.add(menuItemLocateEngine);
+      menuItemEngine = new JMenu("Chess Engine");
+      menuOpt.add(menuItemEngine);
+        engineGroup = new ButtonGroup();
+        menuItemEngineOff = new JRadioButtonMenuItem("Off");
+        menuItemEngineOff.setSelected(true);
+        menuItemEngineOff.addActionListener(new EngineOffListener());
+        engineGroup.add(menuItemEngineOff);
+        menuItemEngine.add(menuItemEngineOff);
+        menuItemEngineOn = new JRadioButtonMenuItem("On");
+        menuItemEngineOn.addActionListener(new EngineOnListener(this));
+        engineGroup.add(menuItemEngineOn);
+        menuItemEngine.add(menuItemEngineOn);
         menuOpt.add(js1);
-        menuOpt.add(miP);
-        menuOpt.add(js2);
         menuOpt.add(miE);
         menuBar.add(menuOpt);
 
@@ -273,18 +301,30 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
         menuGame.add(menuItemRemove);
         JSeparator js3 = new JSeparator();
         menuGame.add(js3);
+        JMenuItem menuEditTags = new JMenuItem(EDITTAGS);
+        menuEditTags.setMnemonic(KeyEvent.VK_E);
+        menuEditTags.addActionListener(this);
+        menuGame.add(menuEditTags);
+        JSeparator js4 = new JSeparator();
+        menuGame.add(js4);
         JMenuItem menuItemWhiteWin = new JMenuItem(WHITEWIN);
-        //menuItemWhiteWin.addActionListener(new WhiteWinMenuListener());
+        menuItemWhiteWin.addActionListener(this);
         menuGame.add(menuItemWhiteWin);
         JMenuItem menuItemDraw = new JMenuItem(DRAW);
-        //menuItemDraw.addActionListener(new DrawMenuListener());
+        menuItemDraw.addActionListener(this);
         menuGame.add(menuItemDraw);
         JMenuItem menuItemBlackWin = new JMenuItem(BLACKWIN);
-        //menuItemBlackWin.addActionListener(new BlackWinMenuListener());
+        menuItemBlackWin.addActionListener(this);
         menuGame.add(menuItemBlackWin);
         JMenuItem menuItemIncomplete = new JMenuItem(INCOMPLETEGAME);
         //menuItemIncomplete.addActionListener(new IncompleteMenuListener());
         menuGame.add(menuItemIncomplete);
+
+        JMenuItem miP = new JMenuItem(SETUP);
+        miP.setMnemonic(KeyEvent.VK_P);
+        miP.addActionListener(this);
+        menuGame.add(js2);
+        menuGame.add(miP);
 
         JMenu menuOptions = new JMenu("Options");
         menuOptions.setMnemonic(KeyEvent.VK_O);
@@ -297,12 +337,11 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
         jcbM.addItemListener(this);
         menuBar.add(menuOptions);
 
-
         JMenu menuH = new JMenu("Help");
         menuH.setMnemonic(KeyEvent.VK_H);
         JMenuItem miHelp = new JMenuItem("Help Contents");
         //miHelp.setIcon(getImageIcon(HELP));
-        // miHelp.addActionListener(this);
+        miHelp.addActionListener(this);
         JMenuItem miAbout = new JMenuItem(ABOUT);
         //miAbout.setIcon(getImageIcon(ABOUT));
         miAbout.addActionListener(this);
@@ -313,6 +352,103 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
         menuBar.add(menuH);
         return menuBar;
     }
+
+    public void windowOpened(WindowEvent e) {
+  }
+
+  public void windowIconified(WindowEvent e) {
+  }
+
+  public void windowDeiconified(WindowEvent e) {
+  }
+
+  public void windowActivated(WindowEvent e) {
+  }
+
+  public void windowDeactivated(WindowEvent e) {
+  }
+
+  public void windowClosing(WindowEvent e) {
+      System.out.println("closing");
+    stopEngine();
+       
+  }
+
+  public void windowClosed(WindowEvent e) {
+      System.out.println("closed");
+  }
+     class LocateEngineListener implements ActionListener {
+    public void actionPerformed(ActionEvent e) {
+      locateEngine();
+    }
+  }
+
+      class EngineOffListener implements ActionListener {
+    public void actionPerformed(ActionEvent e) {
+      stopEngine();
+    }
+  }
+
+  class EngineOnListener implements ActionListener {
+    ChessBoardUI a;
+        private EngineOnListener(ChessBoardUI aThis) {
+            a = aThis;
+        }
+    public void actionPerformed(ActionEvent e) {
+      if (engineProcess == null) {
+	if (    engineFileName == null)
+	  locateEngine();
+	if (engineFileName.equals(""))
+	  return;
+        engineProcess =
+	  new EngineProcess(a, engineFileName);
+        engineProcess.runEngine();
+        engineProcess.talkToEngine("log off");
+        engineProcess.talkToEngine("noise 1000");
+       // engineProcess.talkToEngine("xboard");
+        engineProcess.talkToEngine("force");
+        //engineProcess.talkToEngine("post");
+        engineProcess.talkToEngine("analyze");
+     
+      }
+    }
+  }
+
+   private void locateEngine() {
+         JFileChooser fileChooser = new JFileChooser();
+          fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+          //fileChooser.resetChoosableFileFilters();
+          //fileChooser.addChoosableFileFilter(new PGNFileFilter());
+
+            //JFileChooser fileChooser = new JFileChooser(fileName);
+    //fileChooser.setFileFilter(new PGNFileFilter());
+    //fileChooser.setDialogTitle(title);
+
+            int choice = fileChooser.showOpenDialog(this);
+            fileChooser.setDialogTitle("Locate Engine");
+            if (choice == JFileChooser.APPROVE_OPTION)
+            {
+
+                System.out.println(fileChooser.getSelectedFile().toString());
+                this.engineFileName = fileChooser.getSelectedFile().toString();
+            }
+   /* if (fileChooserParameter("engineFileName", "Locate Engine", null)) {
+      String fileName = (String)parameter.get("engineFileName");
+      if (!fileName.endsWith(".exe")) { // ???? not OS agnostic
+        FileIO.getInstance().alert(this, fileName + " not executable");
+	parameter.put("engineFileName", "");
+      }
+      file.saveParameters("chesseditor.ini", parameter);
+    }*/
+  }
+
+     private void stopEngine() {
+    if (engineProcess != null) {
+      engineProcess.stopEngine();
+      engineProcess = null;
+    }
+  }
+
 
     public JPanel resetChessContainerUI()
     {
@@ -568,7 +704,8 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
 
     public void processPromotedPawn(MyJToggleButtonUI but, String piecename, String col)
     {
-        cbo.allPieces.removeElement(but.getChessp());
+        //cbo.allPieces.removeElement(but.getChessp());
+        cbo.allPieces.remove(but.getChessp());
         CP pPromo = new CP(this.cbo,piecename,col,but.getChessp().getCurrentPosition());
         cbo.allPieces.add(pPromo);
     }
@@ -725,10 +862,11 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
         //yes piece is captured
         p.setCapturedFlag(true);
         cbo.capturedPieces.add(p);
-        cbo.allPieces.removeElement(p);
+        //cbo.allPieces.removeElement(p);
+        cbo.allPieces.remove(p);
     }
 
-    public void makeMove(MyJToggleButtonUI newBut,MyJToggleButtonUI prevBut,Vector v)
+    public void makeMove(MyJToggleButtonUI newBut,MyJToggleButtonUI prevBut,ArrayList v)
     {
         /*
          * The format in data has to be fetched is
@@ -860,7 +998,8 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
             
             String m = calculatePGNMovesFromGUIMoves(col,name,fPos,tPos,cap,castle,check,promo);
             System.out.println("Move is : "+ m );
-            txtAreaMoves.append(m);
+            //txtAreaMoves.append(m);
+            appendMoves(m);
             game.addMove(currentMoveNo,m);
             game.gameResult = "*";
             if(col.equals(BLACK))
@@ -873,25 +1012,19 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
                 if(check.equals("SM"))
                 {
                     //stalemate - draw
-                    txtAreaMoves.append("1/2-1/2");
-                    game.setGameResult("1/2-1/2");
-                    //JOptionPane.showMessageDialog(this,"StaleMate.. its a draw","Game Over...",JOptionPane.INFORMATION_MESSAGE);
+                    itsADraw();
                 }
                 else if(check.equals("CM"))
                 {
                     if(whoseTurn.equals(WHITE))
                     {
                         //white loses
-                        txtAreaMoves.append("0-1");
-                        game.setGameResult("0-1");
-                        //JOptionPane.showMessageDialog(this,"CheckMate...\nBlack Wins!!!","Game Over...",JOptionPane.INFORMATION_MESSAGE);
+                        blackWins();
                     }
                     else
                     {
                         //black loses
-                        txtAreaMoves.append(" 1-0");
-                        game.setGameResult("1-0");
-                        //JOptionPane.showMessageDialog(this,"CheckMate...\nWhite Wins!!!","Game Over...",JOptionPane.INFORMATION_MESSAGE);
+                        whiteWins();
                     }
                 }
             }
@@ -903,13 +1036,13 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
 
             if(v==null)
             {
-            String s = txtAreaMoves.getText();
-            if(s.contains("1/2-1/2"))
-                JOptionPane.showMessageDialog(this,"StaleMate.. its a draw","Game Over...",JOptionPane.INFORMATION_MESSAGE);
-            else if(s.contains("0-1"))
-                JOptionPane.showMessageDialog(this,"CheckMate...\nBlack Wins!!!","Game Over...",JOptionPane.INFORMATION_MESSAGE);
-            else if(s.contains("1-0"))
-                JOptionPane.showMessageDialog(this,"CheckMate...\nWhite Wins!!!","Game Over...",JOptionPane.INFORMATION_MESSAGE);
+                String s = txtAreaMoves.getText();
+                if(s.contains("1/2-1/2"))
+                    JOptionPane.showMessageDialog(this,"StaleMate.. its a draw","Game Over...",JOptionPane.INFORMATION_MESSAGE);
+                else if(s.contains("0-1"))
+                    JOptionPane.showMessageDialog(this,"CheckMate...\nBlack Wins!!!","Game Over...",JOptionPane.INFORMATION_MESSAGE);
+                else if(s.contains("1-0"))
+                    JOptionPane.showMessageDialog(this,"CheckMate...\nWhite Wins!!!","Game Over...",JOptionPane.INFORMATION_MESSAGE);
             }
         }
         else
@@ -918,6 +1051,27 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
             newBut.setSelected(false);
             prevBut.setSelected(false);
         }
+    }
+
+    private void blackWins()
+    {
+        txtAreaMoves.append(" 0-1");
+        game.setGameResult("0-1");
+        //JOptionPane.showMessageDialog(this,"CheckMate...\nBlack Wins!!!","Game Over...",JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void whiteWins()
+    {
+        txtAreaMoves.append(" 1-0");
+        game.setGameResult("1-0");
+        //JOptionPane.showMessageDialog(this,"CheckMate...\nWhite Wins!!!","Game Over...",JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void itsADraw()
+    {
+        txtAreaMoves.append(" 1/2-1/2");
+        game.setGameResult("1/2-1/2");
+        //JOptionPane.showMessageDialog(this,"StaleMate.. its a draw","Game Over...",JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void reverseBoard(String col)
@@ -987,11 +1141,15 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
         String s = "";
         if(col.equals(WHITE))
         {
-            s = s+((cbo.allMoves.size()/2)+1)+". ";
+            int movno = (cbo.allMoves.size()/2)+1 ;
+            if(movno <10)
+                s = s+movno+".  ";
+            else
+                s = s+movno+". ";
         }
         else
         {
-            s=s+" ";
+            s=s+"  ";
         }
         if(castle!=null)
         {
@@ -1158,8 +1316,8 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
             br.newLine();
             br.write("[Event \""+TITLE+"\"]\n");
             br.write("[Date \""+df.format(d)+"\"]\n");
-            br.write("[White \""+g.wPlayer+"\"]\n");
-            br.write("[Black \""+g.bPlayer+"\"]\n");
+            br.write("[White \""+g.wPlayersName+"\"]\n");
+            br.write("[Black \""+g.bPlayerName+"\"]\n");
             br.write("[Result \""+g.gameResult+"\"]\n");
             br.newLine();
 
@@ -1169,17 +1327,11 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
 
                 br.write(m.movePGNString);
                 br.write(" ");
-               // String[] mov = txtAreaMoves.getText().split("\n");
-
-               // for(int i=0;i<mov.length;i++)
-               // {
-               //     br.write(mov[i]);
-               //     br.write(" ");
-                    if(m.moveNo%10==0)
-                    {
-                        br.newLine();
-                    }
-               // }
+              
+                if(m.moveNo%10==0)
+                {
+                    br.newLine();
+                }
             }
             br.newLine();
         }
@@ -1317,7 +1469,8 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
             for(int i=0;i<game.moveList.size();i++)
             {
                 Move m = (Move) game.moveList.get(i);
-                txtAreaMoves.append(m.movePGNString);
+                //txtAreaMoves.append(m.movePGNString);
+                appendMoves(m.movePGNString);
                 if(i%2==1)
                 {
                     txtAreaMoves.append("\n");
@@ -1379,6 +1532,8 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
         else if(e.getActionCommand().equals(NEW))
         {
             System.out.println("New is clicked");
+            NewGameDialog ngd = new NewGameDialog(this,true);
+            ngd.setVisible(true);
             currentMoveNo=0;
             cbo.resetCB();
             resetChessBoardUI(true);
@@ -1417,7 +1572,7 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
                 //currentGameNo = 0;
                 //game = new Game(cbo,currentGameNo);
                 //gameList.add(game);
-                gameList.removeAllElements();
+                gameList.clear();
                 //setPieceUI();
                 for(int i=0;i<allGames.pgnGames.size();i++)
                 {
@@ -1446,7 +1601,7 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
                 currentGameNo = 1;
                 EachPGNGame  e1 = new EachPGNGame(this,1);
                 loadGame(game);
-                Vector v = new Vector();
+                ArrayList v = new ArrayList();
                 for(int k=0;k<game.allBWMoves.size();k++)
                 {
                     v.add(game.allBWMoves.get(k));
@@ -1484,7 +1639,8 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
                         if(g.gameno == currentGameNo)
                         {
                             System.out.println("Found a game with game no "+ currentGameNo);
-                            gameList.removeElementAt(i);
+                            //gameList.removeElementAt(i);
+                            gameList.remove(i);
                             break;
                         }
                     }
@@ -1521,13 +1677,23 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
                 System.out.println("Clicked no");
             }
         }
-
+        else if(e.getActionCommand().equals(EDITTAGS))
+        {
+            new EditTags(this,true,game.tags).setVisible(true);
+        }
         else if(e.getActionCommand().equals(SAVE))
         {
+
+
            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            fileChooser.resetChoosableFileFilters();
+            //fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            //fileChooser.resetChoosableFileFilters();
             //fileChooser.addChoosableFileFilter(new PGNFileFilter());
+
+            //JFileChooser fileChooser = new JFileChooser(fileName);
+    fileChooser.setFileFilter(new PGNFileFilter());
+    //fileChooser.setDialogTitle(title);
+
             int choice = fileChooser.showSaveDialog(this);
             if (choice == JFileChooser.APPROVE_OPTION)
             {
@@ -1540,10 +1706,42 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
                 }
             }
         }
+        else if(e.getActionCommand().equals(SETUP))
+        {
+            new SetupPosition(this,true).setVisible(true);
+        }
+        else if(e.getActionCommand().equals(WHITEWIN))
+        {
+            if(JOptionPane.showConfirmDialog(this,"Are you sure WHITE wins?","Resign?",JOptionPane.OK_CANCEL_OPTION) == JOptionPane.YES_OPTION)
+            {
+                System.out.println("white win");
+                whiteWins();
+            }
+        }
+        else if(e.getActionCommand().equals(BLACKWIN))
+        {
+            if(JOptionPane.showConfirmDialog(this,"Are you sure BLACK wins?","Resign?",JOptionPane.OK_CANCEL_OPTION) == JOptionPane.YES_OPTION)
+            {
+                System.out.println("black win");
+                blackWins();
+            }
+        }
+        else if(e.getActionCommand().equals(DRAW))
+        {
+            if(JOptionPane.showConfirmDialog(this,"Close this game as DRAW?","Draw?",JOptionPane.OK_CANCEL_OPTION) == JOptionPane.YES_OPTION)
+            {
+                System.out.println("Draw");
+                itsADraw();
+            }
+        }
         else if(e.getActionCommand().equals(ABOUT))
         {
             //System.out.println("ABOUT,,,");
             new AboutBoxUI(this,true).setVisible(true);
+        }
+        if(e.getActionCommand().equals("Help Contents"))
+        {
+           JOptionPane.showMessageDialog(null, "Under Construction!! Please co-operate :-) ","ERROR...",JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -1565,5 +1763,43 @@ public class ChessBoardUI extends JFrame implements ActionListener,ItemListener,
         }
     }
 
+    private void appendMoves(String m) {
+        if(m.contains("."))
+        {
+            String mm = m.split("\\.")[1].trim();
+            System.out.println("Mov:"+mm);
+            if((engineProcess!=null) && (engineProcess.isEngineRunning()))
+            {
+                System.out.println("herermove");
+                this.engineProcess.talkToEngine(mm);
+            }
+        }
+        else
+        {
+            String mm = m.trim();
+            System.out.println("Mov:"+mm);
+            if((engineProcess!=null) && (engineProcess.isEngineRunning()))
+                this.engineProcess.talkToEngine(mm);
+        }
+        txtAreaMoves.append(m);
+        if(m.contains("."))
+        {
+        String[] mov = m.trim().split("\\.");
+        int l = mov[1].trim().length();
+        System.out.println("Len is "+l);
+        if(l==2)
+            txtAreaMoves.append("     ");
+        else if(l==3)
+            txtAreaMoves.append("    ");
+        else if(l==4)
+            txtAreaMoves.append("   ");
+        else if(l==5)
+            txtAreaMoves.append("  ");
+        else if(l==6)
+            txtAreaMoves.append(" ");
+        }
+    }
+
    
+
 }

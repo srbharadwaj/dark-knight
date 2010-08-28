@@ -5,7 +5,10 @@
 
 package srb;
 
-import java.util.Vector;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.ArrayList;
 
 /**
  * Class Name - Game
@@ -13,24 +16,27 @@ import java.util.Vector;
  *
  * @author suhas
  */
-public class Game
+public class Game implements CConst
 {
-    public Vector moveList = new Vector();
+    public ArrayList moveList = new ArrayList();
     public CB cbGame = null;
     public int gameMoveNo = 0;
     public String gameResult = "*";
     public int gameno=0;
-    public String wPlayer = "Suhas";
-    public String bPlayer = "Player"+gameno;
-    public Vector tags = new Vector();
-    public Vector allBWMoves = new Vector();
+    public String white = HUMAN;
+    public String black = HUMAN;
+    public String wPlayersName = "Suhas";
+    public String bPlayerName = "Player"+gameno;
+    public ArrayList tags = new ArrayList();
+    public ArrayList allBWMoves = new ArrayList();
 
     public Game(CB cb,int i)
     {
         cbGame = cb;
         gameno=i;
-        wPlayer = "Suhas";
-        bPlayer = "Player"+gameno;
+        wPlayersName = "Suhas";
+        bPlayerName = "Player"+gameno;
+        addTags();
     }
 
     public void addMove(int mn,String s)
@@ -40,11 +46,13 @@ public class Game
         while(true)
         {
             try {
-            moveList.removeElementAt(mn-1);
-            } catch(ArrayIndexOutOfBoundsException e) {
+            //moveList.removeElementAt(mn-1);
+            moveList.remove(mn-1);
+            } catch(IndexOutOfBoundsException e) {
                 try {
-                    allBWMoves.removeElementAt(mn-1);
-                } catch(ArrayIndexOutOfBoundsException e1) {
+                    //allBWMoves.removeElementAt(mn-1);
+                    allBWMoves.remove(mn-1);
+                } catch(IndexOutOfBoundsException e1) {
                     break;
                 }
             }
@@ -88,11 +96,11 @@ public class Game
                 String[] sa = s.split(":");
                 if(sa[0].equals("White"))
                 {
-                    wPlayer = s.split(":")[1];
+                    wPlayersName = s.split(":")[1];
                 }
                 else if(sa[0].equals("Black"))
                 {
-                    bPlayer = s.split(":")[1];
+                    bPlayerName = s.split(":")[1];
                 }
                 else if(sa[0].equals("Result"))
                 {
@@ -102,4 +110,22 @@ public class Game
         }
     }
 
+    private void addTags() {
+        if(tags.size()==0)
+        {
+            DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+            Date d = new Date();
+            String ev = "Event:"+TITLE;
+            String da = "Date:"+df.format(d);
+            String wp = "White:"+wPlayersName;
+            String bp = "Black:"+bPlayerName;
+            String re = "Result:"+gameResult;
+
+            tags.add(ev);
+            tags.add(da);
+            tags.add(wp);
+            tags.add(bp);
+            tags.add(re);
+        }
+    }
 }

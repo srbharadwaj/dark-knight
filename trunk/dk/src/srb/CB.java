@@ -1,6 +1,6 @@
 package srb;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 
 /*
@@ -39,9 +39,9 @@ import java.util.Vector;
  */
 public class CB implements CConst
 {
-    public Vector allPieces = new Vector();
-    public Vector capturedPieces = new Vector();
-    public Vector allMoves = new Vector();
+    public ArrayList allPieces = new ArrayList();
+    public ArrayList capturedPieces = new ArrayList();
+    public ArrayList allMoves = new ArrayList();
 
 
     /*
@@ -53,9 +53,9 @@ public class CB implements CConst
     
     public void resetCB()
     {
-        allPieces.removeAllElements();
-        capturedPieces.removeAllElements();
-        allMoves.removeAllElements();
+        allPieces.clear();
+        capturedPieces.clear();
+        allMoves.clear();
 
         createPieces();
 
@@ -146,9 +146,9 @@ public class CB implements CConst
 
     public CB(String s)
     {
-        allPieces.removeAllElements();
-        capturedPieces.removeAllElements();
-        allMoves.removeAllElements();
+        allPieces.clear();
+        capturedPieces.clear();
+        allMoves.clear();
     }
 
     public void printAll()
@@ -298,8 +298,8 @@ public class CB implements CConst
     //could'nt find root cause for bug so added this proc as workaround
     public void aBugFixCalKingPos(String col)
     {
-        Vector kingV = new Vector();
-        Vector knightV = new Vector();
+        ArrayList kingV = new ArrayList();
+        ArrayList knightV = new ArrayList();
         String oppCol;
         CP kingcp =null;
         
@@ -347,7 +347,8 @@ public class CB implements CConst
             if(kingV.contains(knightV.get(i)))
             {
                 System.out.println(knightV.get(i)+"is being removed");
-                kingcp.movesPossible.removeElement(knightV.get(i));
+                //kingcp.movesPossible.removeElement(knightV.get(i));
+                kingcp.movesPossible.remove(knightV.get(i));
             }
         }
     }
@@ -442,7 +443,7 @@ public class CB implements CConst
         //white
         if((wQR != null) && (wK!=null))
         {
-            if((wQR.movesDone.size()==0) && (wK.movesDone.size()==0))
+            if((wQR.movesDone.isEmpty()) && (wK.movesDone.isEmpty()))
             {
                 //12,13,14 goes thru then
                 //0-0-0 possible
@@ -462,7 +463,7 @@ public class CB implements CConst
         }
         if((wKR !=null)&&(wK!=null))
         {
-            if((wKR.movesDone.size()==0) && (wK.movesDone.size()==0))
+            if((wKR.movesDone.isEmpty()) && (wK.movesDone.isEmpty()))
             {
                 //16,17  goes thru then
                 //0-0 possible
@@ -484,7 +485,7 @@ public class CB implements CConst
         //black
         if((bQR !=null)&&(bK!=null))
         {
-            if((bQR.movesDone.size()==0) && (bK.movesDone.size()==0))
+            if((bQR.movesDone.isEmpty()) && (bK.movesDone.isEmpty()))
             {
                 //82,83,84 goes thru then
                 //0-0-0 possible
@@ -504,7 +505,7 @@ public class CB implements CConst
         }
         if((bKR !=null)&&(bK!=null))
         {
-            if((bKR.movesDone.size()==0) && (bK.movesDone.size()==0))
+            if((bKR.movesDone.isEmpty()) && (bK.movesDone.isEmpty()))
             {
                 //86,87 goes thru then
                 //0-0 possible

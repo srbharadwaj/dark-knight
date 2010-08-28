@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Vector;
+import java.util.ArrayList;
 
 /*
  * To change this template, choose Tools | Templates
@@ -21,8 +21,8 @@ public class AllPGNGames implements CConst
 {
 
     int noOfLines;
-    Vector allLines = new Vector();
-    public Vector pgnGames = new Vector();
+    ArrayList allLines = new ArrayList();
+    public ArrayList pgnGames = new ArrayList();
     ChessBoardUI njf = null;
 
     public AllPGNGames(ChessBoardUI n,File f)
@@ -46,7 +46,7 @@ public class AllPGNGames implements CConst
         int tCount = 0;
         int mCount = 0;
         EachPGNGame pg = null;
-        Vector lines = new Vector();
+        ArrayList lines = new ArrayList();
         for(int i=0;i<allLines.size();i++)
         {
             String s = (String) allLines.get(i);

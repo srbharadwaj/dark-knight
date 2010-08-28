@@ -5,7 +5,7 @@
 
 package srb;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * Class Name - Move
@@ -47,9 +47,9 @@ public class Move
 
     public void getMoveData(CB cbo)
     {
-        cbo.allPieces.removeAllElements();
-        cbo.capturedPieces.removeAllElements();
-        cbo.allMoves.removeAllElements();
+        cbo.allPieces.clear();
+        cbo.capturedPieces.clear();
+        cbo.allMoves.clear();
 
         for(int i=0;i<cbMove.allPieces.size();i++)
         {
@@ -81,7 +81,7 @@ public class Move
 
         if(p.movesDone!=null)
         {
-            pMove.movesDone = new Vector();
+            pMove.movesDone = new ArrayList();
             for(int k=0;k<p.movesDone.size();k++)
             {
                 pMove.movesDone.add(p.movesDone.get(k));
@@ -90,7 +90,7 @@ public class Move
 
         if(p.movesPossible!=null)
         {
-            pMove.movesPossible = new Vector();
+            pMove.movesPossible = new ArrayList();
             for(int k=0;k<p.movesPossible.size();k++)
             {
                 pMove.movesPossible.add(p.movesPossible.get(k));
@@ -99,7 +99,7 @@ public class Move
 
         if(p.b_movesPossible!=null)
         {
-            pMove.b_movesPossible = new Vector();
+            pMove.b_movesPossible = new ArrayList();
             for(int k=0;k<p.b_movesPossible.size();k++)
             {
                 pMove.b_movesPossible.add(p.b_movesPossible.get(k));
