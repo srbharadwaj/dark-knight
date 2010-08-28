@@ -46,6 +46,16 @@ public class MyJToggleButtonUI extends JToggleButton implements ItemListener,CCo
         addItemListener(this);
     }
 
+    //test constructor
+    public MyJToggleButtonUI()
+    {
+        super();
+        //System.out.println("Created");
+        //njf=ja;
+        //setChessp(null);
+        addItemListener(this);
+    }
+
     @Override
     public void setBackground(Color bg) {
         super.setBackground(bg);

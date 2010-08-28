@@ -11,7 +11,7 @@
 
 package srb;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  *
@@ -216,7 +216,7 @@ public class GamesPanelUI extends javax.swing.JPanel {
                 njf.game = g;
                 EachPGNGame  e = new EachPGNGame(njf,g.gameno);
                 njf.loadGame(g);
-                Vector v = new Vector();
+                ArrayList v = new ArrayList();
                 for(int k=0;k<g.allBWMoves.size();k++)
                 {
                     v.add(g.allBWMoves.get(k));
@@ -229,11 +229,11 @@ public class GamesPanelUI extends javax.swing.JPanel {
         }
     }
 
-    public void updateGamesPanelUI(Vector gameList) {
+    public void updateGamesPanelUI(ArrayList gameList) {
         njf.game.updateGame();
         labGameNo.setText(Integer.toString(njf.game.gameno));
-        labWhitePlayerName.setText(njf.game.wPlayer);
-        labBlackPlayerName.setText(njf.game.bPlayer);
+        labWhitePlayerName.setText(njf.game.wPlayersName);
+        labBlackPlayerName.setText(njf.game.bPlayerName);
         labGameResult.setText(njf.game.gameResult);
     }
 

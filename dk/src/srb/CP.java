@@ -1,7 +1,7 @@
 package srb;
 
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /*
  * To change this template, choose Tools | Templates
@@ -52,12 +52,12 @@ public class CP implements CConst
     public String pieceColor;
     public int initialPosition;
     public int currentPosition;
-    public Vector movesDone = null;
-    public Vector movesPossible = null;
+    public ArrayList movesDone = null;
+    public ArrayList movesPossible = null;
     public boolean captured = false;
 
     public int b_currentPosition;
-    public Vector b_movesPossible = null;
+    public ArrayList b_movesPossible = null;
 
     public CP(CB o,String pName,String pColor,int iniPos)
     {
@@ -69,10 +69,10 @@ public class CP implements CConst
         setCapturedFlag(false);
 
    
-        movesDone = new Vector();
-        movesPossible = new Vector();
+        movesDone = new ArrayList();
+        movesPossible = new ArrayList();
 
-        b_movesPossible = new Vector();
+        b_movesPossible = new ArrayList();
         b_currentPosition = 0;
 
         //pawn

@@ -41,7 +41,7 @@ import java.awt.Color;
 public interface CConst
 {   
     String APP_NAME = "Dark-Knight";
-    String VERSION = "v0.0.1";
+    String VERSION = "v0.0.1(1)";
     String TITLE = APP_NAME + " " + VERSION;
     String WEBSITE = "https://code.google.com/p/dark-knight/";
     String PAWN = "Pawn";
@@ -62,7 +62,7 @@ public interface CConst
     int MINY=0;
     int MAXY=7;
 
-//TODO : include all gif files
+    //TODO : include all gif files
     String whitePawn = "/images/WP.gif";
     String blackPawn = "/images/BP.gif";
 
@@ -85,6 +85,7 @@ public interface CConst
     String NEXT = "/images/next.gif";
     String PREV = "/images/prev.gif";
     String LAST = "/images/end.gif";
+    String APPICON = "images/bnws.jpg";
 
     Color cLight = new Color(102, 255, 102);
     Color cDark = new Color(51, 153, 0);
@@ -92,6 +93,7 @@ public interface CConst
 
     String NEW = "New Game";
     String REMOVE = "Remove Game";
+    String EDITTAGS = "Edit Tags";
     String OPEN = "Load Game(s)";
     String SAVE = "Save Game(s)";
 
@@ -103,5 +105,8 @@ public interface CConst
     String INCOMPLETEGAME = "Incomplete Game *";
     String EXIT = "Exit";
     String ABOUT = "About";
-    
+
+    String HUMAN = "HUMAN";
+    String COMPUTER = "COMPUTER";
+    String COMPUTERNAME = APP_NAME;
 }
