@@ -5,16 +5,9 @@
 
 package srb;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.JToggleButton;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 /**
  * Class Name - SetupPosition
@@ -63,7 +56,7 @@ public class SetupPosition  extends JDialog implements ActionListener,CConst
         //Display the window.
         //setVisible(true);
         setResizable(false);
-        setTitle(TITLE);
+        setTitle("Setup Position: "+TITLE);
 
         resetChessBoardUI(false);
 

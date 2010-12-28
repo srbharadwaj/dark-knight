@@ -1,10 +1,8 @@
 package srb;
 
-import java.awt.Color;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import javax.swing.ImageIcon;
-import javax.swing.JToggleButton;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 /*
  * To change this template, choose Tools | Templates

@@ -11,26 +11,32 @@
 
 package srb;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
+import java.awt.*;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import java.util.*;
+import javax.swing.*;
 
 /**
  *
  * @author suhas
  */
-public class AboutBoxUI extends javax.swing.JDialog implements CConst {
+public class AboutBoxUI extends JDialog implements CConst {
 
     /** Creates new form AboutBoxUI */
     public AboutBoxUI(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        System.out.println(jLabel13.getFont());
-        System.out.println(jLabel13.getForeground());
+        pack();
+        // Center in parent
+	//Rectangle parentBounds = new Rectangle();
+        Rectangle parentBounds = parent.getBounds();
+        Dimension size = getSize();
+	//parent.getBounds(parentBounds);
+        int x = Math.max(0, parentBounds.x + (parentBounds.width - size.width) /2);
+        int y = Math.max(0, parentBounds.y + (parentBounds.height - size.height) /2);
+	setLocation(new Point(x,y));
+
+        getRootPane().setDefaultButton(jButton1);
     }
 
     /** This method is called from within the constructor to

@@ -11,13 +11,14 @@
 
 package srb;
 
-import java.util.ArrayList;
+import java.util.*;
+import javax.swing.*;
 
 /**
  *
  * @author Suhas Bharadwaj
  */
-public class GamesPanelUI extends javax.swing.JPanel {
+public class GamesPanelUI extends JPanel {
 
      ChessBoardUI njf = null;
     /** Creates new form GamesPanelUI */
@@ -219,10 +220,10 @@ public class GamesPanelUI extends javax.swing.JPanel {
                 ArrayList v = new ArrayList();
                 for(int k=0;k<g.allBWMoves.size();k++)
                 {
+                    System.out.println("Class : callLoadGame :: "+g.allBWMoves.get(k));
                     v.add(g.allBWMoves.get(k));
                 }
 
-                System.out.println("Size "+v.size());
                 e.convertPGNMoveToGUIFormat(v);
                 break;
             }

@@ -1,6 +1,6 @@
 package srb;
 
-import java.util.ArrayList;
+import java.util.*;
 
 
 /*
@@ -290,13 +290,13 @@ public class CB implements CConst
                 }
             }
         }
-        aBugFixCalKingPos(col);
+        aBugFixForCalculateKingPos(col); //Check the proc for more details
     }
-
-    //If king's possible pos and opp col's knight's possible moves coincide
+    
+    //If king's possible pos and opposite col's knight's possible moves coincide
     //then king was able to mov into knight's area
     //could'nt find root cause for bug so added this proc as workaround
-    public void aBugFixCalKingPos(String col)
+    public void aBugFixForCalculateKingPos(String col)
     {
         ArrayList kingV = new ArrayList();
         ArrayList knightV = new ArrayList();

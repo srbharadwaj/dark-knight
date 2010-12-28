@@ -5,10 +5,8 @@
 
 package srb;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.ArrayList;
+import java.text.*;
+import java.util.*;
 
 /**
  * Class Name - Game
@@ -30,13 +28,16 @@ public class Game implements CConst
     public ArrayList tags = new ArrayList();
     public ArrayList allBWMoves = new ArrayList();
 
-    public Game(CB cb,int i)
+    public Game(CB cb,int i,boolean shouldAddTags)
     {
         cbGame = cb;
         gameno=i;
         wPlayersName = "Suhas";
         bPlayerName = "Player"+gameno;
-        addTags();
+        if(shouldAddTags)
+            addTags();
+        white = HUMAN;
+        black = HUMAN;
     }
 
     public void addMove(int mn,String s)
@@ -59,7 +60,11 @@ public class Game implements CConst
         }
         System.out.println("MM "+s);
         System.out.println("BW "+s.split(" ")[1]);
-        allBWMoves.add(s.split(" ")[1]);
+        //allBWMoves.add(s.split(" ")[1]);
+        if(s.contains("."))
+            allBWMoves.add(s.split("\\.")[1].trim());
+        else
+            allBWMoves.add(s.trim());
         Move m = new Move(mn,s,cbGame);
         moveList.add(m);
         gameMoveNo++;
@@ -67,7 +72,7 @@ public class Game implements CConst
 
     public void getMove(int mn)
     {
-        System.out.println("mn"+mn);
+        //System.out.println("mn"+mn);
         Move m = (Move) moveList.get(mn-1);
         m.getMoveData(cbGame);
     }
@@ -93,33 +98,33 @@ public class Game implements CConst
             for(int i=0;i<tags.size();i++)
             {
                 String s = (String) tags.get(i);
-                String[] sa = s.split(":");
+                String[] sa = s.split("~");
                 if(sa[0].equals("White"))
                 {
-                    wPlayersName = s.split(":")[1];
+                    wPlayersName = s.split("~")[1];
                 }
                 else if(sa[0].equals("Black"))
                 {
-                    bPlayerName = s.split(":")[1];
+                    bPlayerName = s.split("~")[1];
                 }
                 else if(sa[0].equals("Result"))
                 {
-                    gameResult = s.split(":")[1];
+                    gameResult = s.split("~")[1];
                 }
             }
         }
     }
 
     private void addTags() {
-        if(tags.size()==0)
+        if(tags.isEmpty())
         {
             DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
             Date d = new Date();
-            String ev = "Event:"+TITLE;
-            String da = "Date:"+df.format(d);
-            String wp = "White:"+wPlayersName;
-            String bp = "Black:"+bPlayerName;
-            String re = "Result:"+gameResult;
+            String ev = "Event~"+TITLE;
+            String da = "Date~"+df.format(d);
+            String wp = "White~"+wPlayersName;
+            String bp = "Black~"+bPlayerName;
+            String re = "Result~"+gameResult;
 
             tags.add(ev);
             tags.add(da);

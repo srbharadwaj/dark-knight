@@ -5,18 +5,9 @@
 
 package srb;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 
 /**
@@ -34,7 +25,7 @@ public class PawnPromoDialogUI extends JDialog implements CConst
     public  JButton bR;
     public  JLabel jLabel1;
 
-    public PawnPromoDialogUI (java.awt.Frame parent, boolean modal,String col)
+    public PawnPromoDialogUI (Frame parent, boolean modal,String col)
     {
         super(parent, modal);
         initComponents();

@@ -5,7 +5,7 @@
 
 package srb;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Class Name - Move

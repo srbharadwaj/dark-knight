@@ -7,7 +7,7 @@ package srb;
 
 
 
-import java.awt.Color;
+import java.awt.*;
 
 /**
  *  81 82 83 84 85 86 87 88
@@ -41,7 +41,7 @@ import java.awt.Color;
 public interface CConst
 {   
     String APP_NAME = "Dark-Knight";
-    String VERSION = "v0.0.1(1)";
+    String VERSION = "v0.0.2";
     String TITLE = APP_NAME + " " + VERSION;
     String WEBSITE = "https://code.google.com/p/dark-knight/";
     String PAWN = "Pawn";
@@ -61,6 +61,13 @@ public interface CConst
     int MAXX=7;
     int MINY=0;
     int MAXY=7;
+
+    //Menu icons
+    String abouticon = "/images/icons/information.png";
+    String helpicon = "/images/icons/help.png";
+    String addicon = "/images/icons/add.png";
+    String cancelicon = "/images/icons/cancel.png";
+    String delicon = "/images/icons/delete.png";
 
     //TODO : include all gif files
     String whitePawn = "/images/WP.gif";

@@ -5,8 +5,8 @@
 
 package srb;
 
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
+import java.util.*;
+import javax.swing.*;
 
 /**
  * Class Name - EachPGNGame
@@ -80,8 +80,8 @@ public class EachPGNGame implements CConst
             //System.out.println(stag[0]+":"+stag[1]);
             String[] tagl = stag[0].split("\\[");
 
-            System.out.println(":"+tagl[1].trim()+":"+stag[1]+":");
-            String eachtaganddeatils = tagl[1].trim()+":"+stag[1];
+            System.out.println("~"+tagl[1].trim()+"~"+stag[1]+"~");
+            String eachtaganddeatils = tagl[1].trim()+"~"+stag[1];
             allTagDetails.add(eachtaganddeatils);
         }
     }
@@ -1122,11 +1122,10 @@ public class EachPGNGame implements CConst
     public void convertPGNMoveToGUIFormat(ArrayList allBandWMoves)
     {
         njf.whoseTurn = WHITE;
-
+        System.out.println("Class: convertPGNMoveToGUIFormat:: Size "+allBandWMoves.size());
         for(int i=0;i<allBandWMoves.size();i++)
         {
-            System.out.println(njf.whoseTurn + "Move " +allBandWMoves.get(i));
-
+            System.out.println(njf.whoseTurn + "Class: convertPGNMoveToGUIFormat::Move " +allBandWMoves.get(i));
             String s = (String) allBandWMoves.get(i);
             if((s.matches("1/2-1/2")) || (s.matches("1-0")) || (s.matches("0-1")) || (s.matches("\\*")))
             {
@@ -1137,6 +1136,7 @@ public class EachPGNGame implements CConst
             }
             else
             {
+                System.out.println("Class: convertPGNMoveToGUIFormat::Here" + allBandWMoves.get(i));
                 parseEachPGNMove(njf.whoseTurn,(String) allBandWMoves.get(i));
             }
         }
