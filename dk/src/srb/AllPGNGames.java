@@ -20,9 +20,9 @@ public class AllPGNGames implements CConst
     int noOfLines;
     ArrayList allLines = new ArrayList();
     public ArrayList pgnGames = new ArrayList();
-    ChessBoardUI njf = null;
+    ChessBoardJFrameUI njf = null;
 
-    public AllPGNGames(ChessBoardUI n,File f)
+    public AllPGNGames(ChessBoardJFrameUI n,File f)
     {
         njf = n;
 

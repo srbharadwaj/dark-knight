@@ -12,7 +12,7 @@ public class EngineProcess extends JFrame implements WindowListener
   private JScrollPane textScroll;
     private JTextArea textArea;
 
-  private ChessBoardUI chessEditor;
+  private ChessBoardJFrameUI chessEditor;
   private String engineFileName; 
 
   private Process engine = null;
@@ -21,7 +21,7 @@ public class EngineProcess extends JFrame implements WindowListener
   private Thread engineOutput;
   private PrintWriter writer;
 
-  public EngineProcess(ChessBoardUI chessEditor, String engineFileName) {
+  public EngineProcess(ChessBoardJFrameUI chessEditor, String engineFileName) {
     this.chessEditor = chessEditor; 
     this.engineFileName = engineFileName; 
 

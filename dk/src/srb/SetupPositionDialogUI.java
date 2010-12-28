@@ -10,12 +10,12 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * Class Name - SetupPosition
+ * Class Name - SetupPositionDialogUI
  * Description - 
  *
  * @author suhas
  */
-public class SetupPosition  extends JDialog implements ActionListener,CConst
+public class SetupPositionDialogUI  extends JDialog implements ActionListener,CConst
 {
     public JPanel mainP = new JPanel(new BorderLayout());
     public JPanel cP = new JPanel(new BorderLayout());
@@ -33,13 +33,15 @@ public class SetupPosition  extends JDialog implements ActionListener,CConst
     public JButton clear = new JButton("Clear");
     public JButton cancel = new JButton("Cancel");
     public JButton flip = new JButton("Flip");
+    public JButton openfen = new JButton("Open FEN");
+    public JButton savefen = new JButton("Save FEN");
     public String pieceSelected = WHITE;
-    public MyJToggleButton_Setup_UI jtb[];
-    public MyJToggleButton_Setup_UI prevButSel;
+    public MyJToggleButtonSetupUI jtb[];
+    public MyJToggleButtonSetupUI prevButSel;
 
-    public SetupPositionControls spc = null;
+    public SetupPositionControlsPanelUI spc = null;
 
-    public SetupPosition(ChessBoardUI cs, boolean modal)
+    public SetupPositionDialogUI(ChessBoardJFrameUI cs, boolean modal)
     {
         super(cs, modal);
 
@@ -50,7 +52,7 @@ public class SetupPosition  extends JDialog implements ActionListener,CConst
         
         setContentPane(mainP);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        ImageIcon imageIcon16 = new ImageIcon(ChessBoardUI.class.getClassLoader().getResource(APPICON));
+        ImageIcon imageIcon16 = new ImageIcon(ChessBoardJFrameUI.class.getClassLoader().getResource(APPICON));
         setIconImage(imageIcon16.getImage());
         setSize(770, 600);
         //Display the window.
@@ -65,6 +67,8 @@ public class SetupPosition  extends JDialog implements ActionListener,CConst
         clear.addActionListener(this);
         cancel.addActionListener(this);
         flip.addActionListener(this);
+        openfen.addActionListener(this);
+        savefen.addActionListener(this);
 
     }
 
@@ -102,7 +106,7 @@ public class SetupPosition  extends JDialog implements ActionListener,CConst
         eP.removeAll();
         eP.revalidate();
       
-        spc=new SetupPositionControls(this);
+        spc=new SetupPositionControlsPanelUI(this);
         eP.add(spc);
 
         return eP;
@@ -115,12 +119,12 @@ public class SetupPosition  extends JDialog implements ActionListener,CConst
         chessBoardContainer.revalidate();
         chessBoard.removeAll();
         chessBoard.revalidate();
-        jtb = new MyJToggleButton_Setup_UI[64];
+        jtb = new MyJToggleButtonSetupUI[64];
         int c = 0;
         int counter=0;
         for(int i=0;i<64;i++)
         {
-            jtb[i] = new MyJToggleButton_Setup_UI(this);
+            jtb[i] = new MyJToggleButtonSetupUI(this);
             jtb[i].setText("");
             jtb[i].setPiece("");
             //jtb[i].setValue(mtbVal);
@@ -224,6 +228,8 @@ public class SetupPosition  extends JDialog implements ActionListener,CConst
         butJPanel.add(clear);
         butJPanel.add(cancel);
         butJPanel.add(flip);
+        butJPanel.add(openfen);
+        butJPanel.add(savefen);
         return butJPanel;
     }
 
@@ -363,7 +369,7 @@ public class SetupPosition  extends JDialog implements ActionListener,CConst
     }
 
     public void actionPerformed(ActionEvent e) {
-        //TODO : ok Button actions
+
         JButton j = (JButton) e.getSource();
         if(j.getText().equals("Flip"))
         {
@@ -396,10 +402,60 @@ public class SetupPosition  extends JDialog implements ActionListener,CConst
             setPieceUI();
             chkCastlingAndEditCheckBox();
         }
+        if(j.getText().equals("Save FEN"))
+        {
+            System.out.println("Val is : "+calculateFENfromPosition());
+        }
         if(j.getText().equals("Ok"))
         {
             //TODO
         }
     }
 
+
+    public String calculateFENfromPosition()
+    {
+        String fen;
+        int b=0;
+        String s;
+        String str="";
+        for(int i=0;i<=63;i++)
+        {
+            s=jtb[i].getPiece();
+            if(s=="")
+                b++;
+            if(s.startsWith("B"))
+            {
+                if(b!=0)
+                {
+                    str = str + b;
+                    b=0;
+                }
+                s = s.toLowerCase();
+                str = str + s.toCharArray()[1];
+            }
+            if(s.startsWith("W"))
+            {
+                if(b!=0)
+                {
+                    str = str + b;
+                    b=0;
+                }
+                s = s.toUpperCase();
+                str = str + s.toCharArray()[1];
+            }
+
+            if(((i+1)%8)==0)
+            {
+                if(b!=0)
+                {
+                    str = str + b;
+                    b=0;
+                }
+                if(i!=63)
+                    str = str + "/";
+            }
+        }
+        return str;
+    }
 }

@@ -99,7 +99,7 @@
                       </Group>
                       <Component id="jtbRemove" alignment="0" min="-2" max="-2" attributes="1"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="18" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -443,7 +443,7 @@
                   <Component id="rbWhite" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="rbBlack" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="78" max="32767" attributes="0"/>
+                  <EmptySpace pref="86" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -508,7 +508,7 @@
                       <Component id="cbBlackKingCastle" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="cbBlackQueenCastle" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="25" max="32767" attributes="0"/>
+                  <EmptySpace pref="27" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -532,7 +532,7 @@
         <Component class="javax.swing.JCheckBox" name="cbWhiteKingCastle">
           <Properties>
             <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" value="White&apos;s King side castling"/>
+            <Property name="text" type="java.lang.String" value="White can castle Kingside"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbWhiteKingCastleActionPerformed"/>
@@ -544,7 +544,7 @@
         <Component class="javax.swing.JCheckBox" name="cbWhiteQueenCastle">
           <Properties>
             <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" value="White&apos;s Queen side castling"/>
+            <Property name="text" type="java.lang.String" value="White can castle Queen side"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbWhiteQueenCastleActionPerformed"/>
@@ -556,7 +556,7 @@
         <Component class="javax.swing.JCheckBox" name="cbBlackKingCastle">
           <Properties>
             <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" value="Black&apos;s King side castling"/>
+            <Property name="text" type="java.lang.String" value="Black can castle King side"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbBlackKingCastleActionPerformed"/>
@@ -568,7 +568,7 @@
         <Component class="javax.swing.JCheckBox" name="cbBlackQueenCastle">
           <Properties>
             <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" value="Black&apos;s Queen side castling"/>
+            <Property name="text" type="java.lang.String" value="Black can castle Queen side"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbBlackQueenCastleActionPerformed"/>

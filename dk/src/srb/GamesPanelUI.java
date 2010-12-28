@@ -20,9 +20,9 @@ import javax.swing.*;
  */
 public class GamesPanelUI extends JPanel {
 
-     ChessBoardUI njf = null;
+     ChessBoardJFrameUI njf = null;
     /** Creates new form GamesPanelUI */
-    public GamesPanelUI(ChessBoardUI n) {
+    public GamesPanelUI(ChessBoardJFrameUI n) {
         njf = n;
         initComponents();
     }
@@ -100,6 +100,11 @@ public class GamesPanelUI extends JPanel {
 
         butBrowseGames.setText("....");
         butBrowseGames.setToolTipText("Browse Games");
+        butBrowseGames.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butBrowseGamesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -201,6 +206,14 @@ public class GamesPanelUI extends JPanel {
             callLoadGame();
         }
     }//GEN-LAST:event_butLastGameActionPerformed
+
+    private void butBrowseGamesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butBrowseGamesActionPerformed
+        // TODO add your handling code here:
+        BrowseGamesDialogUI nj = new BrowseGamesDialogUI(njf,true,njf);
+        nj.setVisible(true);
+         njf.currentGameNo = nj.selGame;
+            callLoadGame();
+    }//GEN-LAST:event_butBrowseGamesActionPerformed
 
     public void callLoadGame()
     {

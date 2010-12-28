@@ -28,14 +28,14 @@ import javax.swing.*;
  *
  * @author Suhas Bharadwaj
  */
-public class MyJToggleButton_Setup_UI extends JToggleButton implements ItemListener,CConst
+public class MyJToggleButtonSetupUI extends JToggleButton implements ItemListener,CConst
 {
     Color darkORlight;
-    SetupPosition sp;
+    SetupPositionDialogUI sp;
     public String piece = "";
 
     //test constructor
-    public MyJToggleButton_Setup_UI(SetupPosition sp)
+    public MyJToggleButtonSetupUI(SetupPositionDialogUI sp)
     {
         super();
         //System.out.println("Created");
@@ -76,7 +76,7 @@ public class MyJToggleButton_Setup_UI extends JToggleButton implements ItemListe
     }
 
     public void itemStateChanged(ItemEvent e) {
-        MyJToggleButton_Setup_UI j = (MyJToggleButton_Setup_UI) e.getSource();
+        MyJToggleButtonSetupUI j = (MyJToggleButtonSetupUI) e.getSource();
         if(j.isSelected())
         {
             j.setPiece(sp.spc.getPieceSelected());

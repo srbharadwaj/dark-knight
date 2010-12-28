@@ -28,9 +28,9 @@ public class EachPGNGame implements CConst
     int gameNo = 0;
 
     public int count = 0;
-    ChessBoardUI njf = null;
+    ChessBoardJFrameUI njf = null;
 
-    public EachPGNGame(ChessBoardUI n,int i)
+    public EachPGNGame(ChessBoardJFrameUI n,int i)
     {
         gameNo =i;
         njf = n;

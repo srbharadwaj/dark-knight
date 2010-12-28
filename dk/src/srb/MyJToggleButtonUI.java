@@ -33,10 +33,10 @@ public class MyJToggleButtonUI extends JToggleButton implements ItemListener,CCo
     Color darkORlight;
     CP chessp;
     int val;
-    ChessBoardUI njf;
+    ChessBoardJFrameUI njf;
  
     //test constructor
-    public MyJToggleButtonUI(ChessBoardUI ja)
+    public MyJToggleButtonUI(ChessBoardJFrameUI ja)
     {
         super();
         //System.out.println("Created");

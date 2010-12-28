@@ -4,7 +4,7 @@
  */
 
 /*
- * AboutBoxUI.java
+ * AboutBoxDialogUI.java
  *
  * Created on 27 Dec, 2009, 2:05:09 PM
  */
@@ -20,10 +20,10 @@ import javax.swing.*;
  *
  * @author suhas
  */
-public class AboutBoxUI extends JDialog implements CConst {
+public class AboutBoxDialogUI extends JDialog implements CConst {
 
-    /** Creates new form AboutBoxUI */
-    public AboutBoxUI(java.awt.Frame parent, boolean modal) {
+    /** Creates new form AboutBoxDialogUI */
+    public AboutBoxDialogUI(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         pack();
@@ -72,7 +72,7 @@ public class AboutBoxUI extends JDialog implements CConst {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BN.gif"))); // NOI18N
         jPanel1.add(jLabel1);
 
-        jLabel2.setFont(new java.awt.Font("Algerian", 0, 36)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Algerian", 0, 36));
         jLabel2.setText("  DARK-KNIGHT  ");
         jPanel1.add(jLabel2);
 

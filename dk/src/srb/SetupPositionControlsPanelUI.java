@@ -4,7 +4,7 @@
  */
 
 /*
- * SetupPositionControls.java
+ * SetupPositionControlsPanelUI.java
  *
  * Created on 2 Jan, 2010, 10:54:03 PM
  */
@@ -19,10 +19,10 @@ import javax.swing.*;
  *
  * @author suhas
  */
-public class SetupPositionControls extends javax.swing.JPanel implements CConst {
-private SetupPosition aThis = null;
-    /** Creates new form SetupPositionControls */
-    public SetupPositionControls(SetupPosition aThis) {
+public class SetupPositionControlsPanelUI extends javax.swing.JPanel implements CConst {
+private SetupPositionDialogUI aThis = null;
+    /** Creates new form SetupPositionControlsPanelUI */
+    public SetupPositionControlsPanelUI(SetupPositionDialogUI aThis) {
         this.aThis = aThis;
         initComponents();
     }
@@ -284,7 +284,7 @@ private SetupPosition aThis = null;
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jtbBP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jtbRemove))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,7 +335,7 @@ private SetupPosition aThis = null;
                 .addComponent(rbWhite)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rbBlack)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -349,7 +349,7 @@ private SetupPosition aThis = null;
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), " Castling Possible?"));
 
         cbWhiteKingCastle.setSelected(true);
-        cbWhiteKingCastle.setText("White's King side castling");
+        cbWhiteKingCastle.setText("White can castle Kingside");
         cbWhiteKingCastle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbWhiteKingCastleActionPerformed(evt);
@@ -357,7 +357,7 @@ private SetupPosition aThis = null;
         });
 
         cbWhiteQueenCastle.setSelected(true);
-        cbWhiteQueenCastle.setText("White's Queen side castling");
+        cbWhiteQueenCastle.setText("White can castle Queen side");
         cbWhiteQueenCastle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbWhiteQueenCastleActionPerformed(evt);
@@ -365,7 +365,7 @@ private SetupPosition aThis = null;
         });
 
         cbBlackKingCastle.setSelected(true);
-        cbBlackKingCastle.setText("Black's King side castling");
+        cbBlackKingCastle.setText("Black can castle King side");
         cbBlackKingCastle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbBlackKingCastleActionPerformed(evt);
@@ -373,7 +373,7 @@ private SetupPosition aThis = null;
         });
 
         cbBlackQueenCastle.setSelected(true);
-        cbBlackQueenCastle.setText("Black's Queen side castling");
+        cbBlackQueenCastle.setText("Black can castle Queen side");
         cbBlackQueenCastle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbBlackQueenCastleActionPerformed(evt);
@@ -390,7 +390,7 @@ private SetupPosition aThis = null;
                     .addComponent(cbWhiteQueenCastle)
                     .addComponent(cbBlackKingCastle)
                     .addComponent(cbBlackQueenCastle))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
