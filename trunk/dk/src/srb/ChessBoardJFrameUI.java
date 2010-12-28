@@ -15,12 +15,12 @@ import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
- * Class Name - ChessBoardUI
+ * Class Name - ChessBoardJFrameUI
  * Description - 
  *
  * @author Suhas Bharadwaj
  */
-public class ChessBoardUI extends JFrame implements WindowListener,ActionListener,ItemListener,CConst
+public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionListener,ItemListener,CConst
 {
     // private JMenuItem menuItemLocateEngine;
         private JMenu menuItemEngine;
@@ -76,10 +76,10 @@ public class ChessBoardUI extends JFrame implements WindowListener,ActionListene
         System.out.println("   Copyright (C) 2009  Suhas Bharadwaj (srbharadwaj@gmail.com)");
         System.out.println("*****************************************************************");
 
-        new ChessBoardUI();
+        new ChessBoardJFrameUI();
     }
 
-    public ChessBoardUI()
+    public ChessBoardJFrameUI()
     {  
         cbo = new CB();
 
@@ -113,9 +113,9 @@ public class ChessBoardUI extends JFrame implements WindowListener,ActionListene
         next.addActionListener(this);
         last.addActionListener(this);
 
-        ImageIcon imageIcon16 = new ImageIcon(ChessBoardUI.class.getClassLoader().getResource(APPICON));
+        ImageIcon imageIcon16 = new ImageIcon(ChessBoardJFrameUI.class.getClassLoader().getResource(APPICON));
         setIconImage(imageIcon16.getImage());
-        //setIconImage(new ImageIcon(ChessBoardUI.class.getClassLoader().getResource(APPICON)));
+        //setIconImage(new ImageIcon(ChessBoardJFrameUI.class.getClassLoader().getResource(APPICON)));
 
     }
 
@@ -220,6 +220,7 @@ public class ChessBoardUI extends JFrame implements WindowListener,ActionListene
         menuOpt.setMnemonic(KeyEvent.VK_F);
 
         JMenuItem miO = new JMenuItem(OPEN);
+        miO.setIcon(new ImageIcon(getClass().getResource(openicon)));
         miO.setMnemonic(KeyEvent.VK_L);
         miO.addActionListener(this);
 
@@ -365,8 +366,8 @@ public class ChessBoardUI extends JFrame implements WindowListener,ActionListene
   }
 
   class EngineOnListener implements ActionListener {
-    ChessBoardUI a;
-        private EngineOnListener(ChessBoardUI aThis) {
+    ChessBoardJFrameUI a;
+        private EngineOnListener(ChessBoardJFrameUI aThis) {
             a = aThis;
         }
     public void actionPerformed(ActionEvent e) {
@@ -1538,9 +1539,6 @@ public class ChessBoardUI extends JFrame implements WindowListener,ActionListene
                 // setTitle(fileName);
                 //fileIsChanged = false;
 
-            
-
-
                 System.out.println("HERE :"+ new Date());
                 //currentMoveNo=0;
                 //cbo.resetCB();
@@ -1573,19 +1571,24 @@ public class ChessBoardUI extends JFrame implements WindowListener,ActionListene
                     
                 }
                 System.out.println("HERE :"+ new Date());
-                game = (Game) gameList.get(0);
-                currentGameNo = 1;
-                EachPGNGame  e1 = new EachPGNGame(this,1);
-                loadGame(game);
-                ArrayList v = new ArrayList();
-                for(int k=0;k<game.allBWMoves.size();k++)
+                
+                setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                for(int i=0;i<gameList.size();i++)
                 {
-                    v.add(game.allBWMoves.get(k));
+                    game = (Game) gameList.get(i);
+                    currentGameNo = i+1;
+                    EachPGNGame  e1 = new EachPGNGame(this,currentGameNo);
+                    loadGame(game);
+                    ArrayList v = new ArrayList();
+                    for(int k=0;k<game.allBWMoves.size();k++)
+                    {
+                        v.add(game.allBWMoves.get(k));
+                    }
+
+                    //System.out.println("Size "+v.size());
+                    e1.convertPGNMoveToGUIFormat(v);
                 }
-
-                //System.out.println("Size "+v.size());
-                e1.convertPGNMoveToGUIFormat(v);
-
+                setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             }
         }
         else if(e.getActionCommand().equals(REMOVE))
@@ -1678,13 +1681,13 @@ public class ChessBoardUI extends JFrame implements WindowListener,ActionListene
                 try {
                     saveContentsToPGNFile(file);
                 } catch (IOException ex) {
-                    Logger.getLogger(ChessBoardUI.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ChessBoardJFrameUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
         else if(e.getActionCommand().equals(SETUP))
         {
-            new SetupPosition(this,true).setVisible(true);
+            new SetupPositionDialogUI(this,true).setVisible(true);
         }
         else if(e.getActionCommand().equals(WHITEWIN))
         {
@@ -1713,7 +1716,7 @@ public class ChessBoardUI extends JFrame implements WindowListener,ActionListene
         else if(e.getActionCommand().equals(ABOUT))
         {
             //System.out.println("ABOUT,,,");
-            new AboutBoxUI(this,true).setVisible(true);
+            new AboutBoxDialogUI(this,true).setVisible(true);
         }
         if(e.getActionCommand().equals("Help Contents"))
         {

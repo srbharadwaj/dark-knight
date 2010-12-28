@@ -41,7 +41,7 @@ import java.awt.*;
 public interface CConst
 {   
     String APP_NAME = "Dark-Knight";
-    String VERSION = "v0.0.2";
+    String VERSION = "v0.0.3";
     String TITLE = APP_NAME + " " + VERSION;
     String WEBSITE = "https://code.google.com/p/dark-knight/";
     String PAWN = "Pawn";
@@ -68,8 +68,19 @@ public interface CConst
     String addicon = "/images/icons/add.png";
     String cancelicon = "/images/icons/cancel.png";
     String delicon = "/images/icons/delete.png";
+    static final String openicon        = "/images/icons/open.png";
+    static final String userhomeicon    = "/images/icons/userhome.png";
+    static final String stopicon      ="/images/icons/stop.png";
+    static final String quiticon      ="/images/icons/quit.png";
+    static final String clearicon      ="/images/icons/broom.png";
+    static final String HELP      ="/images/icons/Button-Help-16x16.png";
+    static final String CHANGELOG      ="/images/icons/settings-16x16.png";
+    static final String removeicon      ="/images/icons/remove-16x16.png";
+    static final String repeaticon      ="/images/icons/Button-Reload-16x16.png";
 
-    //TODO : include all gif files
+   
+
+    //include all gif files
     String whitePawn = "/images/WP.gif";
     String blackPawn = "/images/BP.gif";
 

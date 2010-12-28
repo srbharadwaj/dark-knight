@@ -106,8 +106,10 @@ public class EditTags extends JDialog implements CConst {
 
         jLabel2.setText("Tag Value : ");
 
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/add.png"))); // NOI18N
         jButton3.setText("Add");
 
+        bClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/broom.png"))); // NOI18N
         bClear.setText("Clear");
         bClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,7 +154,7 @@ public class EditTags extends JDialog implements CConst {
                 .addGroup(addPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(bClear))
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Add", addPanel);
@@ -172,6 +174,7 @@ public class EditTags extends JDialog implements CConst {
 
         tfDelTagValue.setEditable(false);
 
+        bDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/delete.png"))); // NOI18N
         bDel.setText("Delete");
         bDel.setEnabled(false);
         bDel.addActionListener(new java.awt.event.ActionListener() {
@@ -190,11 +193,12 @@ public class EditTags extends JDialog implements CConst {
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
                 .addGap(32, 32, 32)
-                .addGroup(deletePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(deletePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bDel)
-                    .addComponent(tfDelTagValue)
-                    .addComponent(cbSelectTagNameForDeletePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(97, 97, 97))
+                    .addGroup(deletePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(tfDelTagValue)
+                        .addComponent(cbSelectTagNameForDeletePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(136, 136, 136))
         );
         deletePanelLayout.setVerticalGroup(
             deletePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,9 +211,9 @@ public class EditTags extends JDialog implements CConst {
                 .addGroup(deletePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(tfDelTagValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addGap(54, 54, 54)
                 .addComponent(bDel)
-                .addGap(56, 56, 56))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Delete", deletePanel);
@@ -307,13 +311,13 @@ public class EditTags extends JDialog implements CConst {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bClearActionPerformed
-        // TODO add your handling code here:
+
         tfAddTagName.setText("");
         tfAddTagValue.setText("");
     }//GEN-LAST:event_bClearActionPerformed
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
-        // TODO add your handling code here:
+
         //System.out.println(jTabbedPane1.getSelectedComponent().getName());
         if(jTabbedPane1.getSelectedComponent().getName().equals("viewPanel"))
             createViewPanel(alltags);
@@ -326,7 +330,7 @@ public class EditTags extends JDialog implements CConst {
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
     private void rbEditTagNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbEditTagNameItemStateChanged
-        // TODO add your handling code here:
+
         if(rbEditTagName.isSelected())
         {
             tfEditValue.setEditable(false);
@@ -341,7 +345,7 @@ public class EditTags extends JDialog implements CConst {
     }//GEN-LAST:event_rbEditTagNameItemStateChanged
 
     private void cbSelectTagNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbSelectTagNameItemStateChanged
-        // TODO add your handling code here:
+
         if(cbSelectTagName.getSelectedIndex()==0)
         {
             tfEditValue.setText("");
@@ -392,7 +396,7 @@ public class EditTags extends JDialog implements CConst {
     }//GEN-LAST:event_cbSelectTagNameForDeletePanelItemStateChanged
 
     private void bDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDelActionPerformed
-        // TODO add your handling code here:
+
          if(JOptionPane.showConfirmDialog(this, "Do you really want to remove the selected tag?"
                     ,"Delete Tag?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
          {
