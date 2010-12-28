@@ -1,7 +1,6 @@
 package srb;
 
 import java.io.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.logging.Level;
@@ -26,13 +25,14 @@ public class EngineProcess extends JFrame implements WindowListener
     this.chessEditor = chessEditor; 
     this.engineFileName = engineFileName; 
 
-    try {
+ /*   try {
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     }
     catch (InstantiationException e) {}
     catch (ClassNotFoundException e) {}
     catch (UnsupportedLookAndFeelException e) {}
-    catch (IllegalAccessException e) {}
+    catch (IllegalAccessException e) {}*/
+
 
     /*if (!(new File(engineFileName)).exists()) {
       FileIO.getInstance().alert(
@@ -43,6 +43,12 @@ public class EngineProcess extends JFrame implements WindowListener
     textArea = new JTextArea("", 15, 60);
     textArea.setEditable(false);
     textScroll = new JScrollPane(textArea);
+
+     textArea.setFont(new java.awt.Font("Monospaced", 0, 12));
+        textArea.setEditable(false);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        //setViewportView(textArea);
 
     this.setTitle("Chess Engine");
     this.addWindowListener(this);
@@ -172,7 +178,7 @@ public class EngineProcess extends JFrame implements WindowListener
   public void getMove()
   {
         try {
-            Thread.sleep(5000);
+            Thread.sleep(1000);
         } catch (InterruptedException ex) {
             Logger.getLogger(EngineProcess.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -1,7 +1,7 @@
 package srb;
 
 
-import java.util.ArrayList;
+import java.util.*;
 
 /*
  * To change this template, choose Tools | Templates
@@ -473,9 +473,71 @@ public class CP implements CConst
             {
                 // add the pos
                 // coz an opposite color piece is present or the pos is empty
-                movesPossible.add(newpos);
+                // if an opposite colour piece is present and that has opp color
+                // king adjacent to it then king cant capture and hence should
+                // not be added to the pos moves
+                if(!isOppKingPresentAtAdjacentBox(newpos, getPieceColor()))
+                    movesPossible.add(newpos);
             }
         }
+    }
+
+    // If my king's possible pos has an opp colour piece and if that piece is
+    // adjacent to its own king then we were able to capture that piece
+    // could'nt fix the root cause for bug as it requires lot of changes for
+    // king's logic so added this proc as workaround
+     public boolean isOppKingPresentAtAdjacentBox(int newpos,String colour)
+     {
+        if(((isValidPosition(newpos+9))) && (isOppositeColorKingPresent(newpos+9, colour)))
+        {
+            return true;
+        }
+        if (((isValidPosition(newpos+10))) && (isOppositeColorKingPresent(newpos+10, colour)))
+        {
+          return true;
+        }
+        if (((isValidPosition(newpos+11))) && (isOppositeColorKingPresent(newpos+11, colour)))
+        {
+          return true;
+        }
+        if (((isValidPosition(newpos-9))) && (isOppositeColorKingPresent(newpos-9, colour)))
+        {
+          return true;
+        }
+        if (((isValidPosition(newpos-10))) && (isOppositeColorKingPresent(newpos-10, colour)))
+        {
+          return true;
+        }
+        if (((isValidPosition(newpos-11))) && (isOppositeColorKingPresent(newpos-11, colour)))
+        {
+          return true;
+        }
+        if (((isValidPosition(newpos+1))) && (isOppositeColorKingPresent(newpos+1, colour)))
+        {
+          return true;
+        }
+        if (((isValidPosition(newpos-1))) && (isOppositeColorKingPresent(newpos-1, colour)))
+        {
+          return true;
+        }
+
+        return false;
+     }
+     public boolean isOppositeColorKingPresent(int pos, String color)
+     {
+        for(int i=0;i<cbObj.allPieces.size();i++)
+        {
+            CP c = (CP) cbObj.allPieces.get(i);
+            if(c.getCurrentPosition() == pos)
+            {
+                if(!(c.getPieceColor().equals(color)))
+                {
+                    if((c.getPieceName().equals(KING)))
+                        return true;
+                }
+            }
+        }
+        return false;
     }
 
      public boolean isValidPosition(int pos)
