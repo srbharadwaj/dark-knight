@@ -69,14 +69,14 @@ public class AboutBoxDialogUI extends JDialog implements CConst {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BN.gif"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/BN.gif"))); // NOI18N
         jPanel1.add(jLabel1);
 
         jLabel2.setFont(new java.awt.Font("Algerian", 0, 36));
         jLabel2.setText("  DARK-KNIGHT  ");
         jPanel1.add(jLabel2);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BN.gif"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/BN.gif"))); // NOI18N
         jPanel1.add(jLabel3);
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

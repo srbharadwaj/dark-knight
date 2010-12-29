@@ -96,7 +96,7 @@
     <Component class="javax.swing.JButton" name="butFirstGame">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/start.gif"/>
+          <Image iconType="3" name="/srb/images/start.gif"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="First Game"/>
       </Properties>
@@ -107,7 +107,7 @@
     <Component class="javax.swing.JButton" name="butPrevGame">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/prev.gif"/>
+          <Image iconType="3" name="/srb/images/prev.gif"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Previous Game"/>
       </Properties>
@@ -118,7 +118,7 @@
     <Component class="javax.swing.JButton" name="butNextGame">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/next.gif"/>
+          <Image iconType="3" name="/srb/images/next.gif"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Next Game"/>
       </Properties>
@@ -129,7 +129,7 @@
     <Component class="javax.swing.JButton" name="butLastGame">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/end.gif"/>
+          <Image iconType="3" name="/srb/images/end.gif"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Last Game"/>
       </Properties>

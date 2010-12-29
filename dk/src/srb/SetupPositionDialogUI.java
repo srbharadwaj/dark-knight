@@ -7,6 +7,10 @@ package srb;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import javax.swing.*;
 
 /**
@@ -406,6 +410,18 @@ public class SetupPositionDialogUI  extends JDialog implements ActionListener,CC
         {
             System.out.println("Val is : "+calculateFENfromPosition());
         }
+        if(j.getText().equals("Open FEN"))
+        {
+            if(JOptionPane.showConfirmDialog(this,"Please note that this version of " +APP_NAME+ " cannot"
+                    + "\nprocess the following information of FEN data/file"
+                    + "\n1)Enpassent 2)half move number and 3)fullmove number"
+                    + "\n\nClick Ok to continue or click Cancel to abort\n ","Please note",JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION)
+            {
+                System.out.println("OK SELECTED");
+                //TODO
+                processOpenFenButton();
+            }
+        }
         if(j.getText().equals("Ok"))
         {
             //TODO
@@ -422,7 +438,7 @@ public class SetupPositionDialogUI  extends JDialog implements ActionListener,CC
         for(int i=0;i<=63;i++)
         {
             s=jtb[i].getPiece();
-            if(s=="")
+            if(s.equals(""))
                 b++;
             if(s.startsWith("B"))
             {
@@ -456,6 +472,85 @@ public class SetupPositionDialogUI  extends JDialog implements ActionListener,CC
                     str = str + "/";
             }
         }
+
+        //Get the active color, the one to move next
+        if(spc.rbWhite.isSelected())
+            str = str + " w ";
+        else
+            str = str + " b ";
+
+        s="";
+        //Get info abt castling
+        if(spc.cbWhiteKingCastle.isSelected())
+            s = s + "K";
+        if(spc.cbWhiteQueenCastle.isSelected())
+            s = s + "Q";
+        if(spc.cbBlackKingCastle.isSelected())
+            s = s + "k";
+        if(spc.cbBlackQueenCastle.isSelected())
+            s = s + "q";
+        if(s.equals(""))
+            str = str + "-";
+        else
+            str = str + s;
+
+        //TODO
+        //Currently cannot process FEN's enpassent,half move and fullmove so setting it to default
+        str = str + " - 0 1";
+
         return str;
+    }
+
+
+    public void processOpenFenButton()
+    {
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.resetChoosableFileFilters();
+        fileChooser.addChoosableFileFilter(new FENFileFilter());
+        int choice = fileChooser.showOpenDialog(this);
+        if (choice == JFileChooser.APPROVE_OPTION)
+        {
+            System.out.println(fileChooser.getSelectedFile());
+            File file = fileChooser.getSelectedFile();
+            String record = "";
+            try
+            {
+                FileReader fr     = new FileReader(file);
+                BufferedReader br = new BufferedReader(fr);
+
+                record = new String();
+                while ((record = br.readLine()) != null)
+                {
+                    record = record.trim();
+                    if(record.matches("^[1-8rnbqkRNBQK].*"))
+                    {
+                        System.out.println("GOT A VALID STRING");
+                        System.out.println(record);
+                        break;
+                    }
+                    else
+                    {
+                        record = "";
+                    }
+                }
+                fr.close();
+                br.close();
+            }
+            catch (IOException e)
+            {
+               // catch possible io errors from readLine()
+               System.out.println("Uh oh, got an IOException error!");
+               e.printStackTrace();
+            }
+
+            validateFENData(record);
+        }
+    }
+
+    public void validateFENData(String s)
+    {
+        //TODO
     }
 }
