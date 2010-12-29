@@ -50,7 +50,7 @@ public class GamesPanelUI extends JPanel {
         labGameResult = new javax.swing.JLabel();
         butBrowseGames = new javax.swing.JButton();
 
-        butFirstGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/start.gif"))); // NOI18N
+        butFirstGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/start.gif"))); // NOI18N
         butFirstGame.setToolTipText("First Game");
         butFirstGame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -58,7 +58,7 @@ public class GamesPanelUI extends JPanel {
             }
         });
 
-        butPrevGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/prev.gif"))); // NOI18N
+        butPrevGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/prev.gif"))); // NOI18N
         butPrevGame.setToolTipText("Previous Game");
         butPrevGame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,7 +66,7 @@ public class GamesPanelUI extends JPanel {
             }
         });
 
-        butNextGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/next.gif"))); // NOI18N
+        butNextGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/next.gif"))); // NOI18N
         butNextGame.setToolTipText("Next Game");
         butNextGame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,7 +74,7 @@ public class GamesPanelUI extends JPanel {
             }
         });
 
-        butLastGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/end.gif"))); // NOI18N
+        butLastGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/end.gif"))); // NOI18N
         butLastGame.setToolTipText("Last Game");
         butLastGame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

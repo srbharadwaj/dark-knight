@@ -112,7 +112,7 @@ private SetupPositionDialogUI aThis = null;
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Pieces"));
 
         buttonGroup1.add(jtbWK);
-        jtbWK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/WK.gif"))); // NOI18N
+        jtbWK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/WK.gif"))); // NOI18N
         jtbWK.setMaximumSize(new java.awt.Dimension(50, 50));
         jtbWK.setMinimumSize(new java.awt.Dimension(50, 50));
         jtbWK.setPreferredSize(new java.awt.Dimension(50, 50));
@@ -123,7 +123,7 @@ private SetupPositionDialogUI aThis = null;
         });
 
         buttonGroup1.add(jtbBK);
-        jtbBK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BK.gif"))); // NOI18N
+        jtbBK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/BK.gif"))); // NOI18N
         jtbBK.setMaximumSize(new java.awt.Dimension(50, 50));
         jtbBK.setMinimumSize(new java.awt.Dimension(50, 50));
         jtbBK.setPreferredSize(new java.awt.Dimension(50, 50));
@@ -134,7 +134,7 @@ private SetupPositionDialogUI aThis = null;
         });
 
         buttonGroup1.add(jtbWQ);
-        jtbWQ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/WQ.gif"))); // NOI18N
+        jtbWQ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/WQ.gif"))); // NOI18N
         jtbWQ.setMaximumSize(new java.awt.Dimension(50, 50));
         jtbWQ.setMinimumSize(new java.awt.Dimension(50, 50));
         jtbWQ.setPreferredSize(new java.awt.Dimension(50, 50));
@@ -145,7 +145,7 @@ private SetupPositionDialogUI aThis = null;
         });
 
         buttonGroup1.add(jtbBQ);
-        jtbBQ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BQ.gif"))); // NOI18N
+        jtbBQ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/BQ.gif"))); // NOI18N
         jtbBQ.setMaximumSize(new java.awt.Dimension(50, 50));
         jtbBQ.setMinimumSize(new java.awt.Dimension(50, 50));
         jtbBQ.setPreferredSize(new java.awt.Dimension(50, 50));
@@ -156,7 +156,7 @@ private SetupPositionDialogUI aThis = null;
         });
 
         buttonGroup1.add(jtbWR);
-        jtbWR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/WR.gif"))); // NOI18N
+        jtbWR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/WR.gif"))); // NOI18N
         jtbWR.setMaximumSize(new java.awt.Dimension(50, 50));
         jtbWR.setMinimumSize(new java.awt.Dimension(50, 50));
         jtbWR.setPreferredSize(new java.awt.Dimension(50, 50));
@@ -167,7 +167,7 @@ private SetupPositionDialogUI aThis = null;
         });
 
         buttonGroup1.add(jtbBR);
-        jtbBR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BR.gif"))); // NOI18N
+        jtbBR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/BR.gif"))); // NOI18N
         jtbBR.setMaximumSize(new java.awt.Dimension(50, 50));
         jtbBR.setMinimumSize(new java.awt.Dimension(50, 50));
         jtbBR.setPreferredSize(new java.awt.Dimension(50, 50));
@@ -178,7 +178,7 @@ private SetupPositionDialogUI aThis = null;
         });
 
         buttonGroup1.add(jtbWN);
-        jtbWN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/WN.gif"))); // NOI18N
+        jtbWN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/WN.gif"))); // NOI18N
         jtbWN.setMaximumSize(new java.awt.Dimension(50, 50));
         jtbWN.setMinimumSize(new java.awt.Dimension(50, 50));
         jtbWN.setPreferredSize(new java.awt.Dimension(50, 50));
@@ -189,7 +189,7 @@ private SetupPositionDialogUI aThis = null;
         });
 
         buttonGroup1.add(jtbBN);
-        jtbBN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BN.gif"))); // NOI18N
+        jtbBN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/BN.gif"))); // NOI18N
         jtbBN.setMaximumSize(new java.awt.Dimension(50, 50));
         jtbBN.setMinimumSize(new java.awt.Dimension(50, 50));
         jtbBN.setPreferredSize(new java.awt.Dimension(50, 50));
@@ -200,7 +200,7 @@ private SetupPositionDialogUI aThis = null;
         });
 
         buttonGroup1.add(jtbWB);
-        jtbWB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/WB.gif"))); // NOI18N
+        jtbWB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/WB.gif"))); // NOI18N
         jtbWB.setMaximumSize(new java.awt.Dimension(50, 50));
         jtbWB.setMinimumSize(new java.awt.Dimension(50, 50));
         jtbWB.setPreferredSize(new java.awt.Dimension(50, 50));
@@ -211,7 +211,7 @@ private SetupPositionDialogUI aThis = null;
         });
 
         buttonGroup1.add(jtbBB);
-        jtbBB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BB.gif"))); // NOI18N
+        jtbBB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/BB.gif"))); // NOI18N
         jtbBB.setMaximumSize(new java.awt.Dimension(50, 50));
         jtbBB.setMinimumSize(new java.awt.Dimension(50, 50));
         jtbBB.setPreferredSize(new java.awt.Dimension(50, 50));
@@ -222,7 +222,7 @@ private SetupPositionDialogUI aThis = null;
         });
 
         buttonGroup1.add(jtbWP);
-        jtbWP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/WP.gif"))); // NOI18N
+        jtbWP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/WP.gif"))); // NOI18N
         jtbWP.setMaximumSize(new java.awt.Dimension(50, 50));
         jtbWP.setMinimumSize(new java.awt.Dimension(50, 50));
         jtbWP.setPreferredSize(new java.awt.Dimension(50, 50));
@@ -233,7 +233,7 @@ private SetupPositionDialogUI aThis = null;
         });
 
         buttonGroup1.add(jtbBP);
-        jtbBP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BP.gif"))); // NOI18N
+        jtbBP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/BP.gif"))); // NOI18N
         jtbBP.setMaximumSize(new java.awt.Dimension(50, 50));
         jtbBP.setMinimumSize(new java.awt.Dimension(50, 50));
         jtbBP.setPreferredSize(new java.awt.Dimension(50, 50));

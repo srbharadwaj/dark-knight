@@ -106,10 +106,15 @@ public class EditTags extends JDialog implements CConst {
 
         jLabel2.setText("Tag Value : ");
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/add.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/icons/add.png"))); // NOI18N
         jButton3.setText("Add");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
-        bClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/broom.png"))); // NOI18N
+        bClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/icons/broom.png"))); // NOI18N
         bClear.setText("Clear");
         bClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -174,7 +179,7 @@ public class EditTags extends JDialog implements CConst {
 
         tfDelTagValue.setEditable(false);
 
-        bDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/delete.png"))); // NOI18N
+        bDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/icons/delete.png"))); // NOI18N
         bDel.setText("Delete");
         bDel.setEnabled(false);
         bDel.addActionListener(new java.awt.event.ActionListener() {
@@ -233,6 +238,11 @@ public class EditTags extends JDialog implements CConst {
 
         bEdit.setText("Apply");
         bEdit.setEnabled(false);
+        bEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bEditActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(rbEditTagName);
         rbEditTagName.setSelected(true);
@@ -422,6 +432,14 @@ public class EditTags extends JDialog implements CConst {
 
          }
     }//GEN-LAST:event_bDelActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void bEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bEditActionPerformed
 
     /**
     * @param args the command line arguments

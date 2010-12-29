@@ -63,47 +63,47 @@ public interface CConst
     int MAXY=7;
 
     //Menu icons
-    String abouticon = "/images/icons/information.png";
-    String helpicon = "/images/icons/help.png";
-    String addicon = "/images/icons/add.png";
-    String cancelicon = "/images/icons/cancel.png";
-    String delicon = "/images/icons/delete.png";
-    static final String openicon        = "/images/icons/open.png";
-    static final String userhomeicon    = "/images/icons/userhome.png";
-    static final String stopicon      ="/images/icons/stop.png";
-    static final String quiticon      ="/images/icons/quit.png";
-    static final String clearicon      ="/images/icons/broom.png";
-    static final String HELP      ="/images/icons/Button-Help-16x16.png";
-    static final String CHANGELOG      ="/images/icons/settings-16x16.png";
-    static final String removeicon      ="/images/icons/remove-16x16.png";
-    static final String repeaticon      ="/images/icons/Button-Reload-16x16.png";
+    String abouticon = "/srb/images/icons/information.png";
+    String helpicon = "/srb/images/icons/help.png";
+    String addicon = "/srb/images/icons/add.png";
+    String cancelicon = "/srb/images/icons/cancel.png";
+    String delicon = "/srb/images/icons/delete.png";
+    static final String openicon        = "/srb/images/icons/open.png";
+    static final String userhomeicon    = "/srb/images/icons/userhome.png";
+    static final String stopicon      ="/srb/images/icons/stop.png";
+    static final String quiticon      ="/srb/images/icons/quit.png";
+    static final String clearicon      ="/srb/images/icons/broom.png";
+    static final String HELP      ="/srb/images/icons/Button-Help-16x16.png";
+    static final String CHANGELOG      ="/srb/images/icons/settings-16x16.png";
+    static final String removeicon      ="/srb/images/icons/remove-16x16.png";
+    static final String repeaticon      ="/srb/images/icons/Button-Reload-16x16.png";
 
    
 
     //include all gif files
-    String whitePawn = "/images/WP.gif";
-    String blackPawn = "/images/BP.gif";
+    String whitePawn = "/srb/images/WP.gif";
+    String blackPawn = "/srb/images/BP.gif";
 
-    String whiteRook = "/images/WR.gif";
-    String blackRook = "/images/BR.gif";
+    String whiteRook = "/srb/images/WR.gif";
+    String blackRook = "/srb/images/BR.gif";
 
-    String whiteKnight = "/images/WN.gif";
-    String blackKnight = "/images/BN.gif";
+    String whiteKnight = "/srb/images/WN.gif";
+    String blackKnight = "/srb/images/BN.gif";
 
-    String whiteBishop = "/images/WB.gif";
-    String blackBishop = "/images/BB.gif";
+    String whiteBishop = "/srb/images/WB.gif";
+    String blackBishop = "/srb/images/BB.gif";
 
-    String whiteQueen = "/images/WQ.gif";
-    String blackQueen = "/images/BQ.gif";
+    String whiteQueen = "/srb/images/WQ.gif";
+    String blackQueen = "/srb/images/BQ.gif";
 
-    String whiteKing = "/images/WK.gif";
-    String blackKing = "/images/BK.gif";
+    String whiteKing = "/srb/images/WK.gif";
+    String blackKing = "/srb/images/BK.gif";
 
-    String START = "/images/start.gif";
-    String NEXT = "/images/next.gif";
-    String PREV = "/images/prev.gif";
-    String LAST = "/images/end.gif";
-    String APPICON = "images/bnws.jpg";
+    String START = "/srb/images/start.gif";
+    String NEXT = "/srb/images/next.gif";
+    String PREV = "/srb/images/prev.gif";
+    String LAST = "/srb/images/end.gif";
+    String APPICON = "srb/images/bnws.jpg";
 
     Color cLight = new Color(102, 255, 102);
     Color cDark = new Color(51, 153, 0);
