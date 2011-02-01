@@ -39,6 +39,7 @@ public class SetupPositionDialogUI  extends JDialog implements ActionListener,CC
     public JButton flip = new JButton("Flip");
     public JButton openfen = new JButton("Open FEN");
     public JButton savefen = new JButton("Save FEN");
+    public JButton pastefen = new JButton("Paste FEN");
     public String pieceSelected = WHITE;
     public MyJToggleButtonSetupUI jtb[];
     public MyJToggleButtonSetupUI prevButSel;
@@ -58,7 +59,7 @@ public class SetupPositionDialogUI  extends JDialog implements ActionListener,CC
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         ImageIcon imageIcon16 = new ImageIcon(ChessBoardJFrameUI.class.getClassLoader().getResource(APPICON));
         setIconImage(imageIcon16.getImage());
-        setSize(770, 600);
+        setSize(825, 600);
         //Display the window.
         //setVisible(true);
         setResizable(false);
@@ -73,6 +74,7 @@ public class SetupPositionDialogUI  extends JDialog implements ActionListener,CC
         flip.addActionListener(this);
         openfen.addActionListener(this);
         savefen.addActionListener(this);
+        pastefen.addActionListener(this);
 
     }
 
@@ -160,18 +162,118 @@ public class SetupPositionDialogUI  extends JDialog implements ActionListener,CC
 
         setPieceUI();
         chessBoardContainer.add(chessBoard,BorderLayout.CENTER);
+        chessBoardContainer.add(addA_Hpanel(true),BorderLayout.PAGE_START);
+        chessBoardContainer.add(addA_Hpanel(true),BorderLayout.PAGE_END);
+        chessBoardContainer.add(add1_8panel(true),BorderLayout.LINE_START);
+        chessBoardContainer.add(add1_8panel(true),BorderLayout.LINE_END);
 
-        chessBoardContainer.add(addA_Hpanel(true),BorderLayout.NORTH);
 
         return chessBoardContainer;
     }
 
-    public JPanel addA_Hpanel(Boolean straight)
+     public JPanel addA_Hpanel(Boolean straight)
     {
 
-        JPanel jpN = new JPanel();
-        jpN.setLayout(new GridLayout(1,8));
+        JPanel jpN = new JPanel(new GridBagLayout());
 
+        GridBagConstraints gbc100 = new GridBagConstraints();
+        gbc100.fill = GridBagConstraints.HORIZONTAL;
+        gbc100.ipadx=-9;
+        gbc100.gridx = 0;
+        gbc100.gridy = 0;
+
+        GridBagConstraints gbc101 = new GridBagConstraints();
+        gbc101.fill = GridBagConstraints.HORIZONTAL;
+        gbc101.ipadx=-9;
+        gbc101.gridx = 9;
+        gbc101.gridy = 0;
+
+        GridBagConstraints gbc1 = new GridBagConstraints();
+        gbc1.fill = GridBagConstraints.HORIZONTAL;
+        gbc1.ipadx=20;
+        gbc1.gridx = 1;
+        gbc1.gridy = 0;
+
+        GridBagConstraints gbc2 = new GridBagConstraints();
+        gbc2.fill = GridBagConstraints.HORIZONTAL;
+        gbc2.ipadx=20;
+        gbc2.gridx = 2;
+        gbc2.gridy = 0;
+
+        GridBagConstraints gbc3 = new GridBagConstraints();
+        gbc3.fill = GridBagConstraints.HORIZONTAL;
+        gbc3.ipadx=20;
+        gbc3.gridx = 3;
+        gbc3.gridy = 0;
+
+        GridBagConstraints gbc4 = new GridBagConstraints();
+        gbc4.fill = GridBagConstraints.HORIZONTAL;
+        gbc4.ipadx=20;
+        gbc4.gridx = 4;
+        gbc4.gridy = 0;
+
+        GridBagConstraints gbc5 = new GridBagConstraints();
+        gbc5.fill = GridBagConstraints.HORIZONTAL;
+        gbc5.ipadx=20;
+        gbc5.gridx = 5;
+        gbc5.gridy = 0;
+
+        GridBagConstraints gbc6 = new GridBagConstraints();
+        gbc6.fill = GridBagConstraints.HORIZONTAL;
+        gbc6.ipadx=20;
+        gbc6.gridx = 6;
+        gbc6.gridy = 0;
+
+        GridBagConstraints gbc7 = new GridBagConstraints();
+        gbc7.fill = GridBagConstraints.HORIZONTAL;
+        gbc7.ipadx=20;
+        gbc7.gridx = 7;
+        gbc7.gridy = 0;
+
+        GridBagConstraints gbc8 = new GridBagConstraints();
+        gbc8.fill = GridBagConstraints.HORIZONTAL;
+        gbc8.ipadx=20;
+        gbc8.gridx = 8;
+        gbc8.gridy = 0;
+
+        GridBagConstraints gbc9 = new GridBagConstraints();
+        gbc9.fill = GridBagConstraints.HORIZONTAL;
+        gbc9.ipadx=-10;
+        gbc9.gridx = 0;
+        gbc9.gridy = 0;
+
+        JButton l100 = new JButton();
+        l100.setIcon(new ImageIcon(getClass().getResource(REVERSE)));
+        l100.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if(pieceSelected.equals(WHITE))
+            {
+                reverseBoard(BLACK);
+                pieceSelected = BLACK;
+            }
+            else
+            {
+                reverseBoard(WHITE);
+                pieceSelected = WHITE;
+            }
+            }
+        });
+        JButton l101 = new JButton();
+        l101.setIcon(new ImageIcon(getClass().getResource(REVERSE)));
+        l101.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if(pieceSelected.equals(WHITE))
+            {
+                reverseBoard(BLACK);
+                pieceSelected = BLACK;
+            }
+            else
+            {
+                reverseBoard(WHITE);
+                pieceSelected = WHITE;
+            }
+            }
+        });
         JToggleButton l1 = new JToggleButton("a");
         JToggleButton l2 = new JToggleButton("b");
         JToggleButton l3 = new JToggleButton("c");
@@ -191,6 +293,61 @@ public class SetupPositionDialogUI  extends JDialog implements ActionListener,CC
         l8.setEnabled(false);
 
         if(straight)
+        {
+            jpN.add(l100,gbc100);
+            jpN.add(l1,gbc1);
+            jpN.add(l2,gbc2);
+            jpN.add(l3,gbc3);
+            jpN.add(l4,gbc4);
+            jpN.add(l5,gbc5);
+            jpN.add(l6,gbc6);
+            jpN.add(l7,gbc7);
+            jpN.add(l8,gbc8);
+            jpN.add(l101,gbc101);
+        }
+        else
+        {
+            jpN.add(l100,gbc101);
+            jpN.add(l8,gbc1);
+            jpN.add(l7,gbc2);
+            jpN.add(l6,gbc3);
+            jpN.add(l5,gbc4);
+            jpN.add(l4,gbc5);
+            jpN.add(l3,gbc6);
+            jpN.add(l2,gbc7);
+            jpN.add(l1,gbc8);
+            jpN.add(l101,gbc100);
+        }
+
+        return jpN;
+
+    }
+
+    public JPanel add1_8panel(Boolean straight)
+    {
+
+        JPanel jpN = new JPanel();
+        jpN.setLayout(new GridLayout(8,1));
+
+        MyJToggleButtonUI l1 = new MyJToggleButtonUI("1");
+        MyJToggleButtonUI l2 = new MyJToggleButtonUI("2");
+        MyJToggleButtonUI l3 = new MyJToggleButtonUI("3");
+        MyJToggleButtonUI l4 = new MyJToggleButtonUI("4");
+        MyJToggleButtonUI l5 = new MyJToggleButtonUI("5");
+        MyJToggleButtonUI l6 = new MyJToggleButtonUI("6");
+        MyJToggleButtonUI l7 = new MyJToggleButtonUI("7");
+        MyJToggleButtonUI l8 = new MyJToggleButtonUI("8");
+
+        l1.setEnabled(false);
+        l2.setEnabled(false);
+        l3.setEnabled(false);
+        l4.setEnabled(false);
+        l5.setEnabled(false);
+        l6.setEnabled(false);
+        l7.setEnabled(false);
+        l8.setEnabled(false);
+
+        if(!straight)
         {
             jpN.add(l1);
             jpN.add(l2);
@@ -233,6 +390,7 @@ public class SetupPositionDialogUI  extends JDialog implements ActionListener,CC
         butJPanel.add(cancel);
         butJPanel.add(flip);
         butJPanel.add(openfen);
+        butJPanel.add(pastefen);
         butJPanel.add(savefen);
         return butJPanel;
     }
@@ -353,7 +511,10 @@ public class SetupPositionDialogUI  extends JDialog implements ActionListener,CC
             {
                 chessBoard.add(jtb[i]);
             }
-            chessBoardContainer.add(addA_Hpanel(false),BorderLayout.NORTH);
+             chessBoardContainer.add(addA_Hpanel(false),BorderLayout.PAGE_START);
+            chessBoardContainer.add(addA_Hpanel(false),BorderLayout.PAGE_END);
+            chessBoardContainer.add(add1_8panel(false),BorderLayout.LINE_START);
+            chessBoardContainer.add(add1_8panel(false),BorderLayout.LINE_END);
         }
         else
         {
@@ -363,7 +524,10 @@ public class SetupPositionDialogUI  extends JDialog implements ActionListener,CC
             {
                 chessBoard.add(jtb[i]);
             }
-            chessBoardContainer.add(addA_Hpanel(true),BorderLayout.NORTH);
+            chessBoardContainer.add(addA_Hpanel(true),BorderLayout.PAGE_START);
+            chessBoardContainer.add(addA_Hpanel(true),BorderLayout.PAGE_END);
+            chessBoardContainer.add(add1_8panel(true),BorderLayout.LINE_START);
+            chessBoardContainer.add(add1_8panel(true),BorderLayout.LINE_END);
         }
         chessBoard.repaint();
 
@@ -406,9 +570,53 @@ public class SetupPositionDialogUI  extends JDialog implements ActionListener,CC
             setPieceUI();
             chkCastlingAndEditCheckBox();
         }
+        if(j.getText().equals("Paste FEN"))
+        {
+            Object obj = JOptionPane.showInputDialog(this, " Paste the FEN in the text box below "
+                                        + "\n\n Please note that this version of " +APP_NAME+ " cannot"
+                                        + "\n process the following information of FEN data"
+                                        + "\n 1)Enpassent 2)half move number and 3)fullmove number"
+                                        + "\n\n Click Ok to continue or click Cancel to abort\n "
+                                        ,"Please note",
+                                        JOptionPane.QUESTION_MESSAGE,null,null,null);
+            if(obj == null)
+            {
+                System.out.println(("CANCEL SELECTED"));
+            }
+            else
+            {
+                System.out.println(("OK SELECTED " + obj));
+                validateFENData((String) obj);
+            }
+
+
+        }
         if(j.getText().equals("Save FEN"))
         {
-            System.out.println("Val is : "+calculateFENfromPosition());
+            String str = calculateFENfromPosition();
+            System.out.println(("Val is : "+str));
+            String[] strs = { str };
+
+            Object obj = JOptionPane.showInputDialog(this, " FEN generated is as shown in the text field below "
+                                        + "\n\n Please note that this version of " +APP_NAME+ " cannot "
+                                          + "\n process the following information of FEN data "
+                                          + "\n 1)Enpassent 2)half move number and 3)fullmove number "
+                                        + "\n\n Hence these values are set to default, you need to modify"
+                                          + "\n these data manually according to your requirement "
+                                        + "\n\n Click Ok to save this FEN or click Cancel to abort \n "
+                                        ,"Please note",
+                                        JOptionPane.QUESTION_MESSAGE,null,null,str);
+            if(obj == null)
+            {
+                System.out.println(("CANCEL SELECTED"));
+            }
+            else
+            {
+                System.out.println(("OK SELECTED " + obj));
+                //TODO
+                //Save the file with obj in it
+            }
+
         }
         if(j.getText().equals("Open FEN"))
         {
@@ -417,7 +625,7 @@ public class SetupPositionDialogUI  extends JDialog implements ActionListener,CC
                     + "\n1)Enpassent 2)half move number and 3)fullmove number"
                     + "\n\nClick Ok to continue or click Cancel to abort\n ","Please note",JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION)
             {
-                System.out.println("OK SELECTED");
+                System.out.println(("OPEN FEN SELECTED"));
                 //TODO
                 processOpenFenButton();
             }
@@ -512,7 +720,7 @@ public class SetupPositionDialogUI  extends JDialog implements ActionListener,CC
         int choice = fileChooser.showOpenDialog(this);
         if (choice == JFileChooser.APPROVE_OPTION)
         {
-            System.out.println(fileChooser.getSelectedFile());
+            System.out.println((fileChooser.getSelectedFile()));
             File file = fileChooser.getSelectedFile();
             String record = "";
             try
@@ -526,8 +734,9 @@ public class SetupPositionDialogUI  extends JDialog implements ActionListener,CC
                     record = record.trim();
                     if(record.matches("^[1-8rnbqkRNBQK].*"))
                     {
-                        System.out.println("GOT A VALID STRING");
-                        System.out.println(record);
+                        System.out.println(("GOT A VALID STRING"));
+                        System.out.println((record));
+                        this.validateFENData(record);
                         break;
                     }
                     else
@@ -541,16 +750,184 @@ public class SetupPositionDialogUI  extends JDialog implements ActionListener,CC
             catch (IOException e)
             {
                // catch possible io errors from readLine()
-               System.out.println("Uh oh, got an IOException error!");
+               System.out.println(("Uh oh, got an IOException error!"));
                e.printStackTrace();
             }
-
-            validateFENData(record);
         }
     }
 
     public void validateFENData(String s)
     {
         //TODO
+        String[] slist = s.split(" ");
+        if(slist.length!=6)
+            System.out.println(("INVALID STRING "+s));
+        String s1 = slist[0];
+        String s2 = slist[1];
+        String s3 = slist[2];
+        String s4 = slist[3];
+        String s5 = slist[4];
+        String s6 = slist[5];
+
+        String[] s1list = s1.split("/");
+        if(s1list.length!=8)
+            System.out.println(("INVALID STRING1 "+s1));
+        if(!(s2.matches("w|b")))
+            System.out.println(("INVALID STRING2 "+s2));
+        if(!(s3.matches("[-kqKQ]+")))
+            System.out.println(("INVALID STRING3 "+s3));
+        if(!(s4.matches("[-a-h1-8]+")))
+            System.out.println(("INVALID STRING3 "+s4));
+        if(!(s5.matches("[0-9]+")))
+            System.out.println(("INVALID STRING3 "+s5));
+        if(!(s6.matches("[0-9]+")))
+            System.out.println(("INVALID STRING3 "+s6));
+
+        //setup pieces
+        populatePositions(s1list);
+        
+        //check whose turn is it
+        if(s2.matches("w"))
+            spc.rbWhite.setSelected(true);
+        else
+            spc.rbBlack.setSelected(true);
+
+        //check castling
+        char[] s3list = s3.toCharArray();
+        spc.cbBlackKingCastle.setSelected(false);
+        spc.cbBlackQueenCastle.setSelected(false);
+        spc.cbWhiteKingCastle.setSelected(false);
+        spc.cbWhiteQueenCastle.setSelected(false);
+        for(int i=0;i<s3list.length;i++)
+        {
+            if(s3list[i]=='K')
+            {
+                spc.cbWhiteKingCastle.setSelected(true);
+            }
+            if(s3list[i]=='Q')
+            {
+                spc.cbWhiteQueenCastle.setSelected(true);
+            }
+            if(s3list[i]=='k')
+            {
+                spc.cbBlackKingCastle.setSelected(true);
+            }
+            if(s3list[i]=='q')
+            {
+                spc.cbBlackQueenCastle.setSelected(true);
+            }
+        }
+    }
+
+
+
+
+    public void populatePositions(String[] s)
+    {
+        for(int index=0;index<8;index++)
+        {
+            int bIndex = index*8;
+            char[] slist = s[index].toCharArray();
+            for(int i=0;i<slist.length;i++)
+            {
+                String sa = ""+slist[i];
+                //System.out.println(sa);
+                if(sa.matches("[0-9]"))
+                {
+                    int k = Integer.parseInt(sa);
+                    for(int a=0;a<k;a++)
+                    {
+                        //set but[a] to blank
+                        jtb[bIndex].setIcon(null);
+                        jtb[bIndex].setPiece("");
+                        bIndex++;
+                    }
+                }
+                else if(sa.matches("r"))
+                {
+                    //set but(bIndex) to black rook
+                    jtb[bIndex].setIcon(new ImageIcon(getClass().getResource(blackRook)));
+                    jtb[bIndex].setPiece("BR");
+                    bIndex++;
+                }
+                else if(sa.matches("n"))
+                {
+                    //set but(bIndex) to black knight
+                    jtb[bIndex].setIcon(new ImageIcon(getClass().getResource(blackKnight)));
+                    jtb[bIndex].setPiece("BN");
+                    bIndex++;
+                }
+                else if(sa.matches("b"))
+                {
+                    //set but(bIndex) to black bishop
+                    jtb[bIndex].setIcon(new ImageIcon(getClass().getResource(blackBishop)));
+                    jtb[bIndex].setPiece("BB");
+                    bIndex++;
+                }
+                else if(sa.matches("q"))
+                {
+                    //set but(bIndex) to black queen
+                    jtb[bIndex].setIcon(new ImageIcon(getClass().getResource(blackQueen)));
+                    jtb[bIndex].setPiece("BQ");
+                    bIndex++;
+                }
+                else if(sa.matches("k"))
+                {
+                    //set but(bIndex) to black king
+                    jtb[bIndex].setIcon(new ImageIcon(getClass().getResource(blackKing)));
+                    jtb[bIndex].setPiece("BK");
+                    bIndex++;
+                }
+                else if(sa.matches("p"))
+                {
+                    //set but(bIndex) to black pawn
+                    jtb[bIndex].setIcon(new ImageIcon(getClass().getResource(blackPawn)));
+                    jtb[bIndex].setPiece("BP");
+                    bIndex++;
+                }
+                else if(sa.matches("R"))
+                {
+                    //set but(bIndex) to white rook
+                    jtb[bIndex].setIcon(new ImageIcon(getClass().getResource(whiteRook)));
+                    jtb[bIndex].setPiece("WR");
+                    bIndex++;
+                }
+                else if(sa.matches("N"))
+                {
+                    //set but(bIndex) to white knight
+                    jtb[bIndex].setIcon(new ImageIcon(getClass().getResource(whiteKnight)));
+                    jtb[bIndex].setPiece("WN");
+                    bIndex++;
+                }
+                else if(sa.matches("B"))
+                {
+                    //set but(bIndex) to white bishop
+                    jtb[bIndex].setIcon(new ImageIcon(getClass().getResource(whiteBishop)));
+                    jtb[bIndex].setPiece("WB");
+                    bIndex++;
+                }
+                else if(sa.matches("Q"))
+                {
+                    //set but(bIndex) to white queen
+                    jtb[bIndex].setIcon(new ImageIcon(getClass().getResource(whiteQueen)));
+                    jtb[bIndex].setPiece("WQ");
+                    bIndex++;
+                }
+                else if(sa.matches("K"))
+                {
+                    //set but(bIndex) to white king
+                    jtb[bIndex].setIcon(new ImageIcon(getClass().getResource(whiteKing)));
+                    jtb[bIndex].setPiece("WK");
+                    bIndex++;
+                }
+                else if(sa.matches("P"))
+                {
+                    //set but(bIndex) to white pawn
+                    jtb[bIndex].setIcon(new ImageIcon(getClass().getResource(whitePawn)));
+                    jtb[bIndex].setPiece("WP");
+                    bIndex++;
+                }
+            }
+        }
     }
 }

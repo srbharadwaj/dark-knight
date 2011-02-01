@@ -41,7 +41,14 @@ import java.awt.*;
 public interface CConst
 {   
     String APP_NAME = "Dark-Knight";
-    String VERSION = "v0.0.3";
+
+    //Example : v0.0.3a
+    //First decimal is the main version
+    //second decimal indicates a stable release can be used by public
+    //thrid decimal indicates minor release can be used by public
+    //alpabets(a-z) after third decimal means work in progress still not stable
+    String VERSION = "v0.0.3a";
+
     String TITLE = APP_NAME + " " + VERSION;
     String WEBSITE = "https://code.google.com/p/dark-knight/";
     String PAWN = "Pawn";
@@ -78,6 +85,8 @@ public interface CConst
     static final String removeicon      ="/srb/images/icons/remove-16x16.png";
     static final String repeaticon      ="/srb/images/icons/Button-Reload-16x16.png";
 
+    //Toolbar icons
+    static final String opengameicon        = "/srb/images/icons/opengame.png";
    
 
     //include all gif files
@@ -104,6 +113,7 @@ public interface CConst
     String PREV = "/srb/images/prev.gif";
     String LAST = "/srb/images/end.gif";
     String APPICON = "srb/images/bnws.jpg";
+    String REVERSE = "/srb/images/reverse.png";
 
     Color cLight = new Color(102, 255, 102);
     Color cDark = new Color(51, 153, 0);
@@ -113,7 +123,8 @@ public interface CConst
     String REMOVE = "Remove Game";
     String EDITTAGS = "Edit Tags";
     String OPEN = "Load Game(s)";
-    String SAVE = "Save Game(s)";
+    String SAVE_AS_PGN = "Save Game(s) - PGN";
+    String SAVE_AS_FEN = "Save Game - FEN";
 
     String SETUP = "Setup Position";
 

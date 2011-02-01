@@ -109,7 +109,7 @@ public class AllPGNGames implements CConst
         catch (IOException e)
         {
            // catch possible io errors from readLine()
-           System.out.println("Uh oh, got an IOException error!");
+           System.out.println(("Uh oh, got an IOException error!"));
            e.printStackTrace();
         }
     } // end of readFileAndGetAllLines()

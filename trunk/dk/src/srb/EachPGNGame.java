@@ -80,7 +80,7 @@ public class EachPGNGame implements CConst
             //System.out.println(stag[0]+":"+stag[1]);
             String[] tagl = stag[0].split("\\[");
 
-            System.out.println("~"+tagl[1].trim()+"~"+stag[1]+"~");
+            System.out.println(("~"+tagl[1].trim()+"~"+stag[1]+"~"));
             String eachtaganddeatils = tagl[1].trim()+"~"+stag[1];
             allTagDetails.add(eachtaganddeatils);
         }
@@ -128,7 +128,7 @@ public class EachPGNGame implements CConst
                     }
                     if(sm[j].trim().matches("\\([0-9]+."))
                     {
-                        System.out.println("problem, its a variation its not supported"+ sm[j].trim());
+                        System.out.println(("problem, its a variation its not supported"+ sm[j].trim()));
                         System.exit(0);
                     }
 
@@ -190,23 +190,23 @@ public class EachPGNGame implements CConst
 
     public void print()
     {
-        System.out.println("GAME: "+gameNo);
-        System.out.println(": "+allWMoves.size() + "," + allBMoves.size());
+        System.out.println(("GAME: "+gameNo));
+        System.out.println((": "+allWMoves.size() + "," + allBMoves.size()));
         for(int k=0;k<allWMoves.size()-1;k++)
         {
             String wm = (String) allWMoves.get(k);
             String bm = (String) allBMoves.get(k);
-            System.out.println(k+1+ ": "+wm.length() + "," + bm.length() + " " + wm+ " " + bm);
+            System.out.println((k+1+ ": "+wm.length() + "," + bm.length() + " " + wm+ " " + bm));
         }
 
     }
      public void print1()
     {
-        System.out.println("GAME: "+gameNo);
+        System.out.println(("GAME: "+gameNo));
 
         for(int k=0;k<allLines.size();k++)
         {
-            System.out.println(allLines.get(k));
+            System.out.println((allLines.get(k)));
         }
 
     }
@@ -230,7 +230,7 @@ public class EachPGNGame implements CConst
                 case 2:
                     if(wm.matches("^[a-h][2-7]+$")){} //pawn move like e4,e5
                     else
-                        System.out.println("ERROR2!!! len=" + l +" '" + wm + "' dos'nt match regex  index " + k);
+                        System.out.println(("ERROR2!!! len=" + l +" '" + wm + "' dos'nt match regex  index " + k));
                     break;
                 case 3:
                     if(wm.matches("^[a-h][2-7][+]+$")){} //(case 2 + chk) like e4+
@@ -238,7 +238,7 @@ public class EachPGNGame implements CConst
                     else if(wm.matches("O-O+$")){} //castle k side like O-O
                     else if(wm.matches("^[RNBQK][a-h][1-8]+$")){} //other piece move like Qb6
                     else
-                        System.out.println("ERROR3!!! len=" + l +" '" + wm + "' dos'nt match regex  index " + k);
+                        System.out.println(("ERROR3!!! len=" + l +" '" + wm + "' dos'nt match regex  index " + k));
                     break;
                case 4:
                     if(wm.matches("O-O[+]+$")){} //(case 3.1 + chk) //castle k side + chk like O-O+
@@ -251,7 +251,7 @@ public class EachPGNGame implements CConst
                     else if(wm.matches("^[RNBQK][a-h][a-h][1-8]+$")){} //special mov like Ndc3
                     else if(wm.matches("^[RNBQK][1-8][a-h][1-8]+$")){} //special mov like N3g4
                     else
-                        System.out.println("ERROR4!!! len=" + l +" '" + wm + "' dos'nt match regex  index " + k);
+                        System.out.println(("ERROR4!!! len=" + l +" '" + wm + "' dos'nt match regex  index " + k));
                     break;
                case 5:
                     if(wm.matches("^[a-h][18]=[RNBQ][+]+$")){} //(case 4.1 + chk) pawn promo + chk like f1=Q+
@@ -269,7 +269,7 @@ public class EachPGNGame implements CConst
                     else if(wm.matches("^[RNBQK][1-8][x][a-h][1-8]+$")){} //special piece capture move like N5xe5
                     else if(wm.matches("^[RNBQK][a-h][x][a-h][1-8]+$")){} //special piece capture move like Nexd5
                     else
-                        System.out.println("ERROR5!!! len=" + l +" '" + wm + "' dos'nt match regex  index " + k);
+                        System.out.println(("ERROR5!!! len=" + l +" '" + wm + "' dos'nt match regex  index " + k));
                     break;
                 case 6:
                     if(wm.matches("O-O-O[+]+$")){} //(case 5.1 + chk) castle q side like O-O-O+
@@ -283,7 +283,7 @@ public class EachPGNGame implements CConst
                     else if(wm.matches("^[RNBQK][a-h][1-8][x][a-h][1-8]+$")){} //complete piece capture move like Ng2xh4
                     else if(wm.matches("^[a-h][x][a-h][18][=][RNBQ]+$")){} //pawn capture and promotion like exf8=Q
                     else
-                        System.out.println("ERROR6!!! len=" + l +" '" + wm + "' dos'nt match regex  index " + k);
+                        System.out.println(("ERROR6!!! len=" + l +" '" + wm + "' dos'nt match regex  index " + k));
                     break;
                 case 7:
                     if(wm.matches("^[RNBQK][a-h][1-8][x][a-h][1-8][+]+$")){}//(case 6.1 + chk)complete piece capture move + chk like Ng2xh4+
@@ -291,10 +291,10 @@ public class EachPGNGame implements CConst
                     else if(wm.matches("^[RNBQK][a-h][1-8][x][a-h][1-8][#]+$")){}//(case 6.1 + chkmate)
                     else if(wm.matches("^[a-h][x][a-h][18][=][RNBQ][#]+$")){}//(case 6.2 + chkmate)
                     else
-                        System.out.println("ERROR7!!! len=" + l +" '" + wm + "' dos'nt match regex  index " + k);
+                        System.out.println(("ERROR7!!! len=" + l +" '" + wm + "' dos'nt match regex  index " + k));
                     break;
                 default:
-                    System.out.println("ERROR!!! len=" + l +" '" + wm + "' dos'nt match regex  index " + k);
+                    System.out.println(("ERROR!!! len=" + l +" '" + wm + "' dos'nt match regex  index " + k));
                     break;
             }
         }
@@ -350,7 +350,7 @@ public class EachPGNGame implements CConst
                     JOptionPane.showMessageDialog(null,
             "ERROR!!! len=" + l +" '" + m + "' dos'nt match regex  index ");
 
-                    System.out.println("ERROR!!! len=" + l +" '" + m + "' dos'nt match regex  index ");
+                    System.out.println(("ERROR!!! len=" + l +" '" + m + "' dos'nt match regex  index "));
                     break;
         }
         //System.out.println("parseEachPGNMove : "+v);
@@ -589,7 +589,7 @@ public class EachPGNGame implements CConst
         v.add(check);
         v.add(promo);
 
-        System.out.println("getArrayList "+v);
+        System.out.println(("getArrayList "+v));
         return v;
 
     }
@@ -1122,21 +1122,21 @@ public class EachPGNGame implements CConst
     public void convertPGNMoveToGUIFormat(ArrayList allBandWMoves)
     {
         njf.whoseTurn = WHITE;
-        System.out.println("Class: convertPGNMoveToGUIFormat:: Size "+allBandWMoves.size());
+        System.out.println(("Class: convertPGNMoveToGUIFormat:: Size "+allBandWMoves.size()));
         for(int i=0;i<allBandWMoves.size();i++)
         {
-            System.out.println(njf.whoseTurn + "Class: convertPGNMoveToGUIFormat::Move " +allBandWMoves.get(i));
+            System.out.println((njf.whoseTurn + "Class: convertPGNMoveToGUIFormat::Move " +allBandWMoves.get(i)));
             String s = (String) allBandWMoves.get(i);
             if((s.matches("1/2-1/2")) || (s.matches("1-0")) || (s.matches("0-1")) || (s.matches("\\*")))
             {
-                System.out.println("Game done");
+                System.out.println(("Game done"));
                 njf.txtAreaMoves.append(s);
                 njf.game.setGameResult(s);
                 break;
             }
             else
             {
-                System.out.println("Class: convertPGNMoveToGUIFormat::Here" + allBandWMoves.get(i));
+                System.out.println(("Class: convertPGNMoveToGUIFormat::Here" + allBandWMoves.get(i)));
                 parseEachPGNMove(njf.whoseTurn,(String) allBandWMoves.get(i));
             }
         }

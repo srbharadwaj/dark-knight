@@ -217,6 +217,7 @@ public class GamesPanelUI extends JPanel {
 
     public void callLoadGame()
     {
+        updateGamesPanelUI(njf.gameList);
         for(int i=0;i<njf.gameList.size();i++)
         {
             Game g = (Game) njf.gameList.get(i);
@@ -233,22 +234,34 @@ public class GamesPanelUI extends JPanel {
                 ArrayList v = new ArrayList();
                 for(int k=0;k<g.allBWMoves.size();k++)
                 {
-                    System.out.println("Class : callLoadGame :: "+g.allBWMoves.get(k));
+                    System.out.println(("Class : callLoadGame :: "+g.allBWMoves.get(k)));
                     v.add(g.allBWMoves.get(k));
                 }
 
                 e.convertPGNMoveToGUIFormat(v);
+                labGameNo.setText(Integer.toString(g.gameno));
+                labWhitePlayerName.setText(g.wPlayersName);
+                labBlackPlayerName.setText(g.bPlayerName);
+                labGameResult.setText(g.gameResult);
+
                 break;
             }
         }
     }
 
     public void updateGamesPanelUI(ArrayList gameList) {
-        njf.game.updateGame();
-        labGameNo.setText(Integer.toString(njf.game.gameno));
-        labWhitePlayerName.setText(njf.game.wPlayersName);
-        labBlackPlayerName.setText(njf.game.bPlayerName);
-        labGameResult.setText(njf.game.gameResult);
+        
+        for(int i=0;i<gameList.size();i++)
+        {
+            Game g = (Game) gameList.get(i);
+            if(g.gameno == njf.currentGameNo)
+            {
+                 labGameNo.setText(Integer.toString(g.gameno));
+                 labWhitePlayerName.setText(g.wPlayersName);
+                 labBlackPlayerName.setText(g.bPlayerName);
+                labGameResult.setText(g.gameResult);
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -58,8 +58,6 @@ public class Game implements CConst
                 }
             }
         }
-        System.out.println("MM "+s);
-        System.out.println("BW "+s.split(" ")[1]);
         //allBWMoves.add(s.split(" ")[1]);
         if(s.contains("."))
             allBWMoves.add(s.split("\\.")[1].trim());
