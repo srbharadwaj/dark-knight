@@ -140,7 +140,7 @@
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="A Simple Two Player Chess Game cum PGN Viewer"/>
+        <Property name="text" type="java.lang.String" value="A Simple Two Player Chess Game cum PGN/FEN Viewer"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel8">

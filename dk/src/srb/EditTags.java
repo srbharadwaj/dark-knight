@@ -367,7 +367,7 @@ public class EditTags extends JDialog implements CConst {
             bEdit.setEnabled(true);
             for(int i=0;i<alltags.size();i++)
             {
-                System.out.println(alltags.get(i));
+                System.out.println((alltags.get(i)));
 
                 String s = (String) alltags.get(i);
                 String[] t = s.split("~");
@@ -392,7 +392,7 @@ public class EditTags extends JDialog implements CConst {
             bDel.setEnabled(true);
             for(int i=0;i<alltags.size();i++)
             {
-                System.out.println(alltags.get(i));
+                System.out.println((alltags.get(i)));
 
                 String s = (String) alltags.get(i);
                 String[] t = s.split("~");
@@ -424,7 +424,7 @@ public class EditTags extends JDialog implements CConst {
                         String[] t = s.split("~");
                         if(o.equals(t[0]))
                         {
-                            System.out.println(alltags.remove(s));
+                            System.out.println((alltags.remove(s)));
                         }
                     }
                     
@@ -494,7 +494,7 @@ public class EditTags extends JDialog implements CConst {
 
         for(int i=0;i<tags.size();i++)
         {
-            System.out.println(tags.get(i));
+            System.out.println((tags.get(i)));
             JLabel tn = new JLabel();
             JLabel tv = new JLabel();
 

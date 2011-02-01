@@ -390,7 +390,7 @@ private SetupPositionDialogUI aThis = null;
                     .addComponent(cbWhiteQueenCastle)
                     .addComponent(cbBlackKingCastle)
                     .addComponent(cbBlackQueenCastle))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -182,7 +182,7 @@ public class CP implements CConst
 
          int newpos;
 
-         //moves vertically so add 10 for white piece
+         //moves vertically so add 10 for white piece and -10 for black pieces
          if(getPieceColor().equals(WHITE))
          {
             newpos = getCurrentPosition() + 10;
@@ -620,7 +620,7 @@ public class CP implements CConst
      {
         for(int i=0;i<movesPossible.size();i++)
         {
-            System.out.println(movesPossible.get(i));
+            System.out.println((movesPossible.get(i)));
         }
     }
 

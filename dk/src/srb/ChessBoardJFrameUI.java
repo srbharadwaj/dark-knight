@@ -22,13 +22,13 @@ import javax.swing.*;
  */
 public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionListener,ItemListener,CConst
 {
-    // private JMenuItem menuItemLocateEngine;
-        private JMenu menuItemEngine;
-          private ButtonGroup engineGroup;
-          public JRadioButtonMenuItem menuItemEngineOff;
-          private JRadioButtonMenuItem menuItemEngineOn;
-           public EngineProcess engineProcess = null;
-           public String engineFileName = null;
+    private JMenuItem menuItemLocateEngine;
+    private JMenu menuItemEngine;
+    private ButtonGroup engineGroup;
+    public JRadioButtonMenuItem menuItemEngineOff;
+    private JRadioButtonMenuItem menuItemEngineOn;
+    public EngineProcess engineProcess = null;
+    public String engineFileName = null;
 
     public JPanel mainP = new JPanel(new BorderLayout());
     public JPanel cP = new JPanel(new BorderLayout());
@@ -38,6 +38,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
     public JPanel wP = new JPanel(new BorderLayout());
 
     public JPanel chessBoardContainer = new JPanel(new BorderLayout());
+    //public JPanel chessBoardContainer = new JPanel(new GridBagLayout());
     public JPanel chessBoard = new JPanel(new GridLayout(8,8));
     public JPanel butJPanel = new JPanel(new FlowLayout());
 
@@ -45,11 +46,14 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
     public JPanel blackCapPanel = new JPanel(new GridLayout(4,4));
 
     public JTextArea txtAreaMoves = new JTextArea();
+    public JTextArea txtAreaLog = new JTextArea();
 
     public JButton first = new JButton("First");
     public JButton prev = new JButton("Prev");
     public JButton next = new JButton("Next");
     public JButton last = new JButton("Last");
+
+    public JCheckBoxMenuItem jcbMi = new JCheckBoxMenuItem("Flip Board");
 
     public JMenuBar menuBar = new JMenuBar();
     public CB cbo;
@@ -68,18 +72,19 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
     public ArrayList gameList = new ArrayList();
     public Game game = null;
     public GamesPanelUI gamesPanelUI = null;
+    public LogData log = null;
 
-    public static void main(String args[])
+    public JToolBar toolBar = new JToolBar();
+    public JButton toolBarButtonOpen = new JButton();
+    public JButton toolBarButtonSaveAsPGN = new JButton();
+    public JButton toolBarButtonSaveAsFEN = new JButton();
+
+    public static void main(String args[]) throws IOException
     {
-        System.out.println("*****************************************************************");
-        System.out.println("\t\t" + TITLE);
-        System.out.println("   Copyright (C) 2009  Suhas Bharadwaj (srbharadwaj@gmail.com)");
-        System.out.println("*****************************************************************");
-
         new ChessBoardJFrameUI();
     }
 
-    public ChessBoardJFrameUI()
+    public ChessBoardJFrameUI() throws IOException
     {  
         cbo = new CB();
 
@@ -89,6 +94,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
 
         gamesPanelUI = new GamesPanelUI(this);
         setJMenuBar(createMenuBar());
+        
 
         mainP.add(processCenterPanel(),BorderLayout.CENTER);
         mainP.add(nP,BorderLayout.NORTH);
@@ -96,11 +102,12 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
         mainP.add(processEastPanel(),BorderLayout.EAST);
         mainP.add(processWestPanel(),BorderLayout.WEST);
 
+        //nP.add(createToolBar());
 
         setContentPane(mainP);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.addWindowListener(this);
-        setSize(760, 660);
+        setSize(760, 760);
         //Display the window.
         setVisible(true);
         setResizable(false);
@@ -116,6 +123,14 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
         ImageIcon imageIcon16 = new ImageIcon(ChessBoardJFrameUI.class.getClassLoader().getResource(APPICON));
         setIconImage(imageIcon16.getImage());
         //setIconImage(new ImageIcon(ChessBoardJFrameUI.class.getClassLoader().getResource(APPICON)));
+
+        log = new LogData(this);
+
+        log.logLine("*****************************************************************");
+        log.logLine("\t\t" + TITLE);
+        log.logLine("   Copyright (C) 2009  Suhas Bharadwaj (srbharadwaj@gmail.com)");
+        log.logLine("*****************************************************************");
+
 
     }
 
@@ -152,13 +167,13 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
         sP.revalidate();
         JScrollPane jScrollPane2 = new JScrollPane();
         jScrollPane2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Log"));
-        JTextArea jTextArea2 = new JTextArea();
-        jTextArea2.setColumns(20);
-        jTextArea2.setEditable(false);
-        jTextArea2.setLineWrap(true);
-        jTextArea2.setRows(5);
-        jTextArea2.setWrapStyleWord(true);
-        jScrollPane2.setViewportView(jTextArea2);
+        
+        txtAreaLog.setColumns(20);
+        txtAreaLog.setEditable(false);
+        txtAreaLog.setLineWrap(true);
+        txtAreaLog.setRows(5);
+        txtAreaLog.setWrapStyleWord(true);
+        jScrollPane2.setViewportView(txtAreaLog);
 
         sP.add(jScrollPane2);
 
@@ -213,6 +228,16 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
 
     }
 
+    public JToolBar createToolBar()
+    {
+        toolBarButtonOpen.setIcon(new ImageIcon(getClass().getResource(openicon)));
+        //toolBarButtonOpen.setText("open");
+        toolBarButtonOpen.addActionListener(this);
+        toolBar.add(toolBarButtonOpen);
+        toolBar.setFloatable(false);
+        return toolBar;
+    }
+
     public JMenuBar createMenuBar()
     {
 
@@ -224,9 +249,13 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
         miO.setMnemonic(KeyEvent.VK_L);
         miO.addActionListener(this);
 
-        JMenuItem miS = new JMenuItem(SAVE);
-        miS.setMnemonic(KeyEvent.VK_S);
+        JMenuItem miS = new JMenuItem(SAVE_AS_PGN);
+        miS.setMnemonic(KeyEvent.VK_P);
         miS.addActionListener(this);
+
+        JMenuItem miS_FEN = new JMenuItem(SAVE_AS_FEN);
+        miS_FEN.setMnemonic(KeyEvent.VK_F);
+        miS_FEN.addActionListener(this);
 
         JSeparator js0 = new JSeparator();
         JSeparator js1 = new JSeparator();
@@ -238,6 +267,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
 
         menuOpt.add(miO);
         menuOpt.add(miS);
+        menuOpt.add(miS_FEN);
         menuOpt.add(js0);
         
        //  menuItemLocateEngine = new JMenuItem("Locate Chess Engine");
@@ -303,7 +333,6 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
 
         JMenu menuOptions = new JMenu("Options");
         menuOptions.setMnemonic(KeyEvent.VK_O);
-        JCheckBoxMenuItem jcbMi = new JCheckBoxMenuItem("Flip Board");
         JCheckBoxMenuItem jcbM = new JCheckBoxMenuItem("HighLight Possible Moves");
         jcbM.setSelected(true);
         menuOptions.add(jcbMi);
@@ -329,6 +358,63 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
         return menuBar;
     }
 
+    public String getFEN_Pawns()
+    {
+        String s = "";
+        String str = "";
+        int blank =0;
+        for(int i=0;i<64;i++)
+        {
+            if((i%8==0) && (i!=0))
+            {
+                if(blank!=0)
+                    s=s+blank+"/";
+                else
+                    s=s+"/";
+                blank=0;
+            }
+
+            CP p = jtb[i].getChessp();
+            if(p == null)
+                blank++;
+            else if(p.getPieceName().equals(PAWN))
+                str="P";
+            else if(p.getPieceName().equals(ROOK))
+                str="R";
+            else if(p.getPieceName().equals(KNIGHT))
+                str="N";
+            else if(p.getPieceName().equals(BISHOP))
+                str="B";
+            else if(p.getPieceName().equals(QUEEN))
+                str="Q";
+            else if(p.getPieceName().equals(KING))
+                str="K";
+
+
+            if((p != null) && (p.getPieceColor().equals(BLACK)))
+            {
+                if(blank!=0)
+                    s=s+blank;
+                str =str.toLowerCase();
+                s=s+str;
+                blank=0;
+            }
+            else if((p!=null) && (p.getPieceColor().equals(WHITE)))
+            {
+                if(blank!=0)
+                    s=s+blank;
+                s=s+str;
+                blank=0;
+            }
+            if((blank!=0) && (i==63))
+            {
+                s=s+blank;
+                blank=0;
+            }
+        }
+        return s;
+    }
+
     public void windowOpened(WindowEvent e) {
   }
 
@@ -345,13 +431,13 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
   }
 
   public void windowClosing(WindowEvent e) {
-      System.out.println("closing");
+      //System.out.println(("closing");
     stopEngine();
        
   }
 
   public void windowClosed(WindowEvent e) {
-      System.out.println("closed");
+      //System.out.println(("closed");
   }
      class LocateEngineListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
@@ -406,7 +492,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
             if (choice == JFileChooser.APPROVE_OPTION)
             {
 
-                System.out.println(fileChooser.getSelectedFile().toString());
+                //System.out.println((fileChooser.getSelectedFile().toString());
                 this.engineFileName = fileChooser.getSelectedFile().toString();
             }
    /* if (fileChooserParameter("engineFileName", "Locate Engine", null)) {
@@ -475,8 +561,10 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
 
         setPieceUI();
         chessBoardContainer.add(chessBoard,BorderLayout.CENTER);
-
-        chessBoardContainer.add(addA_Hpanel(true),BorderLayout.NORTH);
+        chessBoardContainer.add(addA_Hpanel(true),BorderLayout.PAGE_START);
+        chessBoardContainer.add(addA_Hpanel(true),BorderLayout.PAGE_END);
+        chessBoardContainer.add(add1_8panel(true),BorderLayout.LINE_START);
+        chessBoardContainer.add(add1_8panel(true),BorderLayout.LINE_END);
 
         return chessBoardContainer;
     }
@@ -484,9 +572,94 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
     public JPanel addA_Hpanel(Boolean straight)
     {
 
-        JPanel jpN = new JPanel();
-        jpN.setLayout(new GridLayout(1,8));
+        JPanel jpN = new JPanel(new GridBagLayout());
 
+        GridBagConstraints gbc100 = new GridBagConstraints();
+        gbc100.fill = GridBagConstraints.HORIZONTAL;
+        gbc100.ipadx=-9;
+        gbc100.gridx = 0;
+        gbc100.gridy = 0;
+
+        GridBagConstraints gbc101 = new GridBagConstraints();
+        gbc101.fill = GridBagConstraints.HORIZONTAL;
+        gbc101.ipadx=-9;
+        gbc101.gridx = 9;
+        gbc101.gridy = 0;
+
+        GridBagConstraints gbc1 = new GridBagConstraints();
+        gbc1.fill = GridBagConstraints.HORIZONTAL;
+        gbc1.ipadx=20;
+        gbc1.gridx = 1;
+        gbc1.gridy = 0;
+
+        GridBagConstraints gbc2 = new GridBagConstraints();
+        gbc2.fill = GridBagConstraints.HORIZONTAL;
+        gbc2.ipadx=20;
+        gbc2.gridx = 2;
+        gbc2.gridy = 0;
+
+        GridBagConstraints gbc3 = new GridBagConstraints();
+        gbc3.fill = GridBagConstraints.HORIZONTAL;
+        gbc3.ipadx=20;
+        gbc3.gridx = 3;
+        gbc3.gridy = 0;
+
+        GridBagConstraints gbc4 = new GridBagConstraints();
+        gbc4.fill = GridBagConstraints.HORIZONTAL;
+        gbc4.ipadx=20;
+        gbc4.gridx = 4;
+        gbc4.gridy = 0;
+
+        GridBagConstraints gbc5 = new GridBagConstraints();
+        gbc5.fill = GridBagConstraints.HORIZONTAL;
+        gbc5.ipadx=20;
+        gbc5.gridx = 5;
+        gbc5.gridy = 0;
+
+        GridBagConstraints gbc6 = new GridBagConstraints();
+        gbc6.fill = GridBagConstraints.HORIZONTAL;
+        gbc6.ipadx=20;
+        gbc6.gridx = 6;
+        gbc6.gridy = 0;
+
+        GridBagConstraints gbc7 = new GridBagConstraints();
+        gbc7.fill = GridBagConstraints.HORIZONTAL;
+        gbc7.ipadx=20;
+        gbc7.gridx = 7;
+        gbc7.gridy = 0;
+
+        GridBagConstraints gbc8 = new GridBagConstraints();
+        gbc8.fill = GridBagConstraints.HORIZONTAL;
+        gbc8.ipadx=20;
+        gbc8.gridx = 8;
+        gbc8.gridy = 0;
+
+        GridBagConstraints gbc9 = new GridBagConstraints();
+        gbc9.fill = GridBagConstraints.HORIZONTAL;
+        gbc9.ipadx=-10;
+        gbc9.gridx = 0;
+        gbc9.gridy = 0;
+
+        JButton l100 = new JButton();
+        l100.setIcon(new ImageIcon(getClass().getResource(REVERSE)));
+        l100.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if(jcbMi.isSelected())
+                    jcbMi.setSelected(false);
+                else
+                    jcbMi.setSelected(true);
+            }
+        });
+        JButton l101 = new JButton();
+        l101.setIcon(new ImageIcon(getClass().getResource(REVERSE)));
+        l101.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if(jcbMi.isSelected())
+                    jcbMi.setSelected(false);
+                else
+                    jcbMi.setSelected(true);
+            }
+        });
         JToggleButton l1 = new JToggleButton("a");
         JToggleButton l2 = new JToggleButton("b");
         JToggleButton l3 = new JToggleButton("c");
@@ -506,6 +679,61 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
         l8.setEnabled(false);
 
         if(straight)
+        {
+            jpN.add(l100,gbc100);
+            jpN.add(l1,gbc1);
+            jpN.add(l2,gbc2);
+            jpN.add(l3,gbc3);
+            jpN.add(l4,gbc4);
+            jpN.add(l5,gbc5);
+            jpN.add(l6,gbc6);
+            jpN.add(l7,gbc7);
+            jpN.add(l8,gbc8);
+            jpN.add(l101,gbc101);
+        }
+        else
+        {
+            jpN.add(l100,gbc101);
+            jpN.add(l8,gbc1);
+            jpN.add(l7,gbc2);
+            jpN.add(l6,gbc3);
+            jpN.add(l5,gbc4);
+            jpN.add(l4,gbc5);
+            jpN.add(l3,gbc6);
+            jpN.add(l2,gbc7);
+            jpN.add(l1,gbc8);
+            jpN.add(l101,gbc100);
+        }
+
+        return jpN;
+      
+    }
+
+    public JPanel add1_8panel(Boolean straight)
+    {
+
+        JPanel jpN = new JPanel();
+        jpN.setLayout(new GridLayout(8,1));
+
+        MyJToggleButtonUI l1 = new MyJToggleButtonUI("1");
+        MyJToggleButtonUI l2 = new MyJToggleButtonUI("2");
+        MyJToggleButtonUI l3 = new MyJToggleButtonUI("3");
+        MyJToggleButtonUI l4 = new MyJToggleButtonUI("4");
+        MyJToggleButtonUI l5 = new MyJToggleButtonUI("5");
+        MyJToggleButtonUI l6 = new MyJToggleButtonUI("6");
+        MyJToggleButtonUI l7 = new MyJToggleButtonUI("7");
+        MyJToggleButtonUI l8 = new MyJToggleButtonUI("8");
+
+        l1.setEnabled(false);
+        l2.setEnabled(false);
+        l3.setEnabled(false);
+        l4.setEnabled(false);
+        l5.setEnabled(false);
+        l6.setEnabled(false);
+        l7.setEnabled(false);
+        l8.setEnabled(false);
+
+        if(!straight)
         {
             jpN.add(l1);
             jpN.add(l2);
@@ -529,7 +757,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
         }
 
         return jpN;
-      
+
     }
 
     private JPanel createButPanel()
@@ -593,7 +821,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
             {
                 if(newButSel.getChessp().getPieceColor().equals(whoseTurn))
                 {
-                    System.out.println("Good its a "+ whoseTurn +" piece");
+                    //System.out.println(("Good its a "+ whoseTurn +" piece");
                     prevButSel = newButSel;
                     if(highlight)
                     {
@@ -602,13 +830,13 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
                 }
                 else
                 {
-                    System.out.println("Its not a "+whoseTurn+" piece");
+                    //System.out.println(("Its not a "+whoseTurn+" piece");
                     newButSel.setSelected(false);
                 }
             }
             catch(NullPointerException npe)
             {
-                System.out.println("Its not a "+whoseTurn+" piece");
+                //System.out.println(("Its not a "+whoseTurn+" piece");
                 newButSel.setSelected(false);
             }
         }
@@ -656,23 +884,23 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
     private String chkIfPawnPromoted(MyJToggleButtonUI but)
     {
         CP pi = but.getChessp();
-        System.out.println(pi.getPieceName());
-        System.out.println(pi.getCurrentPosition()/10);
+        //System.out.println((pi.getPieceName());
+        //System.out.println((pi.getCurrentPosition()/10);
         if((pi.getPieceName().equals(PAWN))&&(pi.getCurrentPosition()>80)&&(pi.getCurrentPosition()<89))
         {
-            System.out.println("Yes promote white pawn at "+pi.getCurrentPosition());
+            //System.out.println(("Yes promote white pawn at "+pi.getCurrentPosition());
             PawnPromoDialogUI dia = new PawnPromoDialogUI(this,true,WHITE);
             dia.setVisible(true);
-            System.out.println("selected is : "+ dia.selectedPiece);
+            //System.out.println(("selected is : "+ dia.selectedPiece);
             processPromotedPawn(but,dia.selectedPiece,WHITE);
             return dia.selectedPiece;
         }
         else if((pi.getPieceName().equals(PAWN))&&(pi.getCurrentPosition()>10)&&(pi.getCurrentPosition()<19))
         {
-            System.out.println("Yes promote black pawn at "+pi.getCurrentPosition());
+            //System.out.println(("Yes promote black pawn at "+pi.getCurrentPosition());
              PawnPromoDialogUI dia = new PawnPromoDialogUI(this,true,BLACK);
             dia.setVisible(true);
-            System.out.println("selected is : "+ dia.selectedPiece);
+            //System.out.println(("selected is : "+ dia.selectedPiece);
             processPromotedPawn(but,dia.selectedPiece,BLACK);
             return dia.selectedPiece;
         }
@@ -732,7 +960,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
         int butNewPos = newposition;
         int capButPos = captureButPos;
 
-        System.out.println(butCurPos+" "+butNewPos+ " "+capButPos);
+        //System.out.println((butCurPos+" "+butNewPos+ " "+capButPos);
         MyJToggleButtonUI mjtbbutCurPos=null;
         MyJToggleButtonUI mjtbbutNewPos=null;
         MyJToggleButtonUI mjtbcapButPos=null;
@@ -771,7 +999,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
                 completeCastlingMove(oldCP.getCurrentPosition(),"kingside");
                 //castleWhichSide = "KS";
                 //return true;
-                System.out.println("Castling done");
+                //System.out.println(("Castling done");
                 return "KS";
             }
             else if(i==-2)
@@ -880,7 +1108,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
         if(prevButCP.isMovePossible(newpos))
         {
             currentMoveNo++;
-            System.out.println("Can be moved");
+            //System.out.println(("Can be moved");
             cbo.allMoves.add(newpos);
 
             //chk if castling attempted
@@ -893,7 +1121,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
             else if(isEnPassentAttempted(prevButCP,newpos))
             {
                 cap=true;
-                System.out.println("EnPassent done");
+                //System.out.println(("EnPassent done");
             }
             else
             {
@@ -938,7 +1166,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
 
             if(cbo.isKingInCheck(whoseTurn))
             {
-                System.out.println(whoseTurn + " IS IN CHECK");
+                //System.out.println((whoseTurn + " IS IN CHECK");
                 if(v==null)
                 {
                 chk=true;
@@ -958,7 +1186,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
                 //if it return true then chkmate
                 if(isCheckMate(whoseTurn))
                 {
-                    System.out.println("CHECKMATE..."+whoseTurn+" loses");
+                    //System.out.println(("CHECKMATE..."+whoseTurn+" loses");
                     check="CM";
                 }
             }
@@ -967,14 +1195,14 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
                 //if it returns true then stalemate
                 if(isCheckMate(whoseTurn))
                 {
-                    System.out.println("STALEMATE... its a draw");
+                    //System.out.println(("STALEMATE... its a draw");
                     check="SM";
                 }
             }
             }
             
             String m = calculatePGNMovesFromGUIMoves(col,name,fPos,tPos,cap,castle,check,promo);
-            System.out.println("Move is : "+ m );
+            //System.out.println(("Move is : "+ m );
             //txtAreaMoves.append(m);
             appendMoves(m);
             game.addMove(currentMoveNo,m);
@@ -1024,7 +1252,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
         }
         else
         {
-            System.out.println("Its not a valid move");
+            //System.out.println(("Its not a valid move");
             newBut.setSelected(false);
             prevBut.setSelected(false);
         }
@@ -1034,6 +1262,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
     {
         txtAreaMoves.append(" 0-1");
         game.setGameResult("0-1");
+        gamesPanelUI.updateGamesPanelUI(gameList);
         //JOptionPane.showMessageDialog(this,"CheckMate...\nBlack Wins!!!","Game Over...",JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -1041,6 +1270,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
     {
         txtAreaMoves.append(" 1-0");
         game.setGameResult("1-0");
+        gamesPanelUI.updateGamesPanelUI(gameList);
         //JOptionPane.showMessageDialog(this,"CheckMate...\nWhite Wins!!!","Game Over...",JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -1048,6 +1278,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
     {
         txtAreaMoves.append(" 1/2-1/2");
         game.setGameResult("1/2-1/2");
+        gamesPanelUI.updateGamesPanelUI(gameList);
         //JOptionPane.showMessageDialog(this,"StaleMate.. its a draw","Game Over...",JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -1064,7 +1295,10 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
             {
                 chessBoard.add(jtb[i]);
             }
-            chessBoardContainer.add(addA_Hpanel(false),BorderLayout.NORTH);
+            chessBoardContainer.add(addA_Hpanel(false),BorderLayout.PAGE_START);
+            chessBoardContainer.add(addA_Hpanel(false),BorderLayout.PAGE_END);
+            chessBoardContainer.add(add1_8panel(false),BorderLayout.LINE_START);
+            chessBoardContainer.add(add1_8panel(false),BorderLayout.LINE_END);
         }
         else
         {
@@ -1074,7 +1308,10 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
             {
                 chessBoard.add(jtb[i]);
             }
-            chessBoardContainer.add(addA_Hpanel(true),BorderLayout.NORTH);
+            chessBoardContainer.add(addA_Hpanel(true),BorderLayout.PAGE_START);
+            chessBoardContainer.add(addA_Hpanel(true),BorderLayout.PAGE_END);
+            chessBoardContainer.add(add1_8panel(true),BorderLayout.LINE_START);
+            chessBoardContainer.add(add1_8panel(true),BorderLayout.LINE_END);
         }
         chessBoard.repaint();
 
@@ -1114,7 +1351,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
          */
         //AllPGNGames convertPGNMoveToGUIFormat = new AllPGNGames(this,null);
 
-        System.out.println("col is : "+ col +"name is : "+ name +"fPos is : "+ fPos +"tPos is : "+ tPos +"cap is : "+ cap +"castle is : "+ castle +"chk is : "+ chk +"promo is : "+ promo);
+        //System.out.println(("col is : "+ col +"name is : "+ name +"fPos is : "+ fPos +"tPos is : "+ tPos +"cap is : "+ cap +"castle is : "+ castle +"chk is : "+ chk +"promo is : "+ promo);
         String s = "";
         if(col.equals(WHITE))
         {
@@ -1446,7 +1683,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
             for(int i=0;i<game.moveList.size();i++)
             {
                 Move m = (Move) game.moveList.get(i);
-                System.out.println("GUIClicked "+ m.movePGNString);
+                //System.out.println(("GUIClicked "+ m.movePGNString);
                 appendMoves(m.movePGNString);
                 if(i%2==1)
                 {
@@ -1480,35 +1717,35 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
         }
         else if(e.getActionCommand().equals("Prev"))
         {
-            System.out.println("Prev is clicked");
-            System.out.println(currentMoveNo);
+            //System.out.println(("Prev is clicked");
+            //System.out.println((currentMoveNo);
             currentMoveNo--;
             guiButtonIsClicked(currentMoveNo);
         }
         else if(e.getActionCommand().equals("First"))
         {
-            System.out.println("First is clicked");
+            //System.out.println(("First is clicked");
             //System.out.println(currentMoveNo);
             currentMoveNo = 0;
             guiButtonIsClicked(currentMoveNo);
         }
         else if(e.getActionCommand().equals("Next"))
         {
-            System.out.println("Next is clicked");
+            //System.out.println(("Next is clicked");
             //System.out.println(currentMoveNo);
             currentMoveNo++;
             guiButtonIsClicked(currentMoveNo);
         }
         else if(e.getActionCommand().equals("Last"))
         {
-            System.out.println("Last is clicked");
+            //System.out.println(("Last is clicked");
             //System.out.println(currentMoveNo);
             currentMoveNo = game.moveList.size();
             guiButtonIsClicked(currentMoveNo);
         }
         else if(e.getActionCommand().equals(NEW))
         {
-            System.out.println("New is clicked");
+            //System.out.println(("New is clicked");
             //NewGameDialog ngd = new NewGameDialog(this,true);
             //ngd.setVisible(true);
             currentMoveNo=0;
@@ -1531,7 +1768,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
             int choice = fileChooser.showOpenDialog(this);
             if (choice == JFileChooser.APPROVE_OPTION)
             {
-                System.out.println(fileChooser.getSelectedFile());
+                //System.out.println((fileChooser.getSelectedFile());
                 AllPGNGames allGames = new AllPGNGames(this,fileChooser.getSelectedFile());
                 //setEachPGNGame(currentGameNo);
                 //loadFile(fileChooser.getSelectedFile());
@@ -1539,7 +1776,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
                 // setTitle(fileName);
                 //fileIsChanged = false;
 
-                System.out.println("HERE :"+ new Date());
+                //System.out.println(("HERE :"+ new Date());
                 //currentMoveNo=0;
                 //cbo.resetCB();
                 //resetChessBoardUI(true);
@@ -1551,26 +1788,27 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
                 for(int i=0;i<allGames.pgnGames.size();i++)
                 {
                     EachPGNGame eg = (EachPGNGame) allGames.pgnGames.get(i);
-                    System.out.println("Game no "+ eg.getGameNumber());
+                    //System.out.println("Game no "+ eg.getGameNumber());
                     currentGameNo = gameList.size()+1;
                     game = new Game(cbo,currentGameNo,false);
                     gameList.add(game);
-                   
+
+                    game.allBWMoves.clear();
                     for(int a=0;a<eg.allBandWMoves.size();a++)
                     {
                         game.allBWMoves.add(eg.allBandWMoves.get(a));
                         //System.out.println(eg.allBandWMoves.get(a));
                     }
+                    game.tags.clear();
                     for(int a=0;a<eg.allTagDetails.size();a++)
                     {
                         game.tags.add(eg.allTagDetails.get(a));
-                        //System.out.println(eg.allBandWMoves.get(a));
                     }
 
                     //eg.convertPGNMoveToGUIFormat();
                     
                 }
-                System.out.println("HERE :"+ new Date());
+                //System.out.println("HERE :"+ new Date());
                 
                 setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 for(int i=0;i<gameList.size();i++)
@@ -1579,27 +1817,30 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
                     currentGameNo = i+1;
                     EachPGNGame  e1 = new EachPGNGame(this,currentGameNo);
                     loadGame(game);
+                    game.updateGame();
                     ArrayList v = new ArrayList();
                     for(int k=0;k<game.allBWMoves.size();k++)
                     {
                         v.add(game.allBWMoves.get(k));
+                        
                     }
-
+                    //System.out.println(("tag; "+game.allBWMoves);
                     //System.out.println("Size "+v.size());
                     e1.convertPGNMoveToGUIFormat(v);
                 }
+                gamesPanelUI.updateGamesPanelUI(gameList);
                 setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             }
         }
         else if(e.getActionCommand().equals(REMOVE))
         {
             int cg=0;
-            System.out.println("Remove is clicked");
+            //System.out.println(("Remove is clicked");
             if(JOptionPane.showConfirmDialog(this, "Do you really want to remove the current game permenantly?"
                     ,"Delete Game?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
             {
-                System.out.println("Clicked Yes");
-                System.out.println("Current game no is "+ currentGameNo);
+                //System.out.println(("Clicked Yes");
+                //System.out.println(("Current game no is "+ currentGameNo);
 
                 //list size should be more than 1
                 if(gameList.size()>1)
@@ -1617,7 +1858,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
                         Game g = (Game) gameList.get(i);
                         if(g.gameno == currentGameNo)
                         {
-                            System.out.println("Found a game with game no "+ currentGameNo);
+                            //System.out.println(("Found a game with game no "+ currentGameNo);
                             //gameList.removeElementAt(i);
                             gameList.remove(i);
                             break;
@@ -1653,14 +1894,39 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
             }
             else
             {
-                System.out.println("Clicked no");
+                //System.out.println(("Clicked no");
             }
         }
         else if(e.getActionCommand().equals(EDITTAGS))
         {
             new EditTags(this,true,game).setVisible(true);
         }
-        else if(e.getActionCommand().equals(SAVE))
+        else if(e.getActionCommand().equals(SAVE_AS_FEN))
+        {
+            //System.out.println("YOU CLICKED SAVE FEN : "+getFEN_Pawns());
+            //System.out.println(("AllMoves size "+cbo.allMoves.size());
+            //System.out.println(("All Moves "+game.allBWMoves);
+             Object obj = JOptionPane.showInputDialog(this, " FEN generated is as shown in the text field below "
+                                        + "\n\n Please note that this version of " +APP_NAME+ " cannot "
+                                          + "\n process the following information of FEN data "
+                                          + "\n 1)Enpassent 2)half move number and 3)fullmove number "
+                                        + "\n\n Hence these values are set to default, you need to modify"
+                                          + "\n these data manually according to your requirement "
+                                        + "\n\n Click Ok to save this FEN or click Cancel to abort \n "
+                                        ,"Please note",
+                                        JOptionPane.QUESTION_MESSAGE,null,null,getFEN_Pawns());
+              if(obj == null)
+            {
+                //System.out.println(("CANCEL SELECTED");
+            }
+            else
+            {
+                //System.out.println(("OK SELECTED " + obj);
+                //TODO
+                //Save the file with obj in it
+            }
+        }
+        else if(e.getActionCommand().equals(SAVE_AS_PGN))
         {
 
 
@@ -1677,7 +1943,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
             if (choice == JFileChooser.APPROVE_OPTION)
             {
                 String file = fileChooser.getSelectedFile()+".pgn";
-                System.out.println(file);
+                //System.out.println((file);
                 try {
                     saveContentsToPGNFile(file);
                 } catch (IOException ex) {
@@ -1693,7 +1959,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
         {
             if(JOptionPane.showConfirmDialog(this,"Are you sure WHITE wins?","Resign?",JOptionPane.OK_CANCEL_OPTION) == JOptionPane.YES_OPTION)
             {
-                System.out.println("white win");
+                //System.out.println(("white win");
                 whiteWins();
             }
         }
@@ -1701,7 +1967,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
         {
             if(JOptionPane.showConfirmDialog(this,"Are you sure BLACK wins?","Resign?",JOptionPane.OK_CANCEL_OPTION) == JOptionPane.YES_OPTION)
             {
-                System.out.println("black win");
+                //System.out.println(("black win");
                 blackWins();
             }
         }
@@ -1709,7 +1975,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
         {
             if(JOptionPane.showConfirmDialog(this,"Close this game as DRAW?","Draw?",JOptionPane.OK_CANCEL_OPTION) == JOptionPane.YES_OPTION)
             {
-                System.out.println("Draw");
+                //System.out.println(("Draw");
                 itsADraw();
             }
         }
@@ -1747,17 +2013,17 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
         if(m.contains("."))
         {
             mm = m.split("\\.")[1].trim();
-            System.out.println("Mov:"+mm);
+            //System.out.println(("Mov:"+mm);
         }
         else
         {
             mm = m.trim();
-            System.out.println("Mov:"+mm);
+            //System.out.println(("Mov:"+mm);
         }
 
         if((engineProcess!=null) && (engineProcess.isEngineRunning()))
         {
-            System.out.println("herermove:"+mm);
+            //System.out.println(("herermove:"+mm);
             this.engineProcess.talkToEngine(mm);
         }
 
@@ -1767,7 +2033,7 @@ public class ChessBoardJFrameUI extends JFrame implements WindowListener,ActionL
         {
         String[] mov = m.trim().split("\\.");
         int l = mov[1].trim().length();
-        System.out.println("Len is "+l);
+        //System.out.println(("Len is "+l);
         if(l==2)
             txtAreaMoves.append("     ");
         else if(l==3)

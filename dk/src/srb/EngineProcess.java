@@ -144,7 +144,7 @@ public class EngineProcess extends JFrame implements WindowListener
 	textArea.setCaretPosition(textArea.getDocument().getLength() - 1);
         //Thread.sleep(3000);
       }
-    System.out.println("EOF");
+    System.out.println(("EOF"));
     }
     catch(Exception e) {
       e.printStackTrace();
@@ -187,7 +187,7 @@ public class EngineProcess extends JFrame implements WindowListener
         {
             if(s[i].trim().startsWith("8"))
             {
-                System.out.println("MOVE IS " + s[i].trim());
+                System.out.println(("MOVE IS " + s[i].trim()));
                 break;
             }
         }

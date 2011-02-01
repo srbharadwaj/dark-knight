@@ -508,7 +508,7 @@
                       <Component id="cbBlackKingCastle" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="cbBlackQueenCastle" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="27" max="32767" attributes="0"/>
+                  <EmptySpace pref="29" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

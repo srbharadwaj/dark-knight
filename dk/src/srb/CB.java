@@ -154,21 +154,21 @@ public class CB implements CConst
     public void printAll()
     {
 
-        System.out.println("***********************");
+        System.out.println(("***********************"));
         for(int i=0;i<allPieces.size();i++)
         {
             CP c = (CP) allPieces.get(i);
-            System.out.println("Piece : " + c.getPieceName());
-            System.out.println("Color : " + c.getPieceColor());
-            System.out.println("IniPos: " + c.getInitialPosition());
-            System.out.println("CurPos: " + c.getCurrentPosition());
+            System.out.println(("Piece : " + c.getPieceName()));
+            System.out.println(("Color : " + c.getPieceColor()));
+            System.out.println(("IniPos: " + c.getInitialPosition()));
+            System.out.println(("CurPos: " + c.getCurrentPosition()));
             String s = "";
             for(int j=0;j<c.movesPossible.size();j++)
             {
                 s=s + "," + c.movesPossible.get(j);
             }
-            System.out.println("MovPos: " + s);
-            System.out.println("--------------------------------");
+            System.out.println(("MovPos: " + s));
+            System.out.println(("--------------------------------"));
         }
     }
 
@@ -318,7 +318,7 @@ public class CB implements CConst
             if((p.getPieceName().equals(KING)) && (p.getPieceColor().equals(col)))
             {
                 kingcp = p;
-                System.out.println(p.getPieceColor() +" KING found at "+p.getCurrentPosition());
+                System.out.println((p.getPieceColor() +" KING found at "+p.getCurrentPosition()));
                 kingV.add(p.getCurrentPosition() + 9);
                 kingV.add(p.getCurrentPosition() + 10);
                 kingV.add(p.getCurrentPosition() + 11);
@@ -330,7 +330,7 @@ public class CB implements CConst
             }
             if((p.getPieceName().equals(KNIGHT)) && (p.getPieceColor().equals(oppCol)))
             {
-                System.out.println(p.getPieceColor() +" KNIGHT found at "+p.getCurrentPosition());
+                System.out.println((p.getPieceColor() +" KNIGHT found at "+p.getCurrentPosition()));
                 knightV.add(p.getCurrentPosition() + 8);
                 knightV.add(p.getCurrentPosition() + 12);
                 knightV.add(p.getCurrentPosition() + 19);
@@ -346,7 +346,7 @@ public class CB implements CConst
         {
             if(kingV.contains(knightV.get(i)))
             {
-                System.out.println(knightV.get(i)+"is being removed");
+                System.out.println((knightV.get(i)+"is being removed"));
                 //kingcp.movesPossible.removeElement(knightV.get(i));
                 kingcp.movesPossible.remove(knightV.get(i));
             }
@@ -454,7 +454,7 @@ public class CB implements CConst
                         if(!isKingAttackedAt(WHITE,14))
                         {
                             //add
-                            System.out.println("White Queen side castling possible");
+                            System.out.println(("White Queen side castling possible"));
                             wK.movesPossible.add(13);
                         }
                     }
@@ -474,7 +474,7 @@ public class CB implements CConst
                         if(!isKingAttackedAt(WHITE,17))
                         {
                             //add
-                            System.out.println("White King side castling possible");
+                            System.out.println(("White King side castling possible"));
                             wK.movesPossible.add(17);
                         }
                     }
@@ -496,7 +496,7 @@ public class CB implements CConst
                         if(!isKingAttackedAt(BLACK,84))
                         {
                             //add
-                            System.out.println("Black Queen side castling possible");
+                            System.out.println(("Black Queen side castling possible"));
                             bK.movesPossible.add(83);
                         }
                     }
@@ -516,7 +516,7 @@ public class CB implements CConst
                         if(!isKingAttackedAt(BLACK,87))
                         {
                             //add
-                            System.out.println("Black King side castling possible");
+                            System.out.println(("Black King side castling possible"));
                             bK.movesPossible.add(87);
                         }
                     }

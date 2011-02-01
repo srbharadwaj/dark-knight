@@ -72,7 +72,7 @@ public class AboutBoxDialogUI extends JDialog implements CConst {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/srb/images/BN.gif"))); // NOI18N
         jPanel1.add(jLabel1);
 
-        jLabel2.setFont(new java.awt.Font("Algerian", 0, 36));
+        jLabel2.setFont(new java.awt.Font("Algerian", 0, 36)); // NOI18N
         jLabel2.setText("  DARK-KNIGHT  ");
         jPanel1.add(jLabel2);
 
@@ -80,7 +80,7 @@ public class AboutBoxDialogUI extends JDialog implements CConst {
         jPanel1.add(jLabel3);
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("A Simple Two Player Chess Game cum PGN Viewer");
+        jLabel7.setText("A Simple Two Player Chess Game cum PGN/FEN Viewer");
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("This project was written to learn java, hope you too have fun with it");
@@ -194,7 +194,7 @@ public class AboutBoxDialogUI extends JDialog implements CConst {
 
     private void jLabel13MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MousePressed
         JLabel l = (JLabel) evt.getSource();
-        System.out.println("Pressed");
+        System.out.println(("Pressed"));
         openURL(l.getText().trim());
     }//GEN-LAST:event_jLabel13MousePressed
 
