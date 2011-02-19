@@ -8,7 +8,6 @@ import javax.swing.*;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  * position of jtogglebuttons
  *  00 01 02 03 04 05 06 07
@@ -21,33 +20,30 @@ import javax.swing.*;
  *  56 57 58 59 60 61 62 63  
  *
  */
-
 /**
  * Class Name - MyJToggleButtonUI
  * Description - 
  *
  * @author Suhas Bharadwaj
  */
-public class MyJToggleButtonUI extends JToggleButton implements ItemListener,CConst
-{
+public class MyJToggleButtonUI extends JToggleButton implements ItemListener, CConst {
+
     Color darkORlight;
     CP chessp;
     int val;
     ChessBoardJFrameUI njf;
- 
+
     //test constructor
-    public MyJToggleButtonUI(ChessBoardJFrameUI ja)
-    {
+    public MyJToggleButtonUI(ChessBoardJFrameUI ja) {
         super();
         //System.out.println("Created");
-        njf=ja;
+        njf = ja;
         setChessp(null);
         addItemListener(this);
     }
 
     //test constructor
-    public MyJToggleButtonUI()
-    {
+    public MyJToggleButtonUI() {
         super();
         //System.out.println("Created");
         //njf=ja;
@@ -55,9 +51,8 @@ public class MyJToggleButtonUI extends JToggleButton implements ItemListener,CCo
         addItemListener(this);
     }
 
-     //test constructor
-    public MyJToggleButtonUI(String s)
-    {
+    //test constructor
+    public MyJToggleButtonUI(String s) {
         super();
         this.setText(s);
         //System.out.println("Created");
@@ -71,45 +66,37 @@ public class MyJToggleButtonUI extends JToggleButton implements ItemListener,CCo
         super.setBackground(bg);
     }
 
-    public void setDefaultBgColor()
-    {
+    public void setDefaultBgColor() {
         this.setBackground(darkORlight);
     }
 
-    public void setHighlightingBgColor()
-    {
+    public void setHighlightingBgColor() {
         this.setBackground(cHighlight);
     }
 
-    public void setLightBgColor()
-    {
+    public void setLightBgColor() {
         this.setBackground(cLight);
         darkORlight = cLight;
     }
 
-    public void setDarkBgColor()
-    {
+    public void setDarkBgColor() {
         this.setBackground(cDark);
         darkORlight = cDark;
     }
 
-    public void setValue(int v)
-    {
+    public void setValue(int v) {
         val = v;
     }
 
-    public int getValue()
-    {
+    public int getValue() {
         return val;
     }
 
-    public void setChessp(CP p)
-    {
+    public void setChessp(CP p) {
         chessp = p;
     }
 
-    public CP getChessp()
-    {
+    public CP getChessp() {
         return chessp;
     }
 
@@ -117,20 +104,17 @@ public class MyJToggleButtonUI extends JToggleButton implements ItemListener,CCo
     public void setSelected(boolean b) {
         super.setSelected(b);
     }
+
     public void itemStateChanged(ItemEvent e) {
         MyJToggleButtonUI j = (MyJToggleButtonUI) e.getSource();
-        if(j.isSelected())
-        {
+        if (j.isSelected()) {
             //System.out.println(j.getChessp().getPieceName() + " is Selected and col is "+j.getChessp().getPieceColor());
             njf.ButtonSelected(j);
-        }
-        else
-        {
+        } else {
 
             //System.out.println(j.getChessp().getPieceName() + " is DEselected and col is "+j.getChessp().getPieceColor());
             njf.ButtonDeSelected(j);
         }
-        
-    }
 
+    }
 }

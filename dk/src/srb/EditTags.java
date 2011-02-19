@@ -8,7 +8,6 @@
  *
  * Created on 13 Mar, 2010, 2:11:09 PM
  */
-
 package srb;
 
 import java.awt.*;
@@ -23,8 +22,9 @@ public class EditTags extends JDialog implements CConst {
 
     ArrayList alltags;
     Game gameLocal;
+
     /** Creates new form EditTags */
-    public EditTags(java.awt.Frame parent, boolean modal,Game g) {
+    public EditTags(java.awt.Frame parent, boolean modal, Game g) {
         super(parent, modal);
         gameLocal = g;
         alltags = g.tags;
@@ -33,13 +33,13 @@ public class EditTags extends JDialog implements CConst {
         initComponents();
 
         // Center in parent
-	//Rectangle parentBounds = new Rectangle();
+        //Rectangle parentBounds = new Rectangle();
         Rectangle parentBounds = parent.getBounds();
         Dimension size = getSize();
-	//parent.getBounds(parentBounds);
-        int x = Math.max(0, parentBounds.x + (parentBounds.width - size.width) /2);
-        int y = Math.max(0, parentBounds.y + (parentBounds.height - size.height) /2);
-	setLocation(new Point(x,y));
+        //parent.getBounds(parentBounds);
+        int x = Math.max(0, parentBounds.x + (parentBounds.width - size.width) / 2);
+        int y = Math.max(0, parentBounds.y + (parentBounds.height - size.height) / 2);
+        setLocation(new Point(x, y));
     }
 
     /** This method is called from within the constructor to
@@ -329,25 +329,23 @@ public class EditTags extends JDialog implements CConst {
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
 
         //System.out.println(jTabbedPane1.getSelectedComponent().getName());
-        if(jTabbedPane1.getSelectedComponent().getName().equals("viewPanel"))
+        if (jTabbedPane1.getSelectedComponent().getName().equals("viewPanel")) {
             createViewPanel(alltags);
-        else if(jTabbedPane1.getSelectedComponent().getName().equals("addPanel"))
+        } else if (jTabbedPane1.getSelectedComponent().getName().equals("addPanel")) {
             createAddPanel(alltags);
-        else if(jTabbedPane1.getSelectedComponent().getName().equals("deletePanel"))
+        } else if (jTabbedPane1.getSelectedComponent().getName().equals("deletePanel")) {
             createDeletePanel(alltags);
-        else
+        } else {
             createEditPanel(alltags);
+        }
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
     private void rbEditTagNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbEditTagNameItemStateChanged
 
-        if(rbEditTagName.isSelected())
-        {
+        if (rbEditTagName.isSelected()) {
             tfEditValue.setEditable(false);
             tfEditName.setEditable(true);
-        }
-        else
-        {
+        } else {
             tfEditValue.setEditable(true);
             tfEditName.setEditable(false);
         }
@@ -356,23 +354,18 @@ public class EditTags extends JDialog implements CConst {
 
     private void cbSelectTagNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbSelectTagNameItemStateChanged
 
-        if(cbSelectTagName.getSelectedIndex()==0)
-        {
+        if (cbSelectTagName.getSelectedIndex() == 0) {
             tfEditValue.setText("");
             tfEditName.setText("");
             bEdit.setEnabled(false);
-        }
-        else
-        {
+        } else {
             bEdit.setEnabled(true);
-            for(int i=0;i<alltags.size();i++)
-            {
+            for (int i = 0; i < alltags.size(); i++) {
                 System.out.println((alltags.get(i)));
 
                 String s = (String) alltags.get(i);
                 String[] t = s.split("~");
-                if(t[0].equals(cbSelectTagName.getSelectedItem()))
-                {
+                if (t[0].equals(cbSelectTagName.getSelectedItem())) {
                     tfEditValue.setText(t[1]);
                     tfEditName.setText(t[0]);
                     break;
@@ -382,22 +375,17 @@ public class EditTags extends JDialog implements CConst {
     }//GEN-LAST:event_cbSelectTagNameItemStateChanged
 
     private void cbSelectTagNameForDeletePanelItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbSelectTagNameForDeletePanelItemStateChanged
-        if(cbSelectTagNameForDeletePanel.getSelectedIndex()==0)
-        {
+        if (cbSelectTagNameForDeletePanel.getSelectedIndex() == 0) {
             tfDelTagValue.setText("");
             bDel.setEnabled(false);
-        }
-        else
-        {
+        } else {
             bDel.setEnabled(true);
-            for(int i=0;i<alltags.size();i++)
-            {
+            for (int i = 0; i < alltags.size(); i++) {
                 System.out.println((alltags.get(i)));
 
                 String s = (String) alltags.get(i);
                 String[] t = s.split("~");
-                if(t[0].equals(cbSelectTagNameForDeletePanel.getSelectedItem()))
-                {
+                if (t[0].equals(cbSelectTagNameForDeletePanel.getSelectedItem())) {
                     tfDelTagValue.setText(t[1]);
                     break;
                 }
@@ -407,30 +395,23 @@ public class EditTags extends JDialog implements CConst {
 
     private void bDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDelActionPerformed
 
-         if(JOptionPane.showConfirmDialog(this, "Do you really want to remove the selected tag?"
-                    ,"Delete Tag?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
-         {
-                String o = (String) cbSelectTagNameForDeletePanel.getSelectedItem();
-                if((o.contains("Date"))||(o.contains("White"))||(o.contains("Blaack"))||(o.contains("Result")))
-                {
-                    JOptionPane.showMessageDialog(this,"Cannot delete this tag","Tag not removed!!!",JOptionPane.ERROR_MESSAGE);
-                }
-                else
-                {
-                    for(int i=0;i<alltags.size();i++)
-                    {
-                        //System.out.println(alltags.get(i));
-                        String s = (String) alltags.get(i);
-                        String[] t = s.split("~");
-                        if(o.equals(t[0]))
-                        {
-                            System.out.println((alltags.remove(s)));
-                        }
+        if (JOptionPane.showConfirmDialog(this, "Do you really want to remove the selected tag?", "Delete Tag?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            String o = (String) cbSelectTagNameForDeletePanel.getSelectedItem();
+            if ((o.contains("Date")) || (o.contains("White")) || (o.contains("Blaack")) || (o.contains("Result"))) {
+                JOptionPane.showMessageDialog(this, "Cannot delete this tag", "Tag not removed!!!", JOptionPane.ERROR_MESSAGE);
+            } else {
+                for (int i = 0; i < alltags.size(); i++) {
+                    //System.out.println(alltags.get(i));
+                    String s = (String) alltags.get(i);
+                    String[] t = s.split("~");
+                    if (o.equals(t[0])) {
+                        System.out.println((alltags.remove(s)));
                     }
-                    
                 }
 
-         }
+            }
+
+        }
     }//GEN-LAST:event_bDelActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -440,24 +421,22 @@ public class EditTags extends JDialog implements CConst {
     private void bEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bEditActionPerformed
-
     /**
-    * @param args the command line arguments
-    */
-   /* public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                EditTags dialog = new EditTags(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+     * @param args the command line arguments
+     */
+    /* public static void main(String args[]) {
+    java.awt.EventQueue.invokeLater(new Runnable() {
+    public void run() {
+    EditTags dialog = new EditTags(new javax.swing.JFrame(), true);
+    dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+    public void windowClosing(java.awt.event.WindowEvent e) {
+    System.exit(0);
+    }
+    });
+    dialog.setVisible(true);
+    }
+    });
     }*/
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel addPanel;
     private javax.swing.JButton bClear;
@@ -486,14 +465,12 @@ public class EditTags extends JDialog implements CConst {
     private javax.swing.JTextField tfEditValue;
     // End of variables declaration//GEN-END:variables
 
-
-   private void createViewPanel(ArrayList tags) {
-        JPanel jp = new JPanel(); 
-        jp.setLayout(new GridLayout(tags.size(),2));
+    private void createViewPanel(ArrayList tags) {
+        JPanel jp = new JPanel();
+        jp.setLayout(new GridLayout(tags.size(), 2));
         jScrollPane1.setViewportView(jp);
 
-        for(int i=0;i<tags.size();i++)
-        {
+        for (int i = 0; i < tags.size(); i++) {
             System.out.println((tags.get(i)));
             JLabel tn = new JLabel();
             JLabel tv = new JLabel();
@@ -507,7 +484,7 @@ public class EditTags extends JDialog implements CConst {
             jp.add(tn);
             jp.add(tv);
         }
-   }
+    }
 
     private void createAddPanel(ArrayList alltags) {
         //throw new UnsupportedOperationException("Not yet implemented");
@@ -517,8 +494,7 @@ public class EditTags extends JDialog implements CConst {
 
     private void createDeletePanel(ArrayList alltags) {
         clearupComboBox(cbSelectTagNameForDeletePanel);
-        for(int i=0;i<alltags.size();i++)
-        {
+        for (int i = 0; i < alltags.size(); i++) {
             //System.out.println(alltags.get(i));
 
             String s = (String) alltags.get(i);
@@ -530,10 +506,9 @@ public class EditTags extends JDialog implements CConst {
     }
 
     private void createEditPanel(ArrayList alltags) {
-        
+
         clearupComboBox(cbSelectTagName);
-        for(int i=0;i<alltags.size();i++)
-        {
+        for (int i = 0; i < alltags.size(); i++) {
             //System.out.println(alltags.get(i));
 
             String s = (String) alltags.get(i);
@@ -544,10 +519,8 @@ public class EditTags extends JDialog implements CConst {
         }
     }
 
-    public void clearupComboBox(JComboBox cb)
-    {
+    public void clearupComboBox(JComboBox cb) {
         cb.removeAllItems();
         cb.addItem("-- Select Tag Name --");
     }
-
 }

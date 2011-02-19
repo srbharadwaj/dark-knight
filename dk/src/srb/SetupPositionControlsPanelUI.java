@@ -8,70 +8,69 @@
  *
  * Created on 2 Jan, 2010, 10:54:03 PM
  */
-
 package srb;
 
 import java.awt.*;
 import javax.swing.*;
-
 
 /**
  *
  * @author suhas
  */
 public class SetupPositionControlsPanelUI extends javax.swing.JPanel implements CConst {
-private SetupPositionDialogUI aThis = null;
+
+    private SetupPositionDialogUI aThis = null;
+
     /** Creates new form SetupPositionControlsPanelUI */
     public SetupPositionControlsPanelUI(SetupPositionDialogUI aThis) {
         this.aThis = aThis;
         initComponents();
     }
 
-    public void setPieceSelected(String s)
-    {
+    public void setPieceSelected(String s) {
         this.selected = s;
 
         //Set the cursor
         Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Point cursorHotSpot = new Point(0,0);
-          Image cursorImage = null;
-        if(s.equals("WR"))
+        Point cursorHotSpot = new Point(0, 0);
+        Image cursorImage = null;
+        if (s.equals("WR")) {
             cursorImage = toolkit.getImage(getClass().getResource(whiteRook));
-        else if(s.equals("WN"))
+        } else if (s.equals("WN")) {
             cursorImage = toolkit.getImage(getClass().getResource(whiteKnight));
-        else if(s.equals("WB"))
+        } else if (s.equals("WB")) {
             cursorImage = toolkit.getImage(getClass().getResource(whiteBishop));
-        else if(s.equals("WQ"))
+        } else if (s.equals("WQ")) {
             cursorImage = toolkit.getImage(getClass().getResource(whiteQueen));
-        else if(s.equals("WK"))
+        } else if (s.equals("WK")) {
             cursorImage = toolkit.getImage(getClass().getResource(whiteKing));
-        else if(s.equals("WP"))
+        } else if (s.equals("WP")) {
             cursorImage = toolkit.getImage(getClass().getResource(whitePawn));
-        else if(s.equals("BR"))
+        } else if (s.equals("BR")) {
             cursorImage = toolkit.getImage(getClass().getResource(blackRook));
-        else if(s.equals("BN"))
+        } else if (s.equals("BN")) {
             cursorImage = toolkit.getImage(getClass().getResource(blackKnight));
-        else if(s.equals("BB"))
+        } else if (s.equals("BB")) {
             cursorImage = toolkit.getImage(getClass().getResource(blackBishop));
-        else if(s.equals("BQ"))
+        } else if (s.equals("BQ")) {
             cursorImage = toolkit.getImage(getClass().getResource(blackQueen));
-        else if(s.equals("BK"))
+        } else if (s.equals("BK")) {
             cursorImage = toolkit.getImage(getClass().getResource(blackKing));
-        else if(s.equals("BP"))
+        } else if (s.equals("BP")) {
             cursorImage = toolkit.getImage(getClass().getResource(blackPawn));
-        else
+        } else {
             cursorImage = toolkit.getImage(getClass().getResource(blackPawn)); //not req but still
-
+        }
         Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
         aThis.chessBoard.setCursor(customCursor);
 
-        if(s.equals("R"))
+        if (s.equals("R")) {
             aThis.chessBoard.setCursor(Cursor.getDefaultCursor());
+        }
 
     }
 
-    public String getPieceSelected()
-    {
+    public String getPieceSelected() {
         return this.selected;
     }
 
@@ -484,38 +483,32 @@ private SetupPositionDialogUI aThis = null;
 
     private void cbWhiteKingCastleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbWhiteKingCastleActionPerformed
         JCheckBox cb = (JCheckBox) evt.getSource();
-        if(cb.isSelected())
-        {
+        if (cb.isSelected()) {
             aThis.chkCastlingAndEditCheckBox();
         }
     }//GEN-LAST:event_cbWhiteKingCastleActionPerformed
 
     private void cbWhiteQueenCastleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbWhiteQueenCastleActionPerformed
         JCheckBox cb = (JCheckBox) evt.getSource();
-        if(cb.isSelected())
-        {
+        if (cb.isSelected()) {
             aThis.chkCastlingAndEditCheckBox();
         }
     }//GEN-LAST:event_cbWhiteQueenCastleActionPerformed
 
     private void cbBlackQueenCastleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbBlackQueenCastleActionPerformed
         JCheckBox cb = (JCheckBox) evt.getSource();
-        if(cb.isSelected())
-        {
+        if (cb.isSelected()) {
             aThis.chkCastlingAndEditCheckBox();
         }
     }//GEN-LAST:event_cbBlackQueenCastleActionPerformed
 
     private void cbBlackKingCastleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbBlackKingCastleActionPerformed
         JCheckBox cb = (JCheckBox) evt.getSource();
-        if(cb.isSelected())
-        {
+        if (cb.isSelected()) {
             aThis.chkCastlingAndEditCheckBox();
         }
     }//GEN-LAST:event_cbBlackKingCastleActionPerformed
-
-public String selected = "R";
-
+    public String selected = "R";
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
@@ -542,5 +535,4 @@ public String selected = "R";
     public javax.swing.JRadioButton rbBlack;
     public javax.swing.JRadioButton rbWhite;
     // End of variables declaration//GEN-END:variables
-
 }

@@ -8,7 +8,6 @@
  *
  * Created on 27 Dec, 2009, 2:05:09 PM
  */
-
 package srb;
 
 import java.awt.*;
@@ -28,13 +27,13 @@ public class AboutBoxDialogUI extends JDialog implements CConst {
         initComponents();
         pack();
         // Center in parent
-	//Rectangle parentBounds = new Rectangle();
+        //Rectangle parentBounds = new Rectangle();
         Rectangle parentBounds = parent.getBounds();
         Dimension size = getSize();
-	//parent.getBounds(parentBounds);
-        int x = Math.max(0, parentBounds.x + (parentBounds.width - size.width) /2);
-        int y = Math.max(0, parentBounds.y + (parentBounds.height - size.height) /2);
-	setLocation(new Point(x,y));
+        //parent.getBounds(parentBounds);
+        int x = Math.max(0, parentBounds.x + (parentBounds.width - size.width) / 2);
+        int y = Math.max(0, parentBounds.y + (parentBounds.height - size.height) / 2);
+        setLocation(new Point(x, y));
 
         getRootPane().setDefaultButton(jButton1);
     }
@@ -199,61 +198,59 @@ public class AboutBoxDialogUI extends JDialog implements CConst {
     }//GEN-LAST:event_jLabel13MousePressed
 
     private void jLabel13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseEntered
-         JLabel l = (JLabel) evt.getSource();
+        JLabel l = (JLabel) evt.getSource();
         customFontAndColor(l);
     }//GEN-LAST:event_jLabel13MouseEntered
 
     private void jLabel13MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseExited
-         JLabel l = (JLabel) evt.getSource();
+        JLabel l = (JLabel) evt.getSource();
         defaultFontAndColor(l);
     }//GEN-LAST:event_jLabel13MouseExited
+    static final String[] browsers = {"firefox", "opera", "konqueror", "epiphany",
+        "seamonkey", "galeon", "kazehakase", "mozilla", "netscape"};
 
-     static final String[] browsers = { "firefox", "opera", "konqueror", "epiphany",
-      "seamonkey", "galeon", "kazehakase", "mozilla", "netscape" };
+    public void customFontAndColor(JLabel l) {
+        setCursor(Cursor.getPredefinedCursor(12));
+        l.setFont(new Font("Dialog", Font.BOLD, 12));
+        l.setForeground(new Color(0, 0, 255));
+    }
 
-public void customFontAndColor(JLabel l)
-{
-    setCursor(Cursor.getPredefinedCursor(12));
-    l.setFont(new Font("Dialog", Font.BOLD, 12));
-    l.setForeground(new Color(0, 0, 255));
-}
+    public void defaultFontAndColor(JLabel l) {
+        setCursor(Cursor.getDefaultCursor());
+        l.setFont(new Font("Dialog", Font.BOLD, 12));
+        l.setForeground(new Color(51, 51, 51));
+    }
 
-public void defaultFontAndColor(JLabel l)
-{
-    setCursor(Cursor.getDefaultCursor());
-    l.setFont(new Font("Dialog", Font.BOLD, 12));
-    l.setForeground(new Color(51, 51, 51));
-}
- public static void openURL(String url) {
-      String osName = System.getProperty("os.name");
-      try {
-         if (osName.startsWith("Mac OS")) {
-            Class<?> fileMgr = Class.forName("com.apple.eio.FileManager");
-            Method openURL = fileMgr.getDeclaredMethod("openURL",
-               new Class[] {String.class});
-            openURL.invoke(null, new Object[] {url});
+    public static void openURL(String url) {
+        String osName = System.getProperty("os.name");
+        try {
+            if (osName.startsWith("Mac OS")) {
+                Class<?> fileMgr = Class.forName("com.apple.eio.FileManager");
+                Method openURL = fileMgr.getDeclaredMethod("openURL",
+                        new Class[]{String.class});
+                openURL.invoke(null, new Object[]{url});
+            } else if (osName.startsWith("Windows")) {
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+            } else { //assume Unix or Linux
+                boolean found = false;
+                for (String browser : browsers) {
+                    if (!found) {
+                        found = Runtime.getRuntime().exec(
+                                new String[]{"which", browser}).waitFor() == 0;
+                        if (found) {
+                            Runtime.getRuntime().exec(new String[]{browser, url});
+                        }
+                    }
+                }
+                if (!found) {
+                    throw new Exception(Arrays.toString(browsers));
+                }
             }
-         else if (osName.startsWith("Windows"))
-            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
-         else { //assume Unix or Linux
-            boolean found = false;
-            for (String browser : browsers)
-               if (!found) {
-                  found = Runtime.getRuntime().exec(
-                     new String[] {"which", browser}).waitFor() == 0;
-                  if (found)
-                     Runtime.getRuntime().exec(new String[] {browser, url});
-                  }
-            if (!found)
-               throw new Exception(Arrays.toString(browsers));
-            }
-         }
-      catch (Exception e) {
-         JOptionPane.showMessageDialog(null,
-            "Error attempting to launch web browser\n" + e.toString());
-         }
-      }
-
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error attempting to launch web browser\n" + e.toString());
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -271,5 +268,4 @@ public void defaultFontAndColor(JLabel l)
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
-
 }

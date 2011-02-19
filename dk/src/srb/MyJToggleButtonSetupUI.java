@@ -8,7 +8,6 @@ import javax.swing.*;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  * position of jtogglebuttons
  *  00 01 02 03 04 05 06 07
@@ -21,127 +20,93 @@ import javax.swing.*;
  *  56 57 58 59 60 61 62 63  
  *
  */
-
 /**
  * Class Name - MyJToggleButtonUI
  * Description - 
  *
  * @author Suhas Bharadwaj
  */
-public class MyJToggleButtonSetupUI extends JToggleButton implements ItemListener,CConst
-{
+public class MyJToggleButtonSetupUI extends JToggleButton implements ItemListener, CConst {
+
     Color darkORlight;
     SetupPositionDialogUI sp;
     public String piece = "";
 
     //test constructor
-    public MyJToggleButtonSetupUI(SetupPositionDialogUI sp)
-    {
+    public MyJToggleButtonSetupUI(SetupPositionDialogUI sp) {
         super();
         //System.out.println("Created");
-        this.sp=sp;
+        this.sp = sp;
         addItemListener(this);
     }
 
-    public void setDefaultBgColor()
-    {
+    public void setDefaultBgColor() {
         this.setBackground(darkORlight);
     }
 
-    public void setHighlightingBgColor()
-    {
+    public void setHighlightingBgColor() {
         this.setBackground(cHighlight);
     }
 
-    public void setLightBgColor()
-    {
+    public void setLightBgColor() {
         this.setBackground(cLight);
         darkORlight = cLight;
     }
 
-    public void setDarkBgColor()
-    {
+    public void setDarkBgColor() {
         this.setBackground(cDark);
         darkORlight = cDark;
     }
 
-    public void setPiece(String s)
-    {
+    public void setPiece(String s) {
         this.piece = s;
     }
 
-    public String getPiece()
-    {
+    public String getPiece() {
         return this.piece;
     }
 
     public void itemStateChanged(ItemEvent e) {
         MyJToggleButtonSetupUI j = (MyJToggleButtonSetupUI) e.getSource();
-        if(j.isSelected())
-        {
+        if (j.isSelected()) {
             j.setPiece(sp.spc.getPieceSelected());
-            if(sp.spc.getPieceSelected().equals("WR"))
-            {
+            if (sp.spc.getPieceSelected().equals("WR")) {
                 j.setIcon(new ImageIcon(getClass().getResource(whiteRook)));
                 j.setPiece("WR");
-            }
-            else if(sp.spc.getPieceSelected().equals("WN"))
-            {
+            } else if (sp.spc.getPieceSelected().equals("WN")) {
                 j.setIcon(new ImageIcon(getClass().getResource(whiteKnight)));
                 j.setPiece("WN");
-            }
-            else if(sp.spc.getPieceSelected().equals("WB"))
-            {
+            } else if (sp.spc.getPieceSelected().equals("WB")) {
                 j.setIcon(new ImageIcon(getClass().getResource(whiteBishop)));
                 j.setPiece("WB");
-            }
-            else if(sp.spc.getPieceSelected().equals("WQ"))
-            {
+            } else if (sp.spc.getPieceSelected().equals("WQ")) {
                 j.setIcon(new ImageIcon(getClass().getResource(whiteQueen)));
                 j.setPiece("WQ");
-            }
-            else if(sp.spc.getPieceSelected().equals("WK"))
-            {
+            } else if (sp.spc.getPieceSelected().equals("WK")) {
                 j.setIcon(new ImageIcon(getClass().getResource(whiteKing)));
                 j.setPiece("WK");
-            }
-            else if(sp.spc.getPieceSelected().equals("WP"))
-            {
+            } else if (sp.spc.getPieceSelected().equals("WP")) {
                 j.setIcon(new ImageIcon(getClass().getResource(whitePawn)));
                 j.setPiece("WP");
-            }
-            else if(sp.spc.getPieceSelected().equals("BR"))
-            {
+            } else if (sp.spc.getPieceSelected().equals("BR")) {
                 j.setIcon(new ImageIcon(getClass().getResource(blackRook)));
                 j.setPiece("BR");
-            }
-            else if(sp.spc.getPieceSelected().equals("BN"))
-            {
+            } else if (sp.spc.getPieceSelected().equals("BN")) {
                 j.setIcon(new ImageIcon(getClass().getResource(blackKnight)));
                 j.setPiece("BN");
-            }
-            else if(sp.spc.getPieceSelected().equals("BB"))
-            {
+            } else if (sp.spc.getPieceSelected().equals("BB")) {
                 j.setIcon(new ImageIcon(getClass().getResource(blackBishop)));
                 j.setPiece("BB");
-            }
-            else if(sp.spc.getPieceSelected().equals("BQ"))
-            {
+            } else if (sp.spc.getPieceSelected().equals("BQ")) {
                 j.setIcon(new ImageIcon(getClass().getResource(blackQueen)));
                 j.setPiece("BQ");
-            }
-            else if(sp.spc.getPieceSelected().equals("BK"))
-            {
+            } else if (sp.spc.getPieceSelected().equals("BK")) {
                 j.setIcon(new ImageIcon(getClass().getResource(blackKing)));
                 j.setPiece("BK");
-            }
-            else if(sp.spc.getPieceSelected().equals("BP"))
-            {
+            } else if (sp.spc.getPieceSelected().equals("BP")) {
                 j.setIcon(new ImageIcon(getClass().getResource(blackPawn)));
                 j.setPiece("BP");
-            }
-            else
-            {
+            } else {
                 j.setIcon(null);
                 j.setPiece("");
             }
@@ -150,5 +115,4 @@ public class MyJToggleButtonSetupUI extends JToggleButton implements ItemListene
             sp.chkCastlingAndEditCheckBox();
         }
     }
-
 }

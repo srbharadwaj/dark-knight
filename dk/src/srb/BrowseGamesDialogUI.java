@@ -1,6 +1,5 @@
 package srb;
 
-
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -15,7 +14,6 @@ import javax.swing.table.DefaultTableModel;
  *
  * Created on 28 Dec, 2010, 4:28:21 PM
  */
-
 /**
  *
  * @author suhas
@@ -24,15 +22,16 @@ public class BrowseGamesDialogUI extends javax.swing.JDialog implements CConst {
 
     private Vector<String> data;
     private Vector<String> header;
-     ChessBoardJFrameUI njf = null;
-     public int selGame = 1;
+    ChessBoardJFrameUI njf = null;
+    public int selGame = 1;
+
     /** Creates new form BrowseGamesDialogUI */
     public BrowseGamesDialogUI(java.awt.Frame parent, boolean modal, ChessBoardJFrameUI n) {
 
         super(parent, modal);
-          njf = n;
+        njf = n;
         data = new Vector();
-        
+
         header = new Vector<String>();
         header.add("Game No.");
         header.add("White");
@@ -40,9 +39,8 @@ public class BrowseGamesDialogUI extends javax.swing.JDialog implements CConst {
         header.add("Result");
         initComponents();
         updateTable();
-        
-    }
 
+    }
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -111,32 +109,26 @@ public class BrowseGamesDialogUI extends javax.swing.JDialog implements CConst {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         int i = jTable1.getSelectedRow();
-        if(i==-1)
-            JOptionPane.showMessageDialog(this,"Select a game and then click ok","Game not selected!!!",JOptionPane.ERROR_MESSAGE);
-        else
-        {
-            this.selGame = i+1;
+        if (i == -1) {
+            JOptionPane.showMessageDialog(this, "Select a game and then click ok", "Game not selected!!!", JOptionPane.ERROR_MESSAGE);
+        } else {
+            this.selGame = i + 1;
             this.setVisible(false);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-   public void updateTable()
-   {
-       for(int i=0;i<njf.gameList.size();i++)
-       {
-           Game g = (Game) njf.gameList.get(i);
-           DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-           model.addRow(new Object[]{g.gameno,g.wPlayersName,g.bPlayerName,g.gameResult});
+    public void updateTable() {
+        for (int i = 0; i < njf.gameList.size(); i++) {
+            Game g = (Game) njf.gameList.get(i);
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.addRow(new Object[]{g.gameno, g.wPlayersName, g.bPlayerName, g.gameResult});
 
-       }
-   }
-
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
-
-
 }

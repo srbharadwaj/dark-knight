@@ -1,13 +1,11 @@
 package srb;
 
-
 import java.util.*;
 
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *  81 82 83 84 85 86 87 88
  *  71 72 73 74 75 76 77 78
@@ -32,14 +30,11 @@ import java.util.*;
  *  A2 B2 C2 D2 E2 F2 G2 H2
  *  A1 B1 C1 D1 E1 F1 G1 H1
  */
-
-
 /**
  *
  * @author Suhas Bharadwaj
  */
-public class CP implements CConst
-{
+public class CP implements CConst {
     /*
     public final CB cbObj;
     public final String pieceName;
@@ -55,20 +50,18 @@ public class CP implements CConst
     public ArrayList movesDone = null;
     public ArrayList movesPossible = null;
     public boolean captured = false;
-
     public int b_currentPosition;
     public ArrayList b_movesPossible = null;
 
-    public CP(CB o,String pName,String pColor,int iniPos)
-    {
-        cbObj=o;
+    public CP(CB o, String pName, String pColor, int iniPos) {
+        cbObj = o;
         pieceName = pName;
         pieceColor = pColor;
         initialPosition = iniPos;
         setCurrentPosition(iniPos);
         setCapturedFlag(false);
 
-   
+
         movesDone = new ArrayList();
         movesPossible = new ArrayList();
 
@@ -76,346 +69,291 @@ public class CP implements CConst
         b_currentPosition = 0;
 
         //pawn
-        if(pName.equals(PAWN))
-        {
+        if (pName.equals(PAWN)) {
             calculatePossibleMovesForPawn();
         }
 
         //rook
-        if(pName.equals(ROOK))
-        {
+        if (pName.equals(ROOK)) {
             //nothing
         }
         //knight
-        if(pName.equals(KNIGHT))
-        {
+        if (pName.equals(KNIGHT)) {
             calculatePossibleMovesForKnight();
         }
         //BISHOP
-        if(pName.equals(BISHOP))
-        {
+        if (pName.equals(BISHOP)) {
             //nothing
         }
         //QUEEN
-        if(pName.equals(QUEEN))
-        {
+        if (pName.equals(QUEEN)) {
             //nothing
         }
         //KING
-        if(pName.equals(KING))
-        {
+        if (pName.equals(KING)) {
             //nothing
         }
     }
 
-    public CP()
-    {
+    public CP() {
     }
 
-    public String getPieceName()
-    {
+    public String getPieceName() {
         return this.pieceName;
     }
 
-    public String getPieceColor()
-    {
+    public String getPieceColor() {
         return this.pieceColor;
     }
 
-    public int getInitialPosition()
-    {
+    public int getInitialPosition() {
         return this.initialPosition;
     }
 
-    public void setCurrentPosition(int currentPosition)
-    {
+    public void setCurrentPosition(int currentPosition) {
         this.currentPosition = currentPosition;
     }
 
-    public int getCurrentPosition()
-    {
+    public int getCurrentPosition() {
         return this.currentPosition;
     }
 
-    public void setCapturedFlag(boolean b)
-    {
+    public void setCapturedFlag(boolean b) {
         this.captured = b;
     }
 
-    public boolean isCaptured()
-    {
+    public boolean isCaptured() {
         return this.captured;
     }
 
-    public void backupCurrentPosition()
-    {
+    public void backupCurrentPosition() {
         this.b_currentPosition = this.currentPosition;
     }
 
-    public void restoreCurrentPosition()
-    {
+    public void restoreCurrentPosition() {
         this.currentPosition = this.b_currentPosition;
     }
 
-    public void backupPossibleMoves()
-    {
+    public void backupPossibleMoves() {
         this.b_movesPossible.clear();
-        for(int i=0;i<this.movesPossible.size();i++)
-        {
+        for (int i = 0; i < this.movesPossible.size(); i++) {
             this.b_movesPossible.add(this.movesPossible.get(i));
         }
     }
 
-    public void restorePossibleMoves()
-    {
+    public void restorePossibleMoves() {
         this.movesPossible.clear();
-        for(int i=0;i<this.b_movesPossible.size();i++)
-        {
+        for (int i = 0; i < this.b_movesPossible.size(); i++) {
             this.movesPossible.add(this.b_movesPossible.get(i));
         }
     }
 
     //pawn
-    public void calculatePossibleMovesForPawn()
-    {
-         movesPossible.clear();
-
-         int newpos;
-
-         //moves vertically so add 10 for white piece and -10 for black pieces
-         if(getPieceColor().equals(WHITE))
-         {
-            newpos = getCurrentPosition() + 10;
-         }
-         else
-         {
-             newpos = getCurrentPosition() - 10;
-         }
-
-         boolean isAdded = chkPositionValidityAndAddThePositionForPawn(newpos,false);
-
-         //if its still in initial pos then it can move 2 steps fwd
-         if(this.getInitialPosition() == this.getCurrentPosition())
-         {
-             //to move 2 steps fwd u should also be able to one step fwd
-             if(isAdded)
-             {
-                 //moves vertically so add 20 for white piece
-                 if(getPieceColor().equals(WHITE))
-                 {
-                    newpos = getCurrentPosition() + 20;
-                 }
-                 else
-                 {
-                     newpos = getCurrentPosition() - 20;
-                 }
-
-                 chkPositionValidityAndAddThePositionForPawn(newpos,false);
-             }
-         }
-
-
-         //capture diagonaly
-         if(getPieceColor().equals(WHITE))
-         {
-            newpos = getCurrentPosition() + 11;
-            chkPositionValidityAndAddThePositionForPawn(newpos,true);
-            newpos = getCurrentPosition() + 9;
-            chkPositionValidityAndAddThePositionForPawn(newpos,true);
-         }
-         else
-         {
-             newpos = getCurrentPosition() - 11;
-             chkPositionValidityAndAddThePositionForPawn(newpos,true);
-             newpos = getCurrentPosition() - 9;
-             chkPositionValidityAndAddThePositionForPawn(newpos,true);
-         }
-
-
-         //enpassant
-         chkPositionValidityAndAddThePositionForPawn(getEnPassentValue(),false);
-
-    }
-
-    //rook
-    public void calculatePossibleMovesForRook()
-    {
-         movesPossible.clear();
-
-         //Move right
-         chkPositionValidityAndAddThePosition(1);
-
-         //Move left
-         chkPositionValidityAndAddThePosition(-1);
-
-         //Move top/north
-         chkPositionValidityAndAddThePosition(10);
-
-         //Move top/south
-         chkPositionValidityAndAddThePosition(-10);
-
-    }
-
-    //knight
-    public void calculatePossibleMovesForKnight()
-    {
+    public void calculatePossibleMovesForPawn() {
         movesPossible.clear();
 
         int newpos;
 
-        newpos =  getCurrentPosition() + 8;
+        //moves vertically so add 10 for white piece and -10 for black pieces
+        if (getPieceColor().equals(WHITE)) {
+            newpos = getCurrentPosition() + 10;
+        } else {
+            newpos = getCurrentPosition() - 10;
+        }
+
+        boolean isAdded = chkPositionValidityAndAddThePositionForPawn(newpos, false);
+
+        //if its still in initial pos then it can move 2 steps fwd
+        if (this.getInitialPosition() == this.getCurrentPosition()) {
+            //to move 2 steps fwd u should also be able to one step fwd
+            if (isAdded) {
+                //moves vertically so add 20 for white piece
+                if (getPieceColor().equals(WHITE)) {
+                    newpos = getCurrentPosition() + 20;
+                } else {
+                    newpos = getCurrentPosition() - 20;
+                }
+
+                chkPositionValidityAndAddThePositionForPawn(newpos, false);
+            }
+        }
+
+
+        //capture diagonaly
+        if (getPieceColor().equals(WHITE)) {
+            newpos = getCurrentPosition() + 11;
+            chkPositionValidityAndAddThePositionForPawn(newpos, true);
+            newpos = getCurrentPosition() + 9;
+            chkPositionValidityAndAddThePositionForPawn(newpos, true);
+        } else {
+            newpos = getCurrentPosition() - 11;
+            chkPositionValidityAndAddThePositionForPawn(newpos, true);
+            newpos = getCurrentPosition() - 9;
+            chkPositionValidityAndAddThePositionForPawn(newpos, true);
+        }
+
+
+        //enpassant
+        chkPositionValidityAndAddThePositionForPawn(getEnPassentValue(), false);
+
+    }
+
+    //rook
+    public void calculatePossibleMovesForRook() {
+        movesPossible.clear();
+
+        //Move right
+        chkPositionValidityAndAddThePosition(1);
+
+        //Move left
+        chkPositionValidityAndAddThePosition(-1);
+
+        //Move top/north
+        chkPositionValidityAndAddThePosition(10);
+
+        //Move top/south
+        chkPositionValidityAndAddThePosition(-10);
+
+    }
+
+    //knight
+    public void calculatePossibleMovesForKnight() {
+        movesPossible.clear();
+
+        int newpos;
+
+        newpos = getCurrentPosition() + 8;
         chkPositionValidityAndAddThePositionForKnight(newpos);
-        newpos =  getCurrentPosition() + 12;
+        newpos = getCurrentPosition() + 12;
         chkPositionValidityAndAddThePositionForKnight(newpos);
-        newpos =  getCurrentPosition() + 19;
+        newpos = getCurrentPosition() + 19;
         chkPositionValidityAndAddThePositionForKnight(newpos);
-        newpos =  getCurrentPosition() + 21;
+        newpos = getCurrentPosition() + 21;
         chkPositionValidityAndAddThePositionForKnight(newpos);
-        newpos =  getCurrentPosition() - 8;
+        newpos = getCurrentPosition() - 8;
         chkPositionValidityAndAddThePositionForKnight(newpos);
-        newpos =  getCurrentPosition() - 12;
+        newpos = getCurrentPosition() - 12;
         chkPositionValidityAndAddThePositionForKnight(newpos);
-        newpos =  getCurrentPosition() - 19;
+        newpos = getCurrentPosition() - 19;
         chkPositionValidityAndAddThePositionForKnight(newpos);
-        newpos =  getCurrentPosition() - 21;
+        newpos = getCurrentPosition() - 21;
         chkPositionValidityAndAddThePositionForKnight(newpos);
     }
 
     //bishop
-     public void calculatePossibleMovesForBishop()
-    {
+    public void calculatePossibleMovesForBishop() {
         movesPossible.clear();
 
-         //Move top right
-         chkPositionValidityAndAddThePosition(11);
+        //Move top right
+        chkPositionValidityAndAddThePosition(11);
 
-         //Move bottom left
-         chkPositionValidityAndAddThePosition(-11);
+        //Move bottom left
+        chkPositionValidityAndAddThePosition(-11);
 
-         //Move top left
-         chkPositionValidityAndAddThePosition(9);
+        //Move top left
+        chkPositionValidityAndAddThePosition(9);
 
-         //Move bottom right
-         chkPositionValidityAndAddThePosition(-9);
+        //Move bottom right
+        chkPositionValidityAndAddThePosition(-9);
 
     }
 
-     //queen
-     public void calculatePossibleMovesForQueen()
-     {
+    //queen
+    public void calculatePossibleMovesForQueen() {
         //Queen is a combination of rook and bishop
         //So just copy paste the code block of rook and bishop
 
         movesPossible.clear();
 
-         //Move right
-         chkPositionValidityAndAddThePosition(1);
+        //Move right
+        chkPositionValidityAndAddThePosition(1);
 
-         //Move left
-         chkPositionValidityAndAddThePosition(-1);
+        //Move left
+        chkPositionValidityAndAddThePosition(-1);
 
-         //Move top/north
-         chkPositionValidityAndAddThePosition(10);
+        //Move top/north
+        chkPositionValidityAndAddThePosition(10);
 
-         //Move top/south
-         chkPositionValidityAndAddThePosition(-10);
+        //Move top/south
+        chkPositionValidityAndAddThePosition(-10);
 
-         //Move top right
-         chkPositionValidityAndAddThePosition(11);
+        //Move top right
+        chkPositionValidityAndAddThePosition(11);
 
-         //Move bottom left
-         chkPositionValidityAndAddThePosition(-11);
+        //Move bottom left
+        chkPositionValidityAndAddThePosition(-11);
 
-         //Move top left
-         chkPositionValidityAndAddThePosition(9);
+        //Move top left
+        chkPositionValidityAndAddThePosition(9);
 
-         //Move bottom right
-         chkPositionValidityAndAddThePosition(-9);
+        //Move bottom right
+        chkPositionValidityAndAddThePosition(-9);
 
     }
 
     //king
-    public void calculatePossibleMovesForKing()
-    {
-         movesPossible.clear();
+    public void calculatePossibleMovesForKing() {
+        movesPossible.clear();
 
         int newpos;
 
-        newpos =  getCurrentPosition() + 9;
+        newpos = getCurrentPosition() + 9;
         chkPositionValidityAndAddThePositionForKing(newpos);
-        newpos =  getCurrentPosition() + 10;
+        newpos = getCurrentPosition() + 10;
         chkPositionValidityAndAddThePositionForKing(newpos);
-        newpos =  getCurrentPosition() + 11;
+        newpos = getCurrentPosition() + 11;
         chkPositionValidityAndAddThePositionForKing(newpos);
-        newpos =  getCurrentPosition() - 9;
+        newpos = getCurrentPosition() - 9;
         chkPositionValidityAndAddThePositionForKing(newpos);
-        newpos =  getCurrentPosition() - 10;
+        newpos = getCurrentPosition() - 10;
         chkPositionValidityAndAddThePositionForKing(newpos);
-        newpos =  getCurrentPosition() - 11;
+        newpos = getCurrentPosition() - 11;
         chkPositionValidityAndAddThePositionForKing(newpos);
-        newpos =  getCurrentPosition() + 1;
+        newpos = getCurrentPosition() + 1;
         chkPositionValidityAndAddThePositionForKing(newpos);
-        newpos =  getCurrentPosition() - 1;
+        newpos = getCurrentPosition() - 1;
         chkPositionValidityAndAddThePositionForKing(newpos);
     }
 
-     public boolean chkPositionValidityAndAddThePositionForPawn(int newpos,boolean capPos)
-     {
-         if(isValidPosition(newpos))
-         {
-             //staright fwd one step or 2 steps
-             if(!capPos)
-             {
-                 if(isAnyPiecePresent(newpos))
-                 {
+    public boolean chkPositionValidityAndAddThePositionForPawn(int newpos, boolean capPos) {
+        if (isValidPosition(newpos)) {
+            //staright fwd one step or 2 steps
+            if (!capPos) {
+                if (isAnyPiecePresent(newpos)) {
                     // dont add the position
                     // coz some piece is already present at that position
-                     return false;
-                 }
-                 else
-                 {
+                    return false;
+                } else {
                     // add the pos
                     // coz that position is not occupied by any piece
                     movesPossible.add(newpos);
                     return true;
-                 }
-             }
-             //for capturing pieces
-             else
-             {
-                  if(isOppositeColorPiecePresent(newpos,getPieceColor()))
-                  {
-                     // add the position
-                     // coz different color piece is present and cn be captured
-                     movesPossible.add(newpos);
-                     return true;
-                  }
-                  else
-                  {
-                      // dont add the position
-                      return false;
-                  }
+                }
+            } //for capturing pieces
+            else {
+                if (isOppositeColorPiecePresent(newpos, getPieceColor())) {
+                    // add the position
+                    // coz different color piece is present and cn be captured
+                    movesPossible.add(newpos);
+                    return true;
+                } else {
+                    // dont add the position
+                    return false;
+                }
 
-             }
-         }
-         else
-         {
-             return false;
-         }
+            }
+        } else {
+            return false;
+        }
 
-     }
+    }
 
-     public void chkPositionValidityAndAddThePositionForKnight(int newpos)
-     {
-        if( isValidPosition(newpos))
-        {
-            if( isSameColorPiecePresent(newpos, getPieceColor()))
-            {
+    public void chkPositionValidityAndAddThePositionForKnight(int newpos) {
+        if (isValidPosition(newpos)) {
+            if (isSameColorPiecePresent(newpos, getPieceColor())) {
                 // dont add the position
                 // coz same color piece is present
-            }
-            else
-            {
+            } else {
                 // add the pos
                 // coz an opposite color piece is present or the pos is empty
                 movesPossible.add(newpos);
@@ -423,61 +361,48 @@ public class CP implements CConst
         }
     }
 
-     public void chkPositionValidityAndAddThePosition(int moveByVal)
-     {
+    public void chkPositionValidityAndAddThePosition(int moveByVal) {
         int newpos;
         newpos = getCurrentPosition() + moveByVal;
-         while(true)
-         {
-             //System.out.println("adding"+newpos);
-             if(isValidPosition(newpos))
-             {
-                 if(isOppositeColorPiecePresent(newpos,getPieceColor()))
-                 {
-                     // add the position
-                     // coz different color piece is present and cant go furthur
-                     movesPossible.add(newpos);
-                     break;
-                 }
-                 if(isSameColorPiecePresent(newpos,getPieceColor()))
-                 {
-                     // dont add the position
-                     // coz same color piece is present and cant go furthur
-                     break;
-                 }
-                 else
-                 {
-                     // add the pos
-                     // coz that pos is empty
-                     movesPossible.add(newpos);
-                 }
-             }
-             else
-             {
-                 break;
-             }
-             newpos = newpos+moveByVal;
-         }
+        while (true) {
+            //System.out.println("adding"+newpos);
+            if (isValidPosition(newpos)) {
+                if (isOppositeColorPiecePresent(newpos, getPieceColor())) {
+                    // add the position
+                    // coz different color piece is present and cant go furthur
+                    movesPossible.add(newpos);
+                    break;
+                }
+                if (isSameColorPiecePresent(newpos, getPieceColor())) {
+                    // dont add the position
+                    // coz same color piece is present and cant go furthur
+                    break;
+                } else {
+                    // add the pos
+                    // coz that pos is empty
+                    movesPossible.add(newpos);
+                }
+            } else {
+                break;
+            }
+            newpos = newpos + moveByVal;
+        }
     }
 
-     public void chkPositionValidityAndAddThePositionForKing(int newpos)
-     {
-        if( isValidPosition(newpos))
-        {
-            if( isSameColorPiecePresent(newpos, getPieceColor()))
-            {
+    public void chkPositionValidityAndAddThePositionForKing(int newpos) {
+        if (isValidPosition(newpos)) {
+            if (isSameColorPiecePresent(newpos, getPieceColor())) {
                 // dont add the position
                 // coz same color piece is present
-            }
-            else
-            {
+            } else {
                 // add the pos
                 // coz an opposite color piece is present or the pos is empty
                 // if an opposite colour piece is present and that has opp color
                 // king adjacent to it then king cant capture and hence should
                 // not be added to the pos moves
-                if(!isOppKingPresentAtAdjacentBox(newpos, getPieceColor()))
+                if (!isOppKingPresentAtAdjacentBox(newpos, getPieceColor())) {
                     movesPossible.add(newpos);
+                }
             }
         }
     }
@@ -486,62 +411,50 @@ public class CP implements CConst
     // adjacent to its own king then we were able to capture that piece
     // could'nt fix the root cause for bug as it requires lot of changes for
     // king's logic so added this proc as workaround
-     public boolean isOppKingPresentAtAdjacentBox(int newpos,String colour)
-     {
-        if(((isValidPosition(newpos+9))) && (isOppositeColorKingPresent(newpos+9, colour)))
-        {
+    public boolean isOppKingPresentAtAdjacentBox(int newpos, String colour) {
+        if (((isValidPosition(newpos + 9))) && (isOppositeColorKingPresent(newpos + 9, colour))) {
             return true;
         }
-        if (((isValidPosition(newpos+10))) && (isOppositeColorKingPresent(newpos+10, colour)))
-        {
-          return true;
+        if (((isValidPosition(newpos + 10))) && (isOppositeColorKingPresent(newpos + 10, colour))) {
+            return true;
         }
-        if (((isValidPosition(newpos+11))) && (isOppositeColorKingPresent(newpos+11, colour)))
-        {
-          return true;
+        if (((isValidPosition(newpos + 11))) && (isOppositeColorKingPresent(newpos + 11, colour))) {
+            return true;
         }
-        if (((isValidPosition(newpos-9))) && (isOppositeColorKingPresent(newpos-9, colour)))
-        {
-          return true;
+        if (((isValidPosition(newpos - 9))) && (isOppositeColorKingPresent(newpos - 9, colour))) {
+            return true;
         }
-        if (((isValidPosition(newpos-10))) && (isOppositeColorKingPresent(newpos-10, colour)))
-        {
-          return true;
+        if (((isValidPosition(newpos - 10))) && (isOppositeColorKingPresent(newpos - 10, colour))) {
+            return true;
         }
-        if (((isValidPosition(newpos-11))) && (isOppositeColorKingPresent(newpos-11, colour)))
-        {
-          return true;
+        if (((isValidPosition(newpos - 11))) && (isOppositeColorKingPresent(newpos - 11, colour))) {
+            return true;
         }
-        if (((isValidPosition(newpos+1))) && (isOppositeColorKingPresent(newpos+1, colour)))
-        {
-          return true;
+        if (((isValidPosition(newpos + 1))) && (isOppositeColorKingPresent(newpos + 1, colour))) {
+            return true;
         }
-        if (((isValidPosition(newpos-1))) && (isOppositeColorKingPresent(newpos-1, colour)))
-        {
-          return true;
+        if (((isValidPosition(newpos - 1))) && (isOppositeColorKingPresent(newpos - 1, colour))) {
+            return true;
         }
 
         return false;
-     }
-     public boolean isOppositeColorKingPresent(int pos, String color)
-     {
-        for(int i=0;i<cbObj.allPieces.size();i++)
-        {
+    }
+
+    public boolean isOppositeColorKingPresent(int pos, String color) {
+        for (int i = 0; i < cbObj.allPieces.size(); i++) {
             CP c = (CP) cbObj.allPieces.get(i);
-            if(c.getCurrentPosition() == pos)
-            {
-                if(!(c.getPieceColor().equals(color)))
-                {
-                    if((c.getPieceName().equals(KING)))
+            if (c.getCurrentPosition() == pos) {
+                if (!(c.getPieceColor().equals(color))) {
+                    if ((c.getPieceName().equals(KING))) {
                         return true;
+                    }
                 }
             }
         }
         return false;
     }
 
-     public boolean isValidPosition(int pos)
-     {
+    public boolean isValidPosition(int pos) {
         /**
          * The position of board is as shown at the starting of the comments
          * in this file, that is the numbers 11,12,...88 are actual integers
@@ -549,26 +462,23 @@ public class CP implements CConst
          * In this case we do a modulus of pos with 10 then the value(reminder)
          * must be within 1 to 8, anything else then its out of position or board
          */
-
-        if((pos < 11) || (pos > 88))
+        if ((pos < 11) || (pos > 88)) {
             return false;
+        }
 
-        int i = pos%10;
-        if((i == 1)|| (i == 2)|| (i == 3)|| (i == 4)|| (i == 5)|| (i == 6)|| (i == 7)|| (i == 8))
+        int i = pos % 10;
+        if ((i == 1) || (i == 2) || (i == 3) || (i == 4) || (i == 5) || (i == 6) || (i == 7) || (i == 8)) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
-     public boolean isSameColorPiecePresent(int pos, String color)
-     {
-        for(int i=0;i<cbObj.allPieces.size();i++)
-        {
+    public boolean isSameColorPiecePresent(int pos, String color) {
+        for (int i = 0; i < cbObj.allPieces.size(); i++) {
             CP c = (CP) cbObj.allPieces.get(i);
-            if(c.getCurrentPosition() == pos)
-            {
-                if(c.getPieceColor().equals(color))
-                {
+            if (c.getCurrentPosition() == pos) {
+                if (c.getPieceColor().equals(color)) {
                     return true;
                 }
             }
@@ -576,15 +486,11 @@ public class CP implements CConst
         return false;
     }
 
-     public boolean isOppositeColorPiecePresent(int pos, String color)
-     {
-        for(int i=0;i<cbObj.allPieces.size();i++)
-        {
+    public boolean isOppositeColorPiecePresent(int pos, String color) {
+        for (int i = 0; i < cbObj.allPieces.size(); i++) {
             CP c = (CP) cbObj.allPieces.get(i);
-            if(c.getCurrentPosition() == pos)
-            {
-                if(!(c.getPieceColor().equals(color)))
-                {
+            if (c.getCurrentPosition() == pos) {
+                if (!(c.getPieceColor().equals(color))) {
                     return true;
                 }
             }
@@ -592,40 +498,33 @@ public class CP implements CConst
         return false;
     }
 
-     public boolean isAnyPiecePresent(int pos)
-     {
-        for(int i=0;i<cbObj.allPieces.size();i++)
-        {
+    public boolean isAnyPiecePresent(int pos) {
+        for (int i = 0; i < cbObj.allPieces.size(); i++) {
             CP c = (CP) cbObj.allPieces.get(i);
-            if(c.getCurrentPosition() == pos)
-            {
+            if (c.getCurrentPosition() == pos) {
                 return true;
             }
         }
         return false;
     }
 
-     public boolean isMovePossible(int p)
-     {
-        for(int i=0;i<movesPossible.size();i++)
-        {
+    public boolean isMovePossible(int p) {
+        for (int i = 0; i < movesPossible.size(); i++) {
             //System.out.println(movesPossible.get(i));
-            if(p == movesPossible.get(i))
+            if (p == movesPossible.get(i)) {
                 return true;
+            }
         }
         return false;
     }
 
-     public void printPossibleMoves()
-     {
-        for(int i=0;i<movesPossible.size();i++)
-        {
+    public void printPossibleMoves() {
+        for (int i = 0; i < movesPossible.size(); i++) {
             System.out.println((movesPossible.get(i)));
         }
     }
 
-     public int getEnPassentValue()
-     {
+    public int getEnPassentValue() {
         //enpassent
         //if white pawn then cur_pos must be >=51 and <=58
         //if black pawn then cur_pos must be >=41 and <=48
@@ -636,59 +535,49 @@ public class CP implements CConst
         int curPos = getCurrentPosition();
         String pCol = getPieceColor();
 
-        if((pCol.equals(WHITE)) && (curPos>=51) && (curPos<=58))
-        {
-            for(int j=0;j<cbObj.allPieces.size();j++)
-            {
+        if ((pCol.equals(WHITE)) && (curPos >= 51) && (curPos <= 58)) {
+            for (int j = 0; j < cbObj.allPieces.size(); j++) {
                 CP p = (CP) cbObj.allPieces.get(j);
-                if((p.getPieceName().equals(PAWN)) &&
-                   (p.getPieceColor().equals(BLACK)) &&
-                   (p.movesDone.size()==1))
-                {
-                    if(p.getCurrentPosition() == (curPos+1))
-                    {
-                        if(cbObj.getLatestMove() == (curPos+1))
-                            return curPos+11;
+                if ((p.getPieceName().equals(PAWN))
+                        && (p.getPieceColor().equals(BLACK))
+                        && (p.movesDone.size() == 1)) {
+                    if (p.getCurrentPosition() == (curPos + 1)) {
+                        if (cbObj.getLatestMove() == (curPos + 1)) {
+                            return curPos + 11;
+                        }
                     }
-                    if(p.getCurrentPosition() == (curPos-1))
-                    {
-                        if(cbObj.getLatestMove() == (curPos-1))
-                            return curPos+9;
+                    if (p.getCurrentPosition() == (curPos - 1)) {
+                        if (cbObj.getLatestMove() == (curPos - 1)) {
+                            return curPos + 9;
+                        }
                     }
                 }
             }
 
-        }
-        else if ((pCol.equals(BLACK)) && (curPos>=41) && (curPos<=48))
-        {
-            for(int j=0;j<cbObj.allPieces.size();j++)
-            {
+        } else if ((pCol.equals(BLACK)) && (curPos >= 41) && (curPos <= 48)) {
+            for (int j = 0; j < cbObj.allPieces.size(); j++) {
                 CP p = (CP) cbObj.allPieces.get(j);
-                if((p.getPieceName().equals(PAWN)) &&
-                   (p.getPieceColor().equals(WHITE)) &&
-                   (p.movesDone.size()==1))
-                {
-                    if(p.getCurrentPosition() == (curPos+1))
-                    {
-                        if(cbObj.getLatestMove() == (curPos+1))
-                            return curPos-9;
+                if ((p.getPieceName().equals(PAWN))
+                        && (p.getPieceColor().equals(WHITE))
+                        && (p.movesDone.size() == 1)) {
+                    if (p.getCurrentPosition() == (curPos + 1)) {
+                        if (cbObj.getLatestMove() == (curPos + 1)) {
+                            return curPos - 9;
+                        }
                     }
-                    if(p.getCurrentPosition() == (curPos-1))
-                    {
-                        if(cbObj.getLatestMove() == (curPos-1))
-                            return curPos-11;
+                    if (p.getCurrentPosition() == (curPos - 1)) {
+                        if (cbObj.getLatestMove() == (curPos - 1)) {
+                            return curPos - 11;
+                        }
                     }
                 }
             }
-        }
-        else
-        {
+        } else {
             //enpassent not possible
             return -1;
         }
 
         //enpassent not possible
-         return -1;
+        return -1;
     }
-
 }

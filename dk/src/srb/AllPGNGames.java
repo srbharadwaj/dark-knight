@@ -2,122 +2,103 @@ package srb;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
 
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  * Class Name - AllPGNGames
  * Description - 
  *
  * @author Suhas Bharadwaj
  */
-public class AllPGNGames implements CConst
-{
+public class AllPGNGames implements CConst {
 
     int noOfLines;
     ArrayList allLines = new ArrayList();
     public ArrayList pgnGames = new ArrayList();
     ChessBoardJFrameUI njf = null;
 
-    public AllPGNGames(ChessBoardJFrameUI n,File f)
-    {
+    public AllPGNGames(ChessBoardJFrameUI n, File f) {
         njf = n;
 
-        if(f!=null)
-        {
+        if (f != null) {
             String file = f.getAbsolutePath();
 
             readFileAndGetAllLines(file);
-            
+
             getEachGame();
 
         }
 
     }
 
-    public void getEachGame()
-    {
+    public void getEachGame() {
         int tCount = 0;
         int mCount = 0;
         EachPGNGame pg = null;
         ArrayList lines = new ArrayList();
-        for(int i=0;i<allLines.size();i++)
-        {
+        for (int i = 0; i < allLines.size(); i++) {
             String s = (String) allLines.get(i);
-            if(s.startsWith("["))
-            {
+            if (s.startsWith("[")) {
                 tCount++;
-                if((tCount-mCount) == 1)
-                {
-                    if((lines.size()!=0)&&(pg!=null))
-                    {
+                if ((tCount - mCount) == 1) {
+                    if ((lines.size() != 0) && (pg != null)) {
                         pg.setLines(lines);
                         lines.clear();
                     }
                     pg = null;
-                    pg = new EachPGNGame(njf,pgnGames.size()+1);
+                    pg = new EachPGNGame(njf, pgnGames.size() + 1);
                     pgnGames.add(pg);
                 }
             }
-            if(s.startsWith("1."))
-            {
+            if (s.startsWith("1.")) {
                 mCount++;
-                if(mCount>tCount)
-                {
-                    if((lines.size()!=0)&&(pg!=null))
-                    {
+                if (mCount > tCount) {
+                    if ((lines.size() != 0) && (pg != null)) {
                         pg.setLines(lines);
                         lines.clear();
                     }
                     pg = null;
-                    pg = new EachPGNGame(njf,pgnGames.size()+1);
+                    pg = new EachPGNGame(njf, pgnGames.size() + 1);
                     pgnGames.add(pg);
                 }
                 tCount = mCount;
             }
             lines.add(s);
         }
-        if((lines.size()!=0)&&(pg!=null))
-        {
+        if ((lines.size() != 0) && (pg != null)) {
             pg.setLines(lines);
             lines.clear();
         }
     }
 
-    void readFileAndGetAllLines(String file)
-    {
+    void readFileAndGetAllLines(String file) {
         String record = null;
 
-        try
-        {
-            FileReader fr     = new FileReader(file);
+        try {
+            FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
 
             record = new String();
-            while ((record = br.readLine()) != null)
-            {
+            while ((record = br.readLine()) != null) {
                 noOfLines++;
                 allLines.add(record);
                 //System.out.println(record);
             }
             fr.close();
             br.close();
-        }
-        catch (IOException e)
-        {
-           // catch possible io errors from readLine()
-           System.out.println(("Uh oh, got an IOException error!"));
-           e.printStackTrace();
+        } catch (IOException e) {
+            // catch possible io errors from readLine()
+            System.out.println(("Uh oh, got an IOException error!"));
+            njf.log.logger.log(Level.SEVERE, "Uh oh, got an IOException error!", e);
         }
     } // end of readFileAndGetAllLines()
 
-    public String convertNumValToAlphaCol(int i)
-    {
-        switch (i)
-        {
+    public String convertNumValToAlphaCol(int i) {
+        switch (i) {
             case 1:
                 return "a";
             case 2:
@@ -134,10 +115,8 @@ public class AllPGNGames implements CConst
                 return "g";
             case 8:
                 return "h";
-             default:
-                 return "ERROR";
+            default:
+                return "ERROR";
         }
     }
-
 }
-

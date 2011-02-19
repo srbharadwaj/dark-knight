@@ -8,7 +8,6 @@
  *
  * Created on 16 Dec, 2009, 9:14:55 PM
  */
-
 package srb;
 
 import java.util.*;
@@ -20,7 +19,8 @@ import javax.swing.*;
  */
 public class GamesPanelUI extends JPanel {
 
-     ChessBoardJFrameUI njf = null;
+    ChessBoardJFrameUI njf = null;
+
     /** Creates new form GamesPanelUI */
     public GamesPanelUI(ChessBoardJFrameUI n) {
         njf = n;
@@ -172,8 +172,7 @@ public class GamesPanelUI extends JPanel {
 
     private void butFirstGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butFirstGameActionPerformed
 
-        if(njf.currentGameNo>1)
-        {
+        if (njf.currentGameNo > 1) {
             njf.currentGameNo = 1;
             callLoadGame();
         }
@@ -182,8 +181,7 @@ public class GamesPanelUI extends JPanel {
 
     private void butPrevGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butPrevGameActionPerformed
 
-        if(njf.currentGameNo>1)
-        {
+        if (njf.currentGameNo > 1) {
             njf.currentGameNo--;
             callLoadGame();
         }
@@ -191,8 +189,7 @@ public class GamesPanelUI extends JPanel {
 
     private void butNextGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butNextGameActionPerformed
 
-        if(njf.currentGameNo<njf.gameList.size())
-        {
+        if (njf.currentGameNo < njf.gameList.size()) {
             njf.currentGameNo++;
             callLoadGame();
         }
@@ -200,8 +197,7 @@ public class GamesPanelUI extends JPanel {
 
     private void butLastGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butLastGameActionPerformed
 
-        if(njf.currentGameNo<njf.gameList.size())
-        {
+        if (njf.currentGameNo < njf.gameList.size()) {
             njf.currentGameNo = njf.gameList.size();
             callLoadGame();
         }
@@ -209,32 +205,27 @@ public class GamesPanelUI extends JPanel {
 
     private void butBrowseGamesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butBrowseGamesActionPerformed
         // TODO add your handling code here:
-        BrowseGamesDialogUI nj = new BrowseGamesDialogUI(njf,true,njf);
+        BrowseGamesDialogUI nj = new BrowseGamesDialogUI(njf, true, njf);
         nj.setVisible(true);
-         njf.currentGameNo = nj.selGame;
-            callLoadGame();
+        njf.currentGameNo = nj.selGame;
+        callLoadGame();
     }//GEN-LAST:event_butBrowseGamesActionPerformed
 
-    public void callLoadGame()
-    {
+    public void callLoadGame() {
         updateGamesPanelUI(njf.gameList);
-        for(int i=0;i<njf.gameList.size();i++)
-        {
+        for (int i = 0; i < njf.gameList.size(); i++) {
             Game g = (Game) njf.gameList.get(i);
             g.moveList.clear();
         }
-        for(int i=0;i<njf.gameList.size();i++)
-        {
+        for (int i = 0; i < njf.gameList.size(); i++) {
             Game g = (Game) njf.gameList.get(i);
-            if(g.gameno == njf.currentGameNo)
-            {
+            if (g.gameno == njf.currentGameNo) {
                 njf.game = g;
-                EachPGNGame  e = new EachPGNGame(njf,g.gameno);
+                EachPGNGame e = new EachPGNGame(njf, g.gameno);
                 njf.loadGame(g);
                 ArrayList v = new ArrayList();
-                for(int k=0;k<g.allBWMoves.size();k++)
-                {
-                    System.out.println(("Class : callLoadGame :: "+g.allBWMoves.get(k)));
+                for (int k = 0; k < g.allBWMoves.size(); k++) {
+                    System.out.println(("Class : callLoadGame :: " + g.allBWMoves.get(k)));
                     v.add(g.allBWMoves.get(k));
                 }
 
@@ -250,20 +241,17 @@ public class GamesPanelUI extends JPanel {
     }
 
     public void updateGamesPanelUI(ArrayList gameList) {
-        
-        for(int i=0;i<gameList.size();i++)
-        {
+
+        for (int i = 0; i < gameList.size(); i++) {
             Game g = (Game) gameList.get(i);
-            if(g.gameno == njf.currentGameNo)
-            {
-                 labGameNo.setText(Integer.toString(g.gameno));
-                 labWhitePlayerName.setText(g.wPlayersName);
-                 labBlackPlayerName.setText(g.bPlayerName);
+            if (g.gameno == njf.currentGameNo) {
+                labGameNo.setText(Integer.toString(g.gameno));
+                labWhitePlayerName.setText(g.wPlayersName);
+                labBlackPlayerName.setText(g.bPlayerName);
                 labGameResult.setText(g.gameResult);
             }
         }
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton butBrowseGames;
     private javax.swing.JButton butFirstGame;
@@ -279,5 +267,4 @@ public class GamesPanelUI extends JPanel {
     public javax.swing.JLabel labGameResult;
     public javax.swing.JLabel labWhitePlayerName;
     // End of variables declaration//GEN-END:variables
-
 }
